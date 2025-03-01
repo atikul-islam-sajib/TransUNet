@@ -75,9 +75,6 @@ class Loader:
         else:
             raise FileNotFoundError("Image file not found".capitalize())
 
-    def split_dataset(self):
-        pass
-
     def features_extracted(self):
         processed_path = path_names()["processed_data_path"]
         train_path = os.path.join(processed_path, "dataset", "train")
