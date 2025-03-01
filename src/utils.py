@@ -13,7 +13,7 @@ def config_files():
         return yaml.safe_load(config_file)
 
 
-def dump_file(value=None, filename=None):
+def dump_files(value=None, filename=None):
     if (value is not None) and (filename is not None):
         joblib.dump(value=value, filename=filename)
     else:
