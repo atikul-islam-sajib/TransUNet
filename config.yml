@@ -1,0 +1,16 @@
+artifacts:
+  raw_data_path: "./data/raw/"
+  processed_data_path: "./data/processed/"
+  files_path: "./artifacts/files/"
+  train_models: "./artifacts/checkpoints/train_models/"
+  best_model: "./artifacts/checkpoints/best_model/"
+  metrics_path: "./artifacts/metrics/"
+  train_images: "./artifacts/outputs/train_images/"
+  test_image: "./artifacts/outputs/test_image/"
+
+dataloader:
+  image_path: "./data/raw/dataset.zip"
+  image_channels: 3
+  image_size: 224
+  batch_size: 32
+  split_size: 64
