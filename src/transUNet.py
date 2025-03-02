@@ -1,7 +1,9 @@
 import os
 import sys
+import math
 import torch
 import argparse
+import warnings
 import torch.nn as nn
 
 sys.path.append("./src/")
@@ -15,7 +17,6 @@ class TransUNet(nn.Module):
         self,
         image_channels: int = 3,
         image_size: int = 128,
-        patch_size: int = 16,
         nheads: int = 8,
         num_layers: int = 4,
         dim_feedforward: int = 2048,
@@ -28,7 +29,6 @@ class TransUNet(nn.Module):
 
         self.image_channels = image_channels
         self.image_size = image_size
-        self.patch_size = patch_size
         self.nheads = nheads
         self.num_layers = num_layers
         self.dim_feedforward = dim_feedforward
@@ -37,8 +37,21 @@ class TransUNet(nn.Module):
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
 
-        self.out_channels = self.image_size
-        self.kernel_size = 7
+        warnings.warn(
+            "Output channel configuration is determined based on image size:\n"
+            "  - If image_size > 256, out_channels = (image_channels - 1) ** 8\n"
+            "  - If image_size > 128, out_channels = (image_channels - 1) ** 6\n"
+            "  - Otherwise, out_channels = (image_channels - 1) ** 5"
+        )
+
+        if self.image_size > math.pow(2, 8):
+            self.out_channels = (self.image_channels - 1) ** 8
+        elif self.image_size > math.pow(2, 7):
+            self.out_channels = (self.image_channels - 1) ** 6
+        else:
+            self.out_channels = (self.image_channels - 1) ** 5
+
+        self.kernel_size = (self.image_channels * 2) + 1
         self.stride_size = (self.kernel_size // self.kernel_size) + 1
         self.padding_size = self.kernel_size // 2
 
@@ -81,7 +94,6 @@ class TransUNet(nn.Module):
 
 
 if __name__ == "__main__":
-    model = TransUNet(image_size=512)
-    print(model)
-    images = torch.randn((1, 3, 512, 512))
+    model = TransUNet(image_size=224)
+    images = torch.randn((1, 3, 224, 224))
     print(model(x=images).size())
