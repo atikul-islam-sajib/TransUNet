@@ -40,8 +40,20 @@ class DiceLoss(nn.Module):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Dice Loss".title())
+    parser.add_argument(
+        "--reduction", type=str, help="Reduction method", default="mean"
+    )
+    parser.add_argument(
+        "--smooth",
+        type=float,
+        default=1e-5,
+        help="Smooth valud of the Dice Loss".capitalize(),
+    )
+    args = parser.parse_args()
+
     predicted = torch.randn((64, 1, 128, 128))
     actual = torch.randint(0, 2, (64, 1, 128, 128)).float()
 
-    loss_func = DiceLoss(reduction="mean", smooth=1e-5)
-    print(loss_func(predicted, actual))
+    loss_func = DiceLoss(reduction=args.reduction, smooth=args.smooth)
+    assert type(loss_func(predicted, actual)) == torch.Tensor
