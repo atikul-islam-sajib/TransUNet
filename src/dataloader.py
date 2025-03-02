@@ -2,17 +2,23 @@ import os
 import sys
 import cv2
 import zipfile
-import torch
 import warnings
 import argparse
+import pandas as pd
 from tqdm import tqdm
 from PIL import Image
 from torchvision import transforms
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 
 sys.path.append("./src/")
 
-from utils import config_files, path_names, dump_files, plot_images
+from utils import (
+    config_files,
+    path_names,
+    dump_files,
+    load_file,
+    plot_images,
+)
 
 
 class Loader:
@@ -193,18 +199,85 @@ class Loader:
 
     @staticmethod
     def dataset_details():
-        pass
+        processed_data_path = path_names()["processed_data_path"]
+
+        train_dataloader = os.path.join(processed_data_path, "train_dataloader.pkl")
+        valid_dataloader = os.path.join(processed_data_path, "test_dataloader.pkl")
+
+        train_dataloader = load_file(filename=train_dataloader)
+        valid_dataloader = load_file(filename=valid_dataloader)
+
+        train_images, _ = next(iter(train_dataloader))
+        _, valid_masks = next(iter(valid_dataloader))
+
+        pd.DataFrame(
+            {
+                "Train Images": sum(images.size(0) for images, _ in train_dataloader),
+                "Valid Images": sum(images.size(0) for images, _ in valid_dataloader),
+                "Train Masks": sum(masks.size(0) for _, masks in train_dataloader),
+                "Valid Masks": sum(masks.size(0) for _, masks in valid_dataloader),
+                "Image Size": str(train_images.size()),
+                "Mask Size": str(valid_masks.size()),
+            },
+            index=["Dataset Details"],
+        ).to_csv(os.path.join(path_names()["files_path"], "dataset_details.csv"))
+        print(f"Dataset details saved to {path_names()['files_path']}".capitalize())
 
 
 if __name__ == "__main__":
-    loader = Loader(
-        image_path="./data/raw/dataset.zip",
-        image_channels=3,
-        image_size=224,
-        batch_size=4,
-        split_size=0.25,
-        shuffle=False,
+    image_path = path_names()["image_path"]
+    image_channels = config_files()["dataloader"]["image_channels"]
+    image_size = config_files()["dataloader"]["image_size"]
+    batch_size = config_files()["dataloader"]["batch_size"]
+    split_size = config_files()["dataloader"]["split_size"]
+
+    parser = argparse.ArgumentParser(
+        description="Dataloader configuration for the TransUNet".title()
     )
-    loader.unzip_folder()
-    loader.create_dataloader()
+    parser.add_argument(
+        "--image_path",
+        type=str,
+        default=image_path,
+        help="Path to the dataset image file (zip format).".capitalize(),
+    )
+    parser.add_argument(
+        "--image_channels",
+        type=int,
+        default=image_channels,
+        help="Number of channels in the dataset image.".capitalize(),
+    )
+    parser.add_argument(
+        "--image_size",
+        type=int,
+        default=image_size,
+        help="Size of the dataset image.".capitalize(),
+    )
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=batch_size,
+        help="Batch size for training and validation.".capitalize(),
+    )
+    parser.add_argument(
+        "--split_size",
+        type=float,
+        default=split_size,
+        help="Percentage of data to be used for validation.".capitalize(),
+    )
+
+    args = parser.parse_args()
+
+    loader = Loader(
+        image_path=args.image_path,
+        image_channels=args.image_channels,
+        image_size=args.image_size,
+        batch_size=args.batch_size,
+        split_size=args.split_size,
+        shuffle=True,
+    )
+
+    # loader.unzip_folder()
+    # loader.create_dataloader()
+
     Loader.display_images()
+    Loader.dataset_details()

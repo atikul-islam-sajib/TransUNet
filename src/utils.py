@@ -87,53 +87,57 @@ def plot_images(
     )
     images, masks = next(iter(processed_data_path))
 
-    num_of_rows = int(math.sqrt(images.size(0)))
-    num_of_columns = int(images.size(0) // num_of_rows)
+    max_number = min(16, images.size(0))
+    num_of_rows = math.ceil(math.sqrt(max_number))
+    num_of_columns = math.ceil(max_number / num_of_rows)
 
-    plt.figure(figsize=(12, 10))
+    plt.figure(figsize=(10, 20))
 
-    for index, image in enumerate(images):
+    for index, (image, mask) in enumerate(zip(images[:max_number], masks[:max_number])):
         image = image.squeeze().permute(1, 2, 0).detach().cpu().numpy()
-        mask = masks[index].squeeze().detach().cpu().numpy()
-
-        if predicted:
-            pred_mask = predicted_images[index].squeeze().detach().cpu().numpy()
-            pred_mask = (pred_mask - pred_mask.min()) / (
-                pred_mask.max() - pred_mask.min
-            )
+        mask = mask.squeeze().detach().cpu().numpy()
 
         image = (image - image.min()) / (image.max() - image.min())
         mask = (mask - mask.min()) / (mask.max() - mask.min())
 
         if predicted:
-            plt.subplot(3 * num_of_rows, 3 * num_of_columns, 3 * index + 1)
+            pred_mask = predicted_images[index].squeeze().permute(1, 2, 0)
+            pred_mask = pred_mask.detach().cpu().numpy()
+            pred_mask = (pred_mask - pred_mask.min()) / (
+                pred_mask.max() - pred_mask.min()
+            )
+
+            plt.subplot(3 * num_of_rows, num_of_columns, 3 * index + 1)
             plt.imshow(image)
             plt.axis("off")
             plt.title("Image")
 
-            plt.subplot(3 * num_of_columns, 3 * num_of_columns, 3 * index + 2)
+            plt.subplot(3 * num_of_rows, num_of_columns, 3 * index + 2)
             plt.imshow(mask, cmap="gray")
             plt.axis("off")
             plt.title("Mask")
 
-            plt.subplot(3 * num_of_columns, 3 * num_of_columns, 3 * index + 3)
+            plt.subplot(3 * num_of_rows, num_of_columns, 3 * index + 3)
             plt.imshow(pred_mask, cmap="gray")
             plt.axis("off")
-            plt.title("Pred_Mask")
+            plt.title("Pred Mask")
 
         else:
-            plt.subplot(2 * num_of_rows, 2 * num_of_columns, 2 * index + 1)
+            plt.subplot(2 * num_of_rows, num_of_columns, 2 * index + 1)
             plt.imshow(image)
             plt.axis("off")
             plt.title("Image")
 
-            plt.subplot(2 * num_of_columns, 2 * num_of_columns, 2 * index + 2)
+            plt.subplot(2 * num_of_rows, num_of_columns, 2 * index + 2)
             plt.imshow(mask, cmap="gray")
             plt.axis("off")
             plt.title("Mask")
 
+    plt.subplots_adjust(wspace=0.3, hspace=0.3)
     plt.tight_layout()
-    plt.savefig(os.path.join(path_names()["files_path"], "images.png"))
+
+    save_path = os.path.join(path_names()["files_path"], "images.png")
+    plt.savefig(save_path)
     plt.show()
     plt.close()
-    print("Image files saved in " + path_names()["files_path"].capitalize())
+    print("Image files saved in", save_path)
