@@ -6,6 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from encoder_block import EncoderBlock
+
 
 class TransUNet(nn.Module):
     def __init__(
@@ -41,19 +43,40 @@ class TransUNet(nn.Module):
         self.stride_size = (self.kernel_size // self.kernel_size) + 1
         self.padding_size = self.kernel_size // 2
 
-        self.conv1 = nn.Conv2d(
-            in_channels=self.image_channels,
-            out_channels=self.out_channels,
-            kernel_size=self.kernel_size,
-            stride=self.stride_size,
-            padding=self.padding_size,
-            bias=self.bias,
+        self.conv1 = nn.Sequential(
+            nn.Conv2d(
+                in_channels=self.image_channels,
+                out_channels=self.out_channels,
+                kernel_size=self.kernel_size,
+                stride=self.stride_size,
+                padding=self.padding_size,
+                bias=self.bias,
+            ),
+            nn.BatchNorm2d(num_features=self.out_channels),
+            nn.ReLU(inplace=True),
+        )
+
+        self.in_channels = self.out_channels
+
+        self.encoder1 = EncoderBlock(
+            in_channels=self.in_channels, out_channels=self.in_channels * 2
+        )
+        self.encoder2 = EncoderBlock(
+            in_channels=self.in_channels * 2, out_channels=self.in_channels * 4
+        )
+        self.encoder3 = EncoderBlock(
+            in_channels=self.in_channels * 4, out_channels=self.in_channels * 8
         )
 
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
             x = self.conv1(x)
-            return x
+
+            encoder1 = self.encoder1(x)
+            encoder2 = self.encoder2(encoder1)
+            encoder3 = self.encoder3(encoder2)
+
+            return encoder3
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
