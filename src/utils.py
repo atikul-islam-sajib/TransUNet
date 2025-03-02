@@ -1,9 +1,11 @@
 import os
 import sys
+import math
 import yaml
 import torch
 import joblib
 import torch.nn as nn
+import matplotlib.pyplot as plt
 
 sys.path.append("./src/")
 
@@ -75,4 +77,63 @@ def path_names():
     }
 
 
-print(path_names()["image_path"])
+def plot_images(
+    predicted_images: torch.Tensor = None,
+    predicted: bool = False,
+):
+    processed_data_path = path_names()["processed_data_path"]
+    processed_data_path = load_file(
+        filename=os.path.join(processed_data_path, "test_dataloader.pkl")
+    )
+    images, masks = next(iter(processed_data_path))
+
+    num_of_rows = int(math.sqrt(images.size(0)))
+    num_of_columns = int(images.size(0) // num_of_rows)
+
+    plt.figure(figsize=(12, 10))
+
+    for index, image in enumerate(images):
+        image = image.squeeze().permute(1, 2, 0).detach().cpu().numpy()
+        mask = masks[index].squeeze().detach().cpu().numpy()
+
+        if predicted:
+            pred_mask = predicted_images[index].squeeze().detach().cpu().numpy()
+            pred_mask = (pred_mask - pred_mask.min()) / (
+                pred_mask.max() - pred_mask.min
+            )
+
+        image = (image - image.min()) / (image.max() - image.min())
+        mask = (mask - mask.min()) / (mask.max() - mask.min())
+
+        if predicted:
+            plt.subplot(3 * num_of_rows, 3 * num_of_columns, 3 * index + 1)
+            plt.imshow(image)
+            plt.axis("off")
+            plt.title("Image")
+
+            plt.subplot(3 * num_of_columns, 3 * num_of_columns, 3 * index + 2)
+            plt.imshow(mask, cmap="gray")
+            plt.axis("off")
+            plt.title("Mask")
+
+            plt.subplot(3 * num_of_columns, 3 * num_of_columns, 3 * index + 3)
+            plt.imshow(pred_mask, cmap="gray")
+            plt.axis("off")
+            plt.title("Pred_Mask")
+
+        else:
+            plt.subplot(2 * num_of_rows, 2 * num_of_columns, 2 * index + 1)
+            plt.imshow(image)
+            plt.axis("off")
+            plt.title("Image")
+
+            plt.subplot(2 * num_of_columns, 2 * num_of_columns, 2 * index + 2)
+            plt.imshow(mask, cmap="gray")
+            plt.axis("off")
+            plt.title("Mask")
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(path_names()["files_path"], "images.png"))
+    plt.show()
+    plt.close()
+    print("Image files saved in " + path_names()["files_path"].capitalize())

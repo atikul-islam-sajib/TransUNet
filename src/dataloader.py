@@ -12,7 +12,7 @@ from torch.utils.data import Dataset, DataLoader
 
 sys.path.append("./src/")
 
-from utils import config_files, path_names, dump_files
+from utils import config_files, path_names, dump_files, plot_images
 
 
 class Loader:
@@ -186,7 +186,10 @@ class Loader:
 
     @staticmethod
     def display_images():
-        pass
+        try:
+            plot_images(predicted=False)
+        except Exception as e:
+            print(f"[ERROR] Unexpected error while displaying images: {e}")
 
     @staticmethod
     def dataset_details():
@@ -204,3 +207,4 @@ if __name__ == "__main__":
     )
     loader.unzip_folder()
     loader.create_dataloader()
+    Loader.display_images()
