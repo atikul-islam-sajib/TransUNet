@@ -22,7 +22,7 @@ class PatchEmbedding(nn.Module):
         self.dimension = dimension
         self.bias = bias
 
-        self.num_of_patches = (self.image_size // self.patch_size) ** 2
+        self.num_of_patches = ((self.image_size // 16) // self.patch_size) ** 2
         self.in_channels = (self.dimension // self.image_size) * 2 * self.image_size
 
         self.projection = nn.Conv2d(
@@ -34,9 +34,16 @@ class PatchEmbedding(nn.Module):
             bias=self.bias,
         )
 
+        self.postitonal_embedding = nn.Parameter(
+            data=torch.randn((1, self.num_of_patches, self.dimension)),
+            requires_grad=True,
+        )
+
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
             x = self.projection(x)
+            x = x.view(x.size(0), x.size(-1) * x.size(-2), x.size(1))
+            x = self.postitonal_embedding + x
             return x
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
