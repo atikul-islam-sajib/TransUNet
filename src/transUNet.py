@@ -82,6 +82,6 @@ class TransUNet(nn.Module):
 
 
 if __name__ == "__main__":
-    model = TransUNet()
+    model = TransUNet(dimension=512)
     images = torch.randn((16, 3, 128, 128))
     print(model(x=images).size())
