@@ -1,6 +1,7 @@
 import os
 import sys
 import torch
+import argparse
 import torch.nn as nn
 
 sys.path.append("./src/")
@@ -42,8 +43,25 @@ class TverskyLoss(nn.Module):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Tversky Loss".title())
+    parser.add_argument(
+        "--reduction", type=str, help="Reduction method", default="mean"
+    )
+    parser.add_argument(
+        "--alpha",
+        type=float,
+        default=0.75,
+        help="alpha value of the Dice Loss".capitalize(),
+    )
+    parser.add_argument(
+        "--beta",
+        type=float,
+        default=2.0,
+        help="beta value of the Dice Loss".capitalize(),
+    )
+    args = parser.parse_args()
     predicted = torch.randn((64, 1, 128, 128))
     actual = torch.randint(0, 2, (64, 1, 128, 128)).float()
 
-    loss_func = TverskyLoss(alpha=0.7, beta=0.3, reduction="mean")
-    print(loss_func(actual, predicted))
+    loss_func = TverskyLoss(alpha=args.alpha, beta=args.beta, reduction="mean")
+    assert type(loss_func(actual, predicted)) == torch.Tensor
