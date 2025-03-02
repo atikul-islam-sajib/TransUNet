@@ -27,8 +27,19 @@ class BCE(nn.Module):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Binary Cross-Entropy Loss".title())
+    parser.add_argument(
+        "--name",
+        type=str,
+        help="Name of the loss function",
+        default="BCEWithLogitsLoss",
+    )
+    parser.add_argument(
+        "--reduction", type=str, help="Reduction method", default="mean"
+    )
+    args = parser.parse_args()
     predicted = torch.Tensor([3.0, 2.0, -1.0, -3.0, 5.0])
     actual = torch.Tensor([1.0, 1.0, 0.0, 0.0, 1.0])
 
-    loss = BCE(name="BCEWithLogitsLoss", reduction="mean")
+    loss = BCE(name=args.name, reduction=args.reduction)
     assert type(loss(predicted, actual)) == torch.Tensor
