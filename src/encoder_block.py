@@ -68,10 +68,38 @@ class EncoderBlock(nn.Module):
             x2 = self.encoder_block(x)
             x = x1 + x2
             return x
+        else:
+            raise ValueError("Input must be a torch.Tensor".capitalize())
+
+    @staticmethod
+    def total_params(model):
+        if isinstance(model, EncoderBlock):
+            return sum(p.numel() for p in model.parameters())
+        else:
+            raise ValueError("Input must be an EncoderBlock".capitalize())
 
 
 if __name__ == "__main__":
-    encoder_block = EncoderBlock()
-    print(encoder_block)
+    parser = argparse.ArgumentParser(
+        description="Encoder Block for the TransUNet".title()
+    )
+    parser.add_argument(
+        "--in_channels",
+        type=int,
+        default=128,
+        help="Input channels to encode".capitalize(),
+    )
+    parser.add_argument(
+        "--out_channels",
+        type=int,
+        default=256,
+        help="Output channels to decode".capitalize(),
+    )
+    args = parser.parse_args()
+
+    encoder_block = EncoderBlock(
+        in_channels=args.in_channels,
+        out_channels=args.out_channels,
+    )
     images = torch.randn((16, 128, 64, 64))
-    print(encoder_block(x=images).size())
+    assert (encoder_block(x=images).size()) == (16, 128 * 2, 64 // 2, 64 // 2)
