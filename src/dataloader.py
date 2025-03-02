@@ -276,8 +276,8 @@ if __name__ == "__main__":
         shuffle=True,
     )
 
-    # loader.unzip_folder()
-    # loader.create_dataloader()
+    loader.unzip_folder()
+    loader.create_dataloader()
 
     Loader.display_images()
     Loader.dataset_details()
