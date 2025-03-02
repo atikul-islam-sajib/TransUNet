@@ -35,3 +35,30 @@ class TransUNet(nn.Module):
         self.activation = activation
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
+
+        self.out_channels = self.dimension // 4
+        self.kernel_size = 7
+        self.stride_size = (self.kernel_size // self.kernel_size) + 1
+        self.padding_size = self.kernel_size // 2
+
+        self.conv1 = nn.Conv2d(
+            in_channels=self.image_channels,
+            out_channels=self.out_channels,
+            kernel_size=self.kernel_size,
+            stride=self.stride_size,
+            padding=self.padding_size,
+            bias=self.bias,
+        )
+
+    def forward(self, x: torch.Tensor):
+        if isinstance(x, torch.Tensor):
+            x = self.conv1(x)
+            return x
+        else:
+            raise ValueError("Input must be a torch.Tensor".capitalize())
+
+
+if __name__ == "__main__":
+    model = TransUNet()
+    images = torch.randn((16, 3, 128, 128))
+    print(model(x=images).size())
