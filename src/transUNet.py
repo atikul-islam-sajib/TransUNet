@@ -7,6 +7,7 @@ import torch.nn as nn
 sys.path.append("./src/")
 
 from encoder_block import EncoderBlock
+from patch_embedding import PatchEmbedding
 
 
 class TransUNet(nn.Module):
@@ -15,7 +16,6 @@ class TransUNet(nn.Module):
         image_channels: int = 3,
         image_size: int = 128,
         patch_size: int = 16,
-        dimension: int = 512,
         nheads: int = 8,
         num_layers: int = 4,
         dim_feedforward: int = 2048,
@@ -29,7 +29,6 @@ class TransUNet(nn.Module):
         self.image_channels = image_channels
         self.image_size = image_size
         self.patch_size = patch_size
-        self.dimension = dimension
         self.nheads = nheads
         self.num_layers = num_layers
         self.dim_feedforward = dim_feedforward
@@ -38,7 +37,7 @@ class TransUNet(nn.Module):
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
 
-        self.out_channels = self.dimension // 4
+        self.out_channels = self.image_size
         self.kernel_size = 7
         self.stride_size = (self.kernel_size // self.kernel_size) + 1
         self.padding_size = self.kernel_size // 2
@@ -82,6 +81,7 @@ class TransUNet(nn.Module):
 
 
 if __name__ == "__main__":
-    model = TransUNet(dimension=512)
-    images = torch.randn((16, 3, 512, 512))
+    model = TransUNet(image_size=512)
+    print(model)
+    images = torch.randn((1, 3, 512, 512))
     print(model(x=images).size())
