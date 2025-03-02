@@ -1,5 +1,10 @@
+import os
+import sys
 import torch
+import argparse
 import torch.nn as nn
+
+sys.path.append("./src/")
 
 
 class FocalLoss(nn.Module):
@@ -34,10 +39,27 @@ class FocalLoss(nn.Module):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Dice Loss".title())
+    parser.add_argument(
+        "--reduction", type=str, help="Reduction method", default="mean"
+    )
+    parser.add_argument(
+        "--alpha",
+        type=float,
+        default=0.75,
+        help="alpha value of the Dice Loss".capitalize(),
+    )
+    parser.add_argument(
+        "--gamma",
+        type=float,
+        default=2.0,
+        help="gamma value of the Dice Loss".capitalize(),
+    )
+    args = parser.parse_args()
 
     predicted = torch.randn((64, 1, 128, 128))
     actual = torch.randint(0, 2, (64, 1, 128, 128)).float()
 
-    loss_func = FocalLoss(alpha=0.75, gamma=2.0, reduction="mean")
+    loss_func = FocalLoss(alpha=args.alpha, gamma=args.gamma, reduction="mean")
 
-    print(loss_func(predicted, actual))
+    assert type(loss_func(predicted, actual)) == torch.Tensor
