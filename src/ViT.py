@@ -3,6 +3,7 @@ import sys
 import torch
 import argparse
 import torch.nn as nn
+from tqdm import tqdm
 
 sys.path.append("./src/")
 
@@ -34,8 +35,6 @@ class ViT(nn.Module):
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
 
-        self.layers = list()
-
         self.patch_embedding = PatchEmbedding(
             image_size=self.image_size,
             patch_size=self.image_size // self.image_size,
@@ -43,11 +42,30 @@ class ViT(nn.Module):
             bias=self.bias,
         )
 
+        self.transformer = nn.Sequential(
+            *[
+                TransformerEncoderBlock(
+                    dimension=self.dimension,
+                    nheads=self.nheads,
+                    dim_feedforward=self.dim_feedforward,
+                    dropout=self.dropout,
+                    activation=self.activation,
+                    layer_norm_eps=self.layer_norm_eps,
+                    bias=self.bias,
+                )
+                for _ in tqdm(range(self.num_layers))
+            ]
+        )
+
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
         x = self.patch_embedding(x)
+
+        for transformer in self.transformer:
+            x = transformer(x)
+
         return x
 
 
@@ -63,5 +81,5 @@ if __name__ == "__main__":
         bias=False,
     )
 
-    images = torch.randn((1, 512, 16, 16))
+    images = torch.randn((16, 512, 16, 16))
     print(vit(x=images).size())
