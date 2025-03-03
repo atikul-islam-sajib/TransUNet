@@ -24,6 +24,7 @@ class MultiHeadAttention(nn.Module):
             QKV = self.QKV(x)
 
             query, key, value = torch.chunk(input=QKV, chunks=3, dim=-1)
+
             query = query.view(
                 query.size(0), query.size(1), self.nheads, self.dimension // self.nheads
             )
@@ -33,6 +34,7 @@ class MultiHeadAttention(nn.Module):
             value = value.view(
                 value.size(0), value.size(1), self.nheads, self.dimension // self.nheads
             )
+
             query = query.permute(0, 2, 1, 3)
             key = key.permute(0, 2, 3, 1)
             value = value.permute(0, 2, 1, 3)
