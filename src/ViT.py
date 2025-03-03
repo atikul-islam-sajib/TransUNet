@@ -1,5 +1,6 @@
 import os
 import sys
+import math
 import torch
 import argparse
 import torch.nn as nn
@@ -65,6 +66,10 @@ class ViT(nn.Module):
 
         for transformer in self.transformer:
             x = transformer(x)
+
+        x = x.view(
+            x.size(0), x.size(-1), int(math.sqrt(x.size(1))), int(math.sqrt(x.size(1)))
+        )
 
         return x
 
