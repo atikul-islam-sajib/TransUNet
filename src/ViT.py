@@ -13,6 +13,7 @@ from transformer_encoder_block import TransformerEncoderBlock
 class ViT(nn.Module):
     def __init__(
         self,
+        image_size: int = 256,
         dimension: int = 512,
         nheads: int = 8,
         num_layers: int = 4,
@@ -23,6 +24,7 @@ class ViT(nn.Module):
         bias: bool = False,
     ):
         super(ViT, self).__init__()
+        self.image_size = image_size
         self.dimension = dimension
         self.nheads = nheads
         self.num_layers = num_layers
@@ -32,10 +34,21 @@ class ViT(nn.Module):
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
 
+        self.layers = list()
+
+        self.patch_embedding = PatchEmbedding(
+            image_size=self.image_size,
+            patch_size=self.image_size // self.image_size,
+            dimension=self.dimension,
+            bias=self.bias,
+        )
+
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise ValueError("Input must be a torch.Tensor".capitalize())
-        pass
+
+        x = self.patch_embedding(x)
+        return x
 
 
 if __name__ == "__main__":
@@ -49,3 +62,6 @@ if __name__ == "__main__":
         layer_norm_eps=1e-05,
         bias=False,
     )
+
+    images = torch.randn((1, 512, 16, 16))
+    print(vit(x=images).size())
