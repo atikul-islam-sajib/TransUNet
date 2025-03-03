@@ -54,17 +54,18 @@ class TransformerEncoderBlock(nn.Module):
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise ValueError("Input must be a torch instance".capitalize())
+
         residual = x
 
         x = self.multi_head_attention(x=x)
-        x = self.dropout(x)
+        x = self.dropout1(x)
         x = torch.add(x, residual)
         x = self.layer_norm1(x)
 
         residual = x
 
         x = self.feed_forward_network(x=x)
-        x = self.dropout(x)
+        x = self.dropout2(x)
         x = torch.add(x, residual)
         x = self.layer_norm2(x)
 
@@ -72,4 +73,15 @@ class TransformerEncoderBlock(nn.Module):
 
 
 if __name__ == "__main__":
-    pass
+    transfomer = TransformerEncoderBlock(
+        dimension=512,
+        nheads=4,
+        dim_feedforward=1024,
+        dropout=0.1,
+        activation="relu",
+        layer_norm_eps=1e-05,
+        bias=False,
+    )
+
+    images = torch.randn((1, 256, 512))
+    print(transfomer(x=images).size())
