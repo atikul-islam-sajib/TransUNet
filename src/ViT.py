@@ -76,6 +76,7 @@ class ViT(nn.Module):
 
 if __name__ == "__main__":
     vit = ViT(
+        image_size=256,
         dimension=512,
         nheads=4,
         num_layers=4,
