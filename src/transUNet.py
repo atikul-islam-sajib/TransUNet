@@ -8,8 +8,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from ViT import ViT
 from encoder_block import EncoderBlock
-from patch_embedding import PatchEmbedding
 
 
 class TransUNet(nn.Module):
@@ -80,6 +80,18 @@ class TransUNet(nn.Module):
             in_channels=self.in_channels * 4, out_channels=self.in_channels * 8
         )
 
+        self.vit = ViT(
+            image_size=self.image_size,
+            dimension=self.in_channels * 8,
+            nheads=self.nheads,
+            num_layers=self.num_layers,
+            dim_feedforward=self.dim_feedforward,
+            dropout=self.dropout,
+            activation=self.activation,
+            layer_norm_eps=self.layer_norm_eps,
+            bias=self.bias,
+        )
+
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
             x = self.conv1(x)
@@ -88,12 +100,28 @@ class TransUNet(nn.Module):
             encoder2 = self.encoder2(encoder1)
             encoder3 = self.encoder3(encoder2)
 
-            return encoder3
+            bottleneck = self.vit(x=encoder3)
+
+            return (encoder3, bottleneck)
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
 
 if __name__ == "__main__":
-    model = TransUNet(image_size=256)
+    model = TransUNet(
+        image_channels=3,
+        image_size=256,
+        nheads=4,
+        num_layers=4,
+        dim_feedforward=1024,
+        dropout=0.1,
+        activation="relu",
+        layer_norm_eps=1e-05,
+        bias=False,
+    )
+
     images = torch.randn((1, 3, 256, 256))
-    print(model(x=images).size())
+    encoder, bottleneck = model(x=images)
+
+    print("Encoder output size:", encoder.size())
+    print("Bottleneck output size:", bottleneck.size())
