@@ -24,6 +24,7 @@ class LayerNormalization(nn.Module):
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise ValueError("Input must be a torch.Tensor".capitalize())
+
         mean = torch.mean(input=x, dim=-1)
         variance = torch.var(input=x, dim=-1)
 
