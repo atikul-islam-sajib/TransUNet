@@ -6,6 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from scaled_dot_product import scaled_dot_product
+
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, nheads: int = 4, dimension: int = 256):
@@ -36,15 +38,23 @@ class MultiHeadAttention(nn.Module):
             )
 
             query = query.permute(0, 2, 1, 3)
-            key = key.permute(0, 2, 3, 1)
+            key = key.permute(0, 2, 1, 3)
             value = value.permute(0, 2, 1, 3)
 
-            return query
+            attention = scaled_dot_product(query=query, key=key, value=value)
+
+            attention = attention.view(
+                attention.size(0),
+                attention.size(2),
+                attention.size(1) * attention.size(3),
+            )
+            return attention
+
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
 
 if __name__ == "__main__":
-    attention = MultiHeadAttention()
-    images = torch.randn(1, 64, 256)
+    attention = MultiHeadAttention(nheads=4, dimension=512)
+    images = torch.randn(1, 256, 512)
     print(attention(x=images).size())
