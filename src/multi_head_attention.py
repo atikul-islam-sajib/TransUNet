@@ -21,10 +21,28 @@ class MultiHeadAttention(nn.Module):
 
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
-            pass
+            QKV = self.QKV(x)
+
+            query, key, value = torch.chunk(input=QKV, chunks=3, dim=-1)
+            query = query.view(
+                query.size(0), query.size(1), self.nheads, self.dimension // self.nheads
+            )
+            key = key.view(
+                key.size(0), key.size(1), self.nheads, self.dimension // self.nheads
+            )
+            value = value.view(
+                value.size(0), value.size(1), self.nheads, self.dimension // self.nheads
+            )
+            query = query.permute(0, 2, 1, 3)
+            key = key.permute(0, 2, 3, 1)
+            value = value.permute(0, 2, 1, 3)
+
+            return query
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
 
 if __name__ == "__main__":
-    pass
+    attention = MultiHeadAttention()
+    images = torch.randn(1, 64, 256)
+    print(attention(x=images).size())
