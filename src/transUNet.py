@@ -80,6 +80,10 @@ class TransUNet(nn.Module):
             in_channels=self.in_channels * 4, out_channels=self.in_channels * 8
         )
 
+        print("*8", self.in_channels * 8)
+        print("*4", self.in_channels * 4)
+        print("*2", self.in_channels * 2)
+
         self.vit = ViT(
             image_size=self.image_size,
             dimension=self.in_channels * 8,
@@ -99,6 +103,8 @@ class TransUNet(nn.Module):
             encoder1 = self.encoder1(x)
             encoder2 = self.encoder2(encoder1)
             encoder3 = self.encoder3(encoder2)
+
+            print("encoder1: ", encoder1.size(), " encoder2: ", encoder2.size(), " encoder3: ", encoder3.size())
 
             bottleneck = self.vit(x=encoder3)
 
