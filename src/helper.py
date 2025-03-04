@@ -7,11 +7,95 @@ import torch.optim as optim
 
 sys.path.append("./src/")
 
+from utils import path_names, load_file, config_files
+from transUNet import TransUNet
+from loss.bce_loss import BCE
+from loss.dice_loss import DiceLoss
+from loss.focal_loss import FocalLoss
+from loss.jaccard_loss import JaccardLoss
+from loss.tversky_loss import TverskyLoss
+
 def load_dataloader():
-    pass
+    processed_path = path_names()["processed_data_path"]
+
+    train_dataloader = os.path.join(processed_path, "train_dataloader.pkl")
+    valid_dataloader = os.path.join(processed_path, "test_dataloader.pkl")
+
+    train_dataloader = load_file(filename=train_dataloader)
+    valid_dataloader = load_file(filename=valid_dataloader)
+
+    return {"train_dataloader": train_dataloader, "valid_dataloader": valid_dataloader}
+
 
 def helper(**kwargs):
-    pass
+    model: TransUNet = kwargs["model"]
+    epochs: int = kwargs["epochs"]
+    lr: float = kwargs["lr"]
+    beta1: float = kwargs["beta1"]
+    beta2: float = kwargs["beta2"]
+    weight_decay: float = kwargs["weight_decay"]
+    momentum: float = kwargs["momentum"]
+    adam: bool = kwargs["adam"]
+    SGD: bool = kwargs["SGD"]
+    loss: str = kwargs["loss"]
+    loss_smooth: float = kwargs["loss_smooth"]
+    alpha_focal: float = kwargs["alpha_focal"]
+    gamma_focal: float = kwargs["gamma_focal"]
+    alpha_tversky: float = kwargs["alpha_tversky"]
+    beta_tversky: float = kwargs["beta_tversky"]
 
-if __name__ == '__main__':
+    image_channels: int = config_files()["dataloader"]["image_channels"]
+    image_size: int = config_files()["dataloader"]["image_size"]
+    nheads: int = config_files()["TransUNet"]["nheads"]
+    num_layers: int = config_files()["TransUNet"]["num_layers"]
+    dim_feedforward: int = config_files()["TransUNet"]["dim_feedforward"]
+    dropout: float = float(config_files()["TransUNet"]["dropout"])
+    activation: str = config_files()["TransUNet"]["activation"]
+    layer_norm_eps: float = float(config_files()["TransUNet"]["layer_norm_eps"])
+    bias: bool = config_files()["TransUNet"]["bias"]
+    
+
+    if model is None:
+        trans_unet = TransUNet(
+            image_channels=image_channels,
+            image_size=image_size,
+            nheads=nheads,
+            num_layers=num_layers,
+            dim_feedforward=dim_feedforward,
+            dropout=dropout,
+            activation=activation,
+            layer_norm_eps=layer_norm_eps,
+            bias=bias
+        )
+    elif isinstance(model, TransUNet):
+        trans_unet = model
+    else:
+        raise ValueError("Invalid model type. Expected TransUNet.".capitalize())
+    
+    if adam:
+        optimizer = optim.Adam(params=trans_unet.parameters(), lr=lr, betas=(beta1, beta2), weight_decay=weight_decay)
+    elif SGD:
+        optimizer = optim.SGD(params=trans_unet.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)
+
+    if loss == "bce" or loss == "BCE":
+        criterion = BCE(name="BCEWithLogitsLoss")
+    elif loss == "dice":
+        criterion = DiceLoss(smooth=loss_smooth)
+    elif loss == "focal":
+        criterion = FocalLoss(alpha=alpha_focal, gamma=gamma_focal)
+    elif loss == "jaccard":
+        criterion = JaccardLoss(smooth=loss_smooth)
+    elif loss == "tversky":
+        criterion = TverskyLoss(alpha=alpha_tversky, beta=beta_tversky, smooth=loss_smooth)
+
+    return {
+        "train_dataloader": load_dataloader()["train_dataloader"],
+        "valid_dataloader": load_dataloader()["valid_dataloader"],
+        "model": trans_unet,
+        "optimizer": optimizer,
+        "criterion": criterion,
+    }
+
+
+if __name__ == "__main__":
     pass
