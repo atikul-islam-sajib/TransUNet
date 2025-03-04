@@ -141,3 +141,11 @@ def plot_images(
     plt.show()
     plt.close()
     print("Image files saved in", save_path)
+
+
+def total_params(model=None):
+    if model is None:
+        raise ValueError(
+            "Please provide a model to calculate the total parameters.".capitalize()
+        )
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
