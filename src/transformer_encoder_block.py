@@ -9,6 +9,7 @@ sys.path.append("./src/")
 from multi_head_attention import MultiHeadAttention
 from layer_normalization import LayerNormalization
 from feed_forward_network import FeedForwardNeuralNetwork
+from utils import total_params, plot_model_architecture
 
 
 class TransformerEncoderBlock(nn.Module):
@@ -71,17 +72,72 @@ class TransformerEncoderBlock(nn.Module):
 
         return x
 
+    @staticmethod
+    def total_parameters(model):
+        if isinstance(model, TransformerEncoderBlock):
+            return total_params(model=model)
+        else:
+            raise ValueError("Input must be a TransformerEncoderBlock".capitalize())
+
 
 if __name__ == "__main__":
-    transfomer = TransformerEncoderBlock(
-        dimension=512,
-        nheads=4,
-        dim_feedforward=1024,
-        dropout=0.1,
-        activation="relu",
-        layer_norm_eps=1e-05,
-        bias=False,
+    parser = argparse.ArgumentParser(description="Transformer Encoder Block".title())
+    parser.add_argument(
+        "--dimension", type=int, default=512, help="Embedding dimension".capitalize()
+    )
+    parser.add_argument(
+        "--nheads", type=int, default=4, help="Number of heads".capitalize()
+    )
+    parser.add_argument(
+        "--dim_feedforward",
+        type=int,
+        default=1024,
+        help="Feedforward dimension".capitalize(),
+    )
+    parser.add_argument(
+        "--dropout", type=float, default=0.1, help="Dropout rate".capitalize()
+    )
+    parser.add_argument(
+        "--activation",
+        type=str,
+        default="relu",
+        help="Activation function".capitalize(),
+        choices=["relu", "gelu", "selu", "leaky"],
+    )
+    parser.add_argument(
+        "--layer_norm_eps",
+        type=float,
+        default=1e-05,
+        help="Layer normalization epsilon".capitalize(),
+    )
+    parser.add_argument("--bias", type=bool, default=False, help="Bias".capitalize())
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        default=False,
+        help="Display the model architecture".capitalize(),
     )
 
-    images = torch.randn((1, 256, 512))
-    print(transfomer(x=images).size())
+    args = parser.parse_args()
+
+    transfomer = TransformerEncoderBlock(
+        dimension=args.dimension,
+        nheads=args.nheads,
+        dim_feedforward=args.dim_feedforward,
+        dropout=args.dropout,
+        activation=args.activation,
+        layer_norm_eps=args.layer_norm_eps,
+        bias=args.bias,
+    )
+
+    images = torch.randn((1, 256, args.dimension))
+
+    assert (transfomer(x=images).size()) == (1, 256, args.dimension)
+
+    if args.display:
+        plot_model_architecture(
+            model=transfomer,
+            input_data=images,
+            model_name="TransformerEncoderBlock",
+            format="pdf",
+        )
