@@ -10,6 +10,7 @@ sys.path.append("./src/")
 
 from patch_embedding import PatchEmbedding
 from transformer_encoder_block import TransformerEncoderBlock
+from utils import total_params, plot_model_architecture
 
 
 class ViT(nn.Module):
@@ -73,19 +74,86 @@ class ViT(nn.Module):
 
         return x
 
+    @staticmethod
+    def total_parameters(model):
+        if isinstance(model, ViT):
+            print("Total Parameters: ", total_params(model))
+        else:
+            raise ValueError("Input must be a ViT".capitalize())
+
 
 if __name__ == "__main__":
-    vit = ViT(
-        image_size=256,
-        dimension=512,
-        nheads=4,
-        num_layers=4,
-        dim_feedforward=1024,
-        dropout=0.1,
-        activation="relu",
-        layer_norm_eps=1e-05,
-        bias=False,
+    parser = argparse.ArgumentParser(
+        description="Vision Transformer, aka as ViT".title()
+    )
+    parser.add_argument(
+        "--image_size", type=int, default=256, help="Image size".capitalize()
+    )
+    parser.add_argument(
+        "--dimension", type=int, default=512, help="Dimension".capitalize()
+    )
+    parser.add_argument(
+        "--nheads", type=int, default=4, help="Number of heads".capitalize()
+    )
+    parser.add_argument(
+        "--num_layers", type=int, default=4, help="Number of layers".capitalize()
+    )
+    parser.add_argument(
+        "--dim_feedforward",
+        type=int,
+        default=1024,
+        help="Feedforward dimension".capitalize(),
+    )
+    parser.add_argument(
+        "--dropout", type=float, default=0.1, help="Dropout probability".capitalize()
+    )
+    parser.add_argument(
+        "--activation",
+        choices=["relu", "gelu", "silu"],
+        default="relu",
+        help="Activation function".capitalize(),
+    )
+    parser.add_argument(
+        "--layer_norm_eps",
+        type=float,
+        default=1e-05,
+        help="Layer normalization epsilon".capitalize(),
+    )
+    parser.add_argument(
+        "--bias",
+        action="store_true",
+        default=False,
+        help="Add bias to the layers".capitalize(),
+    )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        default=False,
+        help="Display the model architecture".capitalize(),
     )
 
-    images = torch.randn((16, 512, 16, 16))
-    print(vit(x=images).size())
+    args = parser.parse_args()
+
+    vit = ViT(
+        image_size=args.image_size,
+        dimension=args.dimension,
+        nheads=args.nheads,
+        num_layers=args.num_layers,
+        dim_feedforward=args.dim_feedforward,
+        dropout=args.dropout,
+        activation=args.activation,
+        layer_norm_eps=args.layer_norm_eps,
+        bias=args.bias,
+    )
+
+    images = torch.randn((16, args.dimension, 16, 16))
+
+    assert (vit(x=images).size()) == (16, args.dimension, 16, 16)
+
+    if args.display:
+        plot_model_architecture(
+            model=vit,
+            input_data=images,
+            model_name="Vision Transformer (ViT)",
+            format="pdf",
+        )
