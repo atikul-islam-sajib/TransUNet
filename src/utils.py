@@ -99,7 +99,6 @@ def plot_images(
     num_of_rows = math.ceil(math.sqrt(max_number))
     num_of_columns = math.ceil(max_number / num_of_rows)
 
-    print(predicted_images.size())
     plt.figure(figsize=(10, 20))
 
     for index, (image, mask) in enumerate(zip(images[:max_number], masks[:max_number])):

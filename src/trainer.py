@@ -140,8 +140,9 @@ class Trainer:
         valid_loss = kwargs["valid_loss"]
         train_loss = kwargs["train_loss"]
         train_epoch = kwargs["epoch"]
-        best_model_path = path_names()["best_model"]
-        train_model_path = path_names()["train_models"]
+
+        best_model_path = path_names()["best_model_path"]
+        train_model_path = path_names()["train_models_path"]
 
         if self.loss > valid_loss:
             self.loss = valid_loss
@@ -189,7 +190,7 @@ class Trainer:
         original_images = images.to(self.device)
         original_masks = masks.to(self.device)
 
-        predicted = self.model(images)
+        predicted = self.model(original_images)
 
         plot_images(
             original_images=original_images,
@@ -212,10 +213,14 @@ class Trainer:
 
                         predicted = self.model(images)
 
-                        loss = self.update_train(segmented=segmented, predicted=predicted)
+                        loss = self.update_train(
+                            segmented=segmented, predicted=predicted
+                        )
                         train_loss.append(loss["train_loss"])
                     except Exception as e:
-                        print(f"Error in training loop (batch {index}, epoch {epoch+1}): {e}")
+                        print(
+                            f"Error in training loop (batch {index}, epoch {epoch+1}): {e}"
+                        )
                         traceback.print_exc()
 
                 for index, (images, segmented) in enumerate(self.valid_dataloader):
@@ -227,7 +232,9 @@ class Trainer:
                         loss = self.criterion(segmented, predicted)
                         valid_loss.append(loss.item())
                     except Exception as e:
-                        print(f"Error in validation loop (batch {index}, epoch {epoch+1}): {e}")
+                        print(
+                            f"Error in validation loop (batch {index}, epoch {epoch+1}): {e}"
+                        )
                         traceback.print_exc()
 
                 try:
@@ -242,6 +249,11 @@ class Trainer:
 
                 try:
                     self.plot_train_images(epoch=epoch + 1)
+                    self.saved_checkpoints(
+                        train_loss=np.mean(train_loss),
+                        valid_loss=np.mean(valid_loss),
+                        epoch=epoch + 1,
+                    )
                 except Exception as e:
                     print(f"Error plotting images in epoch {epoch+1}: {e}")
                     traceback.print_exc()
@@ -252,7 +264,7 @@ class Trainer:
 
             except KeyboardInterrupt:
                 print("\nTraining interrupted manually. Saving progress...")
-                break 
+                break
             except Exception as e:
                 print(f"Unexpected error in epoch {epoch+1}: {e}")
                 traceback.print_exc()
@@ -261,7 +273,7 @@ class Trainer:
 if __name__ == "__main__":
     trainer = Trainer(
         model=None,
-        epochs=20,
+        epochs=50,
         lr=0.0002,
         beta1=0.9,
         beta2=0.999,

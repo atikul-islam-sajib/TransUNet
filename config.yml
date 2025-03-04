@@ -12,15 +12,15 @@ dataloader:
   image_path: "./data/raw/dataset.zip"
   image_channels: 3
   image_size: 224
-  batch_size: 8
+  batch_size: 16
   split_size: 0.30
 
 TransUNet:
   nheads: 4
   num_layers: 4
-  dim_feedforward: 512
+  dim_feedforward: 1024
   dropout: 0.1
-  activation: "relu"
+  activation: "leaky"
   layer_norm_eps: 1e-05
   bias: False
 
