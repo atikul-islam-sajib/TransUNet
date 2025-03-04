@@ -30,13 +30,10 @@ def scaled_dot_product(query: torch.Tensor, key: torch.Tensor, value: torch.Tens
 
 
 if __name__ == "__main__":
-    # query = torch.randn(1, 4, 64, 64)
-    # key = torch.randn(1, 4, 64, 64)
-    # value = torch.randn(1, 4, 64, 64)
-
     query = torch.randn(1, 4, 256, 128)
     key = torch.randn(1, 4, 256, 128)
     value = torch.randn(1, 4, 256, 128)
 
     attention = scaled_dot_product(query, key, value)
-    print(attention.size())
+
+    assert (attention.size()) == query.size() == key.size() == value.size()
