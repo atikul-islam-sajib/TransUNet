@@ -6,6 +6,7 @@ import torch
 import joblib
 import torch.nn as nn
 import matplotlib.pyplot as plt
+from torchview import draw_graph
 
 sys.path.append("./src/")
 
@@ -149,3 +150,21 @@ def total_params(model=None):
             "Please provide a model to calculate the total parameters.".capitalize()
         )
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+
+def plot_model_architecture(
+    model=None,
+    input_data: torch.Tensor = None,
+    model_name: str = "./artifacts/files_name/",
+    format: str = "pdf",
+):
+    if model is None and not isinstance(input_data, torch):
+        raise ValueError(
+            "Please provide a model and input data to plot the model architecture.".capitalize()
+        )
+
+    filename = path_names()["files_path"]
+    draw_graph(model=model, input_data=input_data).visual_graph.render(
+        filename=os.path.join(filename, model_name), format=format
+    )
+    print(f"Model architecture saved in {filename}/{model_name}.{format}")
