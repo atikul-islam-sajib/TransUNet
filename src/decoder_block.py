@@ -52,7 +52,15 @@ class DecoderBlock(nn.Module):
 
 
 if __name__ == "__main__":
-    decoder_block = DecoderBlock(in_channels=256, out_channels=256 // 2)
-    print(decoder_block)
-    images = torch.randn((1, 256, 8, 8))
-    print(decoder_block(x=images).size())
+    parser = argparse.ArgumentParser(description="Decoder BLock".title())
+    parser.add_argument("--in_channels", type=int, default=256, help="Number of input channels".capitalize())
+    parser.add_argument("--out_channels", type=int, default=256//2, help="Number of output channels".capitalize())
+    parser.add_argument("--display", action="store_true", default=False, help="Display the model".capitalize())
+
+    args = parser.parse_args()
+
+    decoder_block = DecoderBlock(in_channels=args.in_channels, out_channels=args.out_channels)
+
+    images = torch.randn((1, args.in_channels, 8, 8))
+
+    assert decoder_block(x=images).size() == (1, args.out_channels, 16, 16)
