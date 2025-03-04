@@ -6,6 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from utils import total_params, plot_model_architecture
+
 
 class DecoderBlock(nn.Module):
     def __init__(self, in_channels: int = 256, out_channels: int = 128):
@@ -50,17 +52,49 @@ class DecoderBlock(nn.Module):
 
         return x
 
+    @staticmethod
+    def total_parameters(model):
+        if not isinstance(model, DecoderBlock):
+            raise ValueError("Input must be a DecoderBlock".capitalize())
+
+        print("Total Parameter: ", total_params(model=model))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Decoder BLock".title())
-    parser.add_argument("--in_channels", type=int, default=256, help="Number of input channels".capitalize())
-    parser.add_argument("--out_channels", type=int, default=256//2, help="Number of output channels".capitalize())
-    parser.add_argument("--display", action="store_true", default=False, help="Display the model".capitalize())
+    parser.add_argument(
+        "--in_channels",
+        type=int,
+        default=256,
+        help="Number of input channels".capitalize(),
+    )
+    parser.add_argument(
+        "--out_channels",
+        type=int,
+        default=256 // 2,
+        help="Number of output channels".capitalize(),
+    )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        default=False,
+        help="Display the model".capitalize(),
+    )
 
     args = parser.parse_args()
 
-    decoder_block = DecoderBlock(in_channels=args.in_channels, out_channels=args.out_channels)
+    decoder_block = DecoderBlock(
+        in_channels=args.in_channels, out_channels=args.out_channels
+    )
 
     images = torch.randn((1, args.in_channels, 8, 8))
 
     assert decoder_block(x=images).size() == (1, args.out_channels, 16, 16)
+
+    if args.display:
+        plot_model_architecture(
+            model=decoder_block,
+            input_data=images,
+            model_name="DecoderBlock",
+            format="pdf",
+        )
