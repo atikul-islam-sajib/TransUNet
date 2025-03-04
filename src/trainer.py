@@ -1,12 +1,14 @@
 import os
 import sys
 import torch
+import numpy as np
 import torch.nn as nn
+from tqdm import tqdm
 
 sys.path.append("./src/")
 
 from transUNet import TransUNet
-from utils import device_init
+from utils import device_init, plot_images
 from helper import helper
 from loss.bce_loss import BCE
 from transUNet import TransUNet
@@ -134,25 +136,69 @@ class Trainer:
         pass
 
     def display_progress(self, **kwargs):
-        pass
+        train_loss = kwargs["train_loss"]
+        valid_loss = kwargs["valid_loss"]
+        epochs_run = kwargs["epoch"]
+
+        print("Epoch: [{}/{}] - train_loss: {:.4f} - test_loss: {:.4f}".format(epochs_run,self.epochs, train_loss, valid_loss))
 
     def update_train(self, **kwargs):
-        pass
+        segmented = kwargs["segmented"]
+        predicted = kwargs["predicted"]
+
+        self.optimizer.zero_grad()
+
+        train_loss = self.criterion(segmented, predicted)
+        train_loss.backward()
+        self.optimizer.step()
+
+        return {"train_loss": train_loss.item()}
 
     def train(self):
-        pass
+        for epoch in tqdm(range(self.epochs), desc="Training TransUNet"):
+            train_loss = []
+            valid_loss = []
+            for index, (images, segmented) in enumerate(self.train_dataloader):
+                images = images.to(self.device)
+                segmented = segmented.to(self.device)
+
+                predicted = self.model(images)
+
+                loss = self.update_train(segmented = segmented, predicted = predicted)
+                train_loss.append(loss["train_loss"])
+
+            for index, (images, segmented) in enumerate(self.valid_dataloader):
+                images = images.to(self.device)
+                segmented = segmented.to(self.device)
+
+                predicted = self.model(images)
+                loss = self.criterion(segmented, predicted)
+                valid_loss.append(loss.item())
+
+            self.display_progress(train_loss = np.mean(train_loss), valid_loss = np.mean(valid_loss), epoch = epoch + 1)
+
+            images, masks = next(iter(self.valid_dataloader))
+            images = images.to(self.device)
+            masks = masks.to(self.device)
+
+            predicted = self.model(images)
+
+            plot_images(original_images=images, original_masks= masks, predicted_images=predicted, predicted=True, epoch=epoch+1)
+
+        
+
 
 
 if __name__ == "__main__":
     trainer = Trainer(
         model=None,
-        epochs=2,
-        lr=0.001,
-        beta1=0.5,
+        epochs=20,
+        lr=0.0002,
+        beta1=0.9,
         beta2=0.999,
         weight_decay=0.0,
         momentum=0.95,
-        loss_smooth="bce",
+        loss_smooth="dice",
         alpha_focal=0.75,
         gamma_focal=2.0,
         alpha_tversky=0.75,
@@ -164,3 +210,5 @@ if __name__ == "__main__":
         verbose=True,
         device="cuda",
     )
+
+    trainer.train()

@@ -13,12 +13,12 @@ dataloader:
   image_channels: 3
   image_size: 224
   batch_size: 8
-  split_size: 0.25
+  split_size: 0.30
 
 TransUNet:
   nheads: 4
   num_layers: 4
-  dim_feedforward: 1024
+  dim_feedforward: 512
   dropout: 0.1
   activation: "relu"
   layer_norm_eps: 1e-05

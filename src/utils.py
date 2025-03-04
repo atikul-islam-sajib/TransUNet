@@ -79,19 +79,27 @@ def path_names():
 
 
 def plot_images(
+    original_images: torch.Tensor = None,
+    original_masks: torch.Tensor = None,
     predicted_images: torch.Tensor = None,
     predicted: bool = False,
-):
-    processed_data_path = path_names()["processed_data_path"]
-    processed_data_path = load_file(
-        filename=os.path.join(processed_data_path, "test_dataloader.pkl")
-    )
-    images, masks = next(iter(processed_data_path))
+    epoch: int = 0,
+):  
+    if not predicted:
+        processed_data_path = path_names()["processed_data_path"]
+        processed_data_path = load_file(
+            filename=os.path.join(processed_data_path, "test_dataloader.pkl")
+        )
+        images, masks = next(iter(processed_data_path))
+    else:
+        images = original_images
+        masks = original_masks
 
     max_number = min(16, images.size(0))
     num_of_rows = math.ceil(math.sqrt(max_number))
     num_of_columns = math.ceil(max_number / num_of_rows)
 
+    print(predicted_images.size())
     plt.figure(figsize=(10, 20))
 
     for index, (image, mask) in enumerate(zip(images[:max_number], masks[:max_number])):
@@ -102,7 +110,7 @@ def plot_images(
         mask = (mask - mask.min()) / (mask.max() - mask.min())
 
         if predicted:
-            pred_mask = predicted_images[index].squeeze().permute(1, 2, 0)
+            pred_mask = predicted_images[index].permute(1, 2, 0)
             pred_mask = pred_mask.detach().cpu().numpy()
             pred_mask = (pred_mask - pred_mask.min()) / (
                 pred_mask.max() - pred_mask.min()
@@ -136,8 +144,10 @@ def plot_images(
 
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
     plt.tight_layout()
-
-    save_path = os.path.join(path_names()["files_path"], "images.png")
+    if not predicted:
+        save_path = os.path.join(path_names()["files_path"], "images.png")
+    else:
+        save_path = os.path.join(path_names()["train_images"], "image{}.png".format(epoch))
     plt.savefig(save_path)
     plt.show()
     plt.close()
