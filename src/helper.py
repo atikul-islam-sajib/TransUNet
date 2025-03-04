@@ -1,19 +1,17 @@
 import os
 import sys
 import torch
-import argparse
-import torch.nn as nn
 import torch.optim as optim
 
 sys.path.append("./src/")
 
-from utils import path_names, load_file, config_files
-from transUNet import TransUNet
 from loss.bce_loss import BCE
+from transUNet import TransUNet
 from loss.dice_loss import DiceLoss
 from loss.focal_loss import FocalLoss
 from loss.jaccard_loss import JaccardLoss
 from loss.tversky_loss import TverskyLoss
+from utils import path_names, load_file, config_files
 
 def load_dataloader():
     processed_path = path_names()["processed_data_path"]
@@ -29,7 +27,6 @@ def load_dataloader():
 
 def helper(**kwargs):
     model: TransUNet = kwargs["model"]
-    epochs: int = kwargs["epochs"]
     lr: float = kwargs["lr"]
     beta1: float = kwargs["beta1"]
     beta2: float = kwargs["beta2"]
@@ -98,4 +95,45 @@ def helper(**kwargs):
 
 
 if __name__ == "__main__":
-    pass
+    adam, SGD = True, False
+    loss = "bce"
+    """
+    "dice" | "focal" | "jaccard" | "tversky" | "BCE"
+    """
+    init = helper(
+        model = None,
+        lr = 2e-4,
+        beta1 = 0.9,
+        beta2 = 0.999,
+        weight_decay = 1e-5,
+        momentum = 0.9,
+        adam = True,
+        SGD = False,
+        loss = "bce",
+        loss_smooth = 1e-6,
+        alpha_focal = 0.25,
+        gamma_focal = 2.0,
+        alpha_tversky = 0.5,
+        beta_tversky = 0.5
+    )
+
+    assert init["train_dataloader"].__class__ == torch.utils.data.DataLoader
+    assert init["valid_dataloader"].__class__ == torch.utils.data.DataLoader
+    assert init["model"].__class__ == TransUNet
+    if adam:
+        assert init["optimizer"].__class__ == torch.optim.Adam
+    elif SGD:
+        assert init["optimizer"].__class__ == torch.optim.SGD
+    
+    if loss == "bce" or loss == "BCE":
+        assert init["criterion"].__class__ == BCE
+    elif loss == "dice":
+        assert init["criterion"].__class__ == DiceLoss
+    elif loss == "focal":
+        assert init["criterion"].__class__ == FocalLoss
+    elif loss == "tversky":
+        assert init["criterion"].__class__ == TverskyLoss
+    elif loss == "jaccard":
+        assert init["criterion"].__class__ == JaccardLoss
+    else:
+        raise ValueError("Invalid loss function. Expected one of: bce, dice, focal, jaccard, tversky.".capitalize())
