@@ -110,17 +110,17 @@ class TransUNet(nn.Module):
 if __name__ == "__main__":
     model = TransUNet(
         image_channels=3,
-        image_size=256,
+        image_size=128,
         nheads=4,
         num_layers=4,
-        dim_feedforward=1024,
+        dim_feedforward=512,
         dropout=0.1,
         activation="relu",
         layer_norm_eps=1e-05,
         bias=False,
     )
 
-    images = torch.randn((1, 3, 256, 256))
+    images = torch.randn((1, 3, 128, 128))
     encoder, bottleneck = model(x=images)
 
     print("Encoder output size:", encoder.size())
