@@ -17,7 +17,7 @@ class TransUNet(nn.Module):
     def __init__(
         self,
         image_channels: int = 3,
-        image_size: int = 128,
+        image_size: int = 256,
         nheads: int = 8,
         num_layers: int = 4,
         dim_feedforward: int = 2048,
@@ -88,7 +88,11 @@ class TransUNet(nn.Module):
             in_channels=self.in_channels * 8, out_channels=self.in_channels * 2
         )
         self.decoder3 = DecoderBlock(
-            in_channels=self.in_channels * 4, out_channels=self.image_channels//self.image_channels
+            in_channels=self.in_channels * 4, out_channels=self.in_channels
+        )
+        self.decoder4 = DecoderBlock(
+            in_channels=self.in_channels * 2,
+            out_channels=self.in_channels // self.in_channels,
         )
 
         self.vit = ViT(
@@ -106,7 +110,6 @@ class TransUNet(nn.Module):
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
             x = self.conv1(x)
-            print(x.size())
 
             encoder1 = self.encoder1(x)
             encoder2 = self.encoder2(encoder1)
@@ -120,7 +123,10 @@ class TransUNet(nn.Module):
             decoder2 = self.decoder2(decoder1)
             decoder2 = torch.concat((decoder2, encoder1), dim=1)
 
-            output = self.decoder3(decoder2)
+            decoder3 = self.decoder3(decoder2)
+            decoder3 = torch.concat((decoder3, x), dim=1)
+
+            output = self.decoder4(decoder3)
 
             return output
         else:
@@ -128,18 +134,85 @@ class TransUNet(nn.Module):
 
 
 if __name__ == "__main__":
-    model = TransUNet(
-        image_channels=3,
-        image_size=256,
-        nheads=4,
-        num_layers=4,
-        dim_feedforward=512,
-        dropout=0.1,
-        activation="relu",
-        layer_norm_eps=1e-05,
-        bias=False,
+    parser = argparse.ArgumentParser(
+        description="TransUNet architecture for the segmentation".title()
+    )
+    parser.add_argument(
+        "--image_channels",
+        type=int,
+        default=3,
+        help="Number of channels in the input image".capitalize(),
+    )
+    parser.add_argument(
+        "--image_size",
+        type=int,
+        default=128,
+        help="Size of the input image".capitalize(),
+    )
+    parser.add_argument(
+        "--nheads",
+        type=int,
+        default=4,
+        help="Number of heads in the multi-head attention".capitalize(),
+    )
+    parser.add_argument(
+        "--num_layers",
+        type=int,
+        default=4,
+        help="Number of transformer encoder layers".capitalize(),
+    )
+    parser.add_argument(
+        "--dim_feedforward",
+        type=int,
+        default=512,
+        help="Dimension of the feedforward network in the transformer encoder".capitalize(),
+    )
+    parser.add_argument(
+        "--dropout",
+        type=float,
+        default=0.1,
+        help="Dropout rate in the transformer encoder".capitalize(),
+    )
+    parser.add_argument(
+        "--activation",
+        type=str,
+        default="relu",
+        help="Activation function in the transformer encoder".capitalize(),
+    )
+    parser.add_argument(
+        "--layer_norm_eps",
+        type=float,
+        default=1e-05,
+        help="Epsilon value for layer normalization in the transformer encoder".capitalize(),
+    )
+    parser.add_argument(
+        "--bias",
+        type=bool,
+        default=False,
+        help="Add bias to the transformer encoder".capitalize(),
+    )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        default=False,
+        help="Display the model architecture".capitalize(),
     )
 
-    images = torch.randn((1, 3, 256, 256))
-    output = model(x=images)
-    print("Output size:", output.size())
+    args = parser.parse_args()
+
+    model = TransUNet(
+        image_channels=args.image_channels,
+        image_size=args.image_size,
+        nheads=args.nheads,
+        num_layers=args.num_layers,
+        dim_feedforward=args.dim_feedforward,
+        dropout=args.dropout,
+        activation=args.activation,
+        layer_norm_eps=args.layer_norm_eps,
+        bias=args.bias,
+    )
+
+    images = torch.randn((1, args.image_channels, args.image_size, args.image_size))
+
+    assert model(x=images).size() == (1, 1, args.image_size, args.image_size)
+
