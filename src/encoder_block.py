@@ -6,6 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from utils import plot_model_architecture
+
 
 class EncoderBlock(nn.Module):
     def __init__(self, in_channels: int = 128, out_channels: int = 2 * 128):
@@ -95,6 +97,13 @@ if __name__ == "__main__":
         default=256,
         help="Output channels to decode".capitalize(),
     )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        default=False,
+        help="Display the model architecture.".capitalize(),
+    )
+
     args = parser.parse_args()
 
     encoder_block = EncoderBlock(
@@ -103,3 +112,11 @@ if __name__ == "__main__":
     )
     images = torch.randn((16, 128, 64, 64))
     assert (encoder_block(x=images).size()) == (16, 128 * 2, 64 // 2, 64 // 2)
+
+    if args.display:
+        plot_model_architecture(
+            model=encoder_block,
+            input_data=images,
+            model_name="Encoder Block",
+            format="pdf",
+        )
