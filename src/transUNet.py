@@ -10,6 +10,7 @@ sys.path.append("./src/")
 
 from ViT import ViT
 from encoder_block import EncoderBlock
+from decoder_block import DecoderBlock
 
 
 class TransUNet(nn.Module):
@@ -80,9 +81,15 @@ class TransUNet(nn.Module):
             in_channels=self.in_channels * 4, out_channels=self.in_channels * 8
         )
 
-        print("*8", self.in_channels * 8)
-        print("*4", self.in_channels * 4)
-        print("*2", self.in_channels * 2)
+        self.decoder1 = DecoderBlock(
+            in_channels=self.in_channels * 8, out_channels=self.in_channels * 4
+        )
+        self.decoder2 = DecoderBlock(
+            in_channels=self.in_channels * 8, out_channels=self.in_channels * 2
+        )
+        self.decoder3 = DecoderBlock(
+            in_channels=self.in_channels * 4, out_channels=self.image_channels//self.image_channels
+        )
 
         self.vit = ViT(
             image_size=self.image_size,
@@ -99,16 +106,23 @@ class TransUNet(nn.Module):
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
             x = self.conv1(x)
+            print(x.size())
 
             encoder1 = self.encoder1(x)
             encoder2 = self.encoder2(encoder1)
             encoder3 = self.encoder3(encoder2)
 
-            print("encoder1: ", encoder1.size(), " encoder2: ", encoder2.size(), " encoder3: ", encoder3.size())
-
             bottleneck = self.vit(x=encoder3)
 
-            return (encoder3, bottleneck)
+            decoder1 = self.decoder1(bottleneck)
+            decoder1 = torch.concat((decoder1, encoder2), dim=1)
+
+            decoder2 = self.decoder2(decoder1)
+            decoder2 = torch.concat((decoder2, encoder1), dim=1)
+
+            output = self.decoder3(decoder2)
+
+            return output
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
@@ -116,7 +130,7 @@ class TransUNet(nn.Module):
 if __name__ == "__main__":
     model = TransUNet(
         image_channels=3,
-        image_size=128,
+        image_size=256,
         nheads=4,
         num_layers=4,
         dim_feedforward=512,
@@ -126,8 +140,6 @@ if __name__ == "__main__":
         bias=False,
     )
 
-    images = torch.randn((1, 3, 128, 128))
-    encoder, bottleneck = model(x=images)
-
-    print("Encoder output size:", encoder.size())
-    print("Bottleneck output size:", bottleneck.size())
+    images = torch.randn((1, 3, 256, 256))
+    output = model(x=images)
+    print("Output size:", output.size())
