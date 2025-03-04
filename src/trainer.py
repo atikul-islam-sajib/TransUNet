@@ -8,7 +8,7 @@ from tqdm import tqdm
 sys.path.append("./src/")
 
 from transUNet import TransUNet
-from utils import device_init, plot_images
+from utils import device_init, plot_images, path_names
 from helper import helper
 from loss.bce_loss import BCE
 from transUNet import TransUNet
@@ -115,6 +115,8 @@ class Trainer:
                 "Invalid loss function. Expected one of: bce, dice, focal, jaccard, tversky.".capitalize()
             )
 
+        self.loss = float("inf")
+
     def l1_regularization(self, model: TransUNet = None):
         if (model is None) and (not isinstance(model, TransUNet)):
             raise ValueError("Invalid model. Expected TransUNet.".capitalize())
@@ -133,14 +135,40 @@ class Trainer:
         return self.weight_decay * (l1_regularization + l2_regularization)
 
     def saved_checkpoints(self, **kwargs):
-        pass
+        valid_loss = kwargs["valid_loss"]
+        train_loss = kwargs["train_loss"]
+        train_epoch = kwargs["epoch"]
+        best_model_path = path_names()["best_model"]
+        train_model_path = path_names()["train_models"]
+
+        if self.loss > valid_loss:
+            self.loss = valid_loss
+            torch.save(
+                {
+                    "epoch": train_epoch,
+                    "model_state_dict": self.model.state_dict(),
+                    "optimizer_state_dict": self.optimizer.state_dict(),
+                    "train_loss": train_loss,
+                    "valid_loss": valid_loss,
+                },
+                os.path.join(best_model_path, "best_model.pth"),
+            )
+
+        torch.save(
+            self.model.state_dict(),
+            os.path.join(train_model_path, f"model{train_epoch}.pth"),
+        )
 
     def display_progress(self, **kwargs):
         train_loss = kwargs["train_loss"]
         valid_loss = kwargs["valid_loss"]
         epochs_run = kwargs["epoch"]
 
-        print("Epoch: [{}/{}] - train_loss: {:.4f} - test_loss: {:.4f}".format(epochs_run,self.epochs, train_loss, valid_loss))
+        print(
+            "Epoch: [{}/{}] - train_loss: {:.4f} - test_loss: {:.4f}".format(
+                epochs_run, self.epochs, train_loss, valid_loss
+            )
+        )
 
     def update_train(self, **kwargs):
         segmented = kwargs["segmented"]
@@ -154,6 +182,21 @@ class Trainer:
 
         return {"train_loss": train_loss.item()}
 
+    def plot_train_images(self, epoch: int = 1):
+        images, masks = next(iter(self.valid_dataloader))
+        original_images = images.to(self.device)
+        original_masks = masks.to(self.device)
+
+        predicted = self.model(images)
+
+        plot_images(
+            original_images=original_images,
+            original_masks=original_masks,
+            predicted_images=predicted,
+            predicted=True,
+            epoch=epoch,
+        )
+
     def train(self):
         for epoch in tqdm(range(self.epochs), desc="Training TransUNet"):
             train_loss = []
@@ -164,7 +207,7 @@ class Trainer:
 
                 predicted = self.model(images)
 
-                loss = self.update_train(segmented = segmented, predicted = predicted)
+                loss = self.update_train(segmented=segmented, predicted=predicted)
                 train_loss.append(loss["train_loss"])
 
             for index, (images, segmented) in enumerate(self.valid_dataloader):
@@ -175,18 +218,13 @@ class Trainer:
                 loss = self.criterion(segmented, predicted)
                 valid_loss.append(loss.item())
 
-            self.display_progress(train_loss = np.mean(train_loss), valid_loss = np.mean(valid_loss), epoch = epoch + 1)
+            self.display_progress(
+                train_loss=np.mean(train_loss),
+                valid_loss=np.mean(valid_loss),
+                epoch=epoch + 1,
+            )
 
-            images, masks = next(iter(self.valid_dataloader))
-            images = images.to(self.device)
-            masks = masks.to(self.device)
-
-            predicted = self.model(images)
-
-            plot_images(original_images=images, original_masks= masks, predicted_images=predicted, predicted=True, epoch=epoch+1)
-
-        
-
+            self.plot_train_images(epoch=epoch + 1)
 
 
 if __name__ == "__main__":
