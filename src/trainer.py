@@ -114,10 +114,21 @@ class Trainer:
             )
 
     def l1_regularization(self, model: TransUNet = None):
-        pass
+        if (model is None) and (not isinstance(model, TransUNet)):
+            raise ValueError("Invalid model. Expected TransUNet.".capitalize())
+
+        return self.weight_decay * sum(
+            torch.norm(params, 1) for params in model.parameters()
+        )
 
     def elastic_net_regularization(self, model: TransUNet = None):
-        pass
+        if (model is None) and (not isinstance(model, TransUNet)):
+            raise ValueError("Invalid model. Expected TransUNet.".capitalize())
+
+        l1_regularization = sum(torch.norm(params, 1) for params in model.parameters())
+        l2_regularization = sum(torch.norm(params, 2) for params in model.parameters())
+
+        return self.weight_decay * (l1_regularization + l2_regularization)
 
     def saved_checkpoints(self, **kwargs):
         pass
