@@ -6,6 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from utils import total_params, plot_model_architecture
+
 
 class FeedForwardNeuralNetwork(nn.Module):
     def __init__(
@@ -61,8 +63,52 @@ class FeedForwardNeuralNetwork(nn.Module):
 
         return x
 
+    @staticmethod
+    def total_params(model):
+        if isinstance(model, FeedForwardNeuralNetwork):
+            return total_params(model)
+        else:
+            raise ValueError("Input must be a FeedForwardNeuralNetwork".capitalize())
+
 
 if __name__ == "__main__":
-    network = FeedForwardNeuralNetwork(dimension=512, dim_feedforward=1024)
-    images = torch.randn((1, 256, 512))
-    print(network(x=images).size())
+    parser = argparse.ArgumentParser(description="Feed Forward Neural Network".title())
+    parser.add_argument(
+        "--dimension", type=int, default=512, help="Dimension of the input data"
+    )
+    parser.add_argument(
+        "--dim_feedforward",
+        type=int,
+        default=1024,
+        help="Dimension of the feedforward layers",
+    )
+    parser.add_argument(
+        "--activation",
+        type=str,
+        default="relu",
+        help="Activation function",
+        choices=["relu", "gelu", "selu", "leaky"],
+    )
+    parser.add_argument(
+        "--dropout", type=float, default=0.1, help="Dropout probability"
+    )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        default=False,
+        help="Display the network".capitalize(),
+    )
+    args = parser.parse_args()
+    network = FeedForwardNeuralNetwork(
+        dimension=args.dimension,
+        dim_feedforward=args.dim_feedforward,
+        activation=args.activation,
+        dropout=args.dropout,
+    )
+    images = torch.randn((1, 256, args.dimension))
+    assert (network(x=images).size()) == (1, 256, args.dimension)
+
+    if args.display:
+        plot_model_architecture(
+            model=network, input_data=images, model_name="FFNN", format="pdf"
+        )
