@@ -1,6 +1,7 @@
 import os
 import sys
 import torch
+import traceback
 import numpy as np
 import torch.nn as nn
 from tqdm import tqdm
@@ -116,6 +117,7 @@ class Trainer:
             )
 
         self.loss = float("inf")
+        self.history = {"train_loss": [], "valid_loss": []}
 
     def l1_regularization(self, model: TransUNet = None):
         if (model is None) and (not isinstance(model, TransUNet)):
@@ -199,32 +201,61 @@ class Trainer:
 
     def train(self):
         for epoch in tqdm(range(self.epochs), desc="Training TransUNet"):
-            train_loss = []
-            valid_loss = []
-            for index, (images, segmented) in enumerate(self.train_dataloader):
-                images = images.to(self.device)
-                segmented = segmented.to(self.device)
+            try:
+                train_loss = []
+                valid_loss = []
 
-                predicted = self.model(images)
+                for index, (images, segmented) in enumerate(self.train_dataloader):
+                    try:
+                        images = images.to(self.device)
+                        segmented = segmented.to(self.device)
 
-                loss = self.update_train(segmented=segmented, predicted=predicted)
-                train_loss.append(loss["train_loss"])
+                        predicted = self.model(images)
 
-            for index, (images, segmented) in enumerate(self.valid_dataloader):
-                images = images.to(self.device)
-                segmented = segmented.to(self.device)
+                        loss = self.update_train(segmented=segmented, predicted=predicted)
+                        train_loss.append(loss["train_loss"])
+                    except Exception as e:
+                        print(f"Error in training loop (batch {index}, epoch {epoch+1}): {e}")
+                        traceback.print_exc()
 
-                predicted = self.model(images)
-                loss = self.criterion(segmented, predicted)
-                valid_loss.append(loss.item())
+                for index, (images, segmented) in enumerate(self.valid_dataloader):
+                    try:
+                        images = images.to(self.device)
+                        segmented = segmented.to(self.device)
 
-            self.display_progress(
-                train_loss=np.mean(train_loss),
-                valid_loss=np.mean(valid_loss),
-                epoch=epoch + 1,
-            )
+                        predicted = self.model(images)
+                        loss = self.criterion(segmented, predicted)
+                        valid_loss.append(loss.item())
+                    except Exception as e:
+                        print(f"Error in validation loop (batch {index}, epoch {epoch+1}): {e}")
+                        traceback.print_exc()
 
-            self.plot_train_images(epoch=epoch + 1)
+                try:
+                    self.display_progress(
+                        train_loss=np.mean(train_loss),
+                        valid_loss=np.mean(valid_loss),
+                        epoch=epoch + 1,
+                    )
+                except Exception as e:
+                    print(f"Error displaying progress in epoch {epoch+1}: {e}")
+                    traceback.print_exc()
+
+                try:
+                    self.plot_train_images(epoch=epoch + 1)
+                except Exception as e:
+                    print(f"Error plotting images in epoch {epoch+1}: {e}")
+                    traceback.print_exc()
+
+                # Update History
+                self.history["train_loss"].append(np.mean(train_loss))
+                self.history["valid_loss"].append(np.mean(valid_loss))
+
+            except KeyboardInterrupt:
+                print("\nTraining interrupted manually. Saving progress...")
+                break 
+            except Exception as e:
+                print(f"Unexpected error in epoch {epoch+1}: {e}")
+                traceback.print_exc()
 
 
 if __name__ == "__main__":
