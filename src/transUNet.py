@@ -11,6 +11,7 @@ sys.path.append("./src/")
 from ViT import ViT
 from encoder_block import EncoderBlock
 from decoder_block import DecoderBlock
+from utils import total_params, plot_model_architecture
 
 
 class TransUNet(nn.Module):
@@ -132,6 +133,13 @@ class TransUNet(nn.Module):
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
+    @staticmethod
+    def total_parameters(model):
+        if not isinstance(model, TransUNet):
+            raise ValueError("Input must be a TransUNet".capitalize())
+
+        print("Total parameters: ", total_params(model=model))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -216,3 +224,7 @@ if __name__ == "__main__":
 
     assert model(x=images).size() == (1, 1, args.image_size, args.image_size)
 
+    if args.display:
+        plot_model_architecture(
+            model=model, input_data=images, model_name="TransUNet", format="pdf"
+        )
