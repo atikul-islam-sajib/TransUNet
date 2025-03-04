@@ -7,6 +7,7 @@ import torch.nn as nn
 sys.path.append("./src/")
 
 from scaled_dot_product import scaled_dot_product
+from utils import total_params, plot_model_architecture
 
 
 class MultiHeadAttention(nn.Module):
@@ -53,8 +54,40 @@ class MultiHeadAttention(nn.Module):
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
 
+    @staticmethod
+    def total_params(model):
+        if isinstance(model, MultiHeadAttention):
+            print("Total Parameters: ", total_params(model=model)) 
+        else:
+            raise ValueError("Input must be a MultiHeadAttention".capitalize())
+
 
 if __name__ == "__main__":
-    attention = MultiHeadAttention(nheads=4, dimension=512)
-    images = torch.randn(1, 256, 512)
-    print(attention(x=images).size())
+    parser = argparse.ArgumentParser(description="Multi-Head Attention".title())
+    parser.add_argument(
+        "--nheads", type=int, default=4, help="Number of heads".capitalize()
+    )
+    parser.add_argument(
+        "--dimension", type=int, default=512, help="Dimension".capitalize()
+    )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        help="Display the model architecture".capitalize(),
+    )
+
+    args = parser.parse_args()
+
+    attention = MultiHeadAttention(nheads=args.nheads, dimension=args.dimension)
+
+    images = torch.randn(1, 256, args.dimension)
+
+    assert (attention(x=images).size()) == (1, 256, args.dimension)
+
+    if args.display:
+        plot_model_architecture(
+            model=attention,
+            input_data=images,
+            model_name="MultiHeadAttention",
+            format="pdf",
+        )
