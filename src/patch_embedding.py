@@ -7,6 +7,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from utils import total_params, plot_model_architecture
+
 
 class PatchEmbedding(nn.Module):
     def __init__(
@@ -55,12 +57,58 @@ class PatchEmbedding(nn.Module):
             x = self.projection(x)
             x = x.view(x.size(0), x.size(-1) * x.size(-2), x.size(1))
             x = self.postitonal_embedding + x
+
             return x
         else:
             raise ValueError("Input must be a torch.Tensor".capitalize())
+        
+    @staticmethod
+    def total_parameters(model):
+        if isinstance(model, PatchEmbedding):
+            print("Total Parameters: ", total_params(model)) 
+        else:
+            raise ValueError("Input must be a PatchEmbedding".capitalize())
 
 
 if __name__ == "__main__":
-    patch_embedding = PatchEmbedding(image_size=128, patch_size=1, dimension=1024)
-    images = torch.randn((16, 1024, 8, 8))
-    print(patch_embedding(x=images).size())
+    parser = argparse.ArgumentParser(description="Patch Embedding".title())
+    parser.add_argument(
+        "--image_size", type=int, default=128, help="Image size".capitalize()
+    )
+    parser.add_argument(
+        "--patch_size", type=int, default=1, help="Patch size".capitalize()
+    )
+    parser.add_argument(
+        "--dimension", type=int, default=1024, help="Dimension".capitalize()
+    )
+    parser.add_argument(
+        "--bias",
+        action="store_true",
+        help="Enable bias for the convolution layer".capitalize(),
+    )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        help="Display the model architecture".capitalize(),
+    )
+
+    args = parser.parse_args()
+
+    patch_embedding = PatchEmbedding(
+        image_size=args.image_size,
+        patch_size=args.patch_size // args.patch_size,
+        dimension=args.dimension,
+        bias=args.bias,
+    )
+
+    images = torch.randn((16, args.dimension, 8, 8))
+
+    assert (patch_embedding(x=images).size()) == (16, 8 * 8, args.dimension)
+
+    if args.display:
+        plot_model_architecture(
+            model=patch_embedding,
+            input_data=images,
+            model_name="Patch Embedding",
+            format="pdf",
+        )
