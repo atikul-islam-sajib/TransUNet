@@ -163,8 +163,8 @@ class Trainer:
         best_model_path = path_names()["best_model_path"]
         train_model_path = path_names()["train_models_path"]
 
-        if self.loss > valid_loss:
-            self.loss = valid_loss
+        if self.loss > train_loss:
+            self.loss = train_loss
             torch.save(
                 {
                     "epoch": train_epoch,
