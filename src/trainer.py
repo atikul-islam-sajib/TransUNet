@@ -19,6 +19,16 @@ from loss.focal_loss import FocalLoss
 from loss.jaccard_loss import JaccardLoss
 from loss.tversky_loss import TverskyLoss
 
+class IoUScore(nn.Module):
+    def __init__(self, threshold: float = 0.5, smooth: float = 1e-5):
+        super(IoUScore, self).__init__()
+        self.threshold = threshold
+        self.smooth = smooth
+
+    def forward(self, x: torch.Tensor):
+        if not isinstance(x, torch.Tensor):
+            raise TypeError("Input must be a torch.Tensor".capitalize())
+        pass
 
 class Trainer:
     def __init__(
