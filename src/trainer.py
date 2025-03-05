@@ -138,7 +138,7 @@ class Trainer:
             "valid_IoU": [],
         }
 
-    def l1_regularization(self, model: TransUNet = None):
+    def l1_regularizer(self, model: TransUNet = None):
         if (model is None) and (not isinstance(model, TransUNet)):
             raise ValueError("Invalid model. Expected TransUNet.".capitalize())
 
@@ -146,7 +146,7 @@ class Trainer:
             torch.norm(params, 1) for params in model.parameters()
         )
 
-    def elastic_net_regularization(self, model: TransUNet = None):
+    def elastic_net_regularizer(self, model: TransUNet = None):
         if (model is None) and (not isinstance(model, TransUNet)):
             raise ValueError("Invalid model. Expected TransUNet.".capitalize())
 
@@ -203,6 +203,12 @@ class Trainer:
         self.optimizer.zero_grad()
 
         train_loss = self.criterion(segmented, predicted)
+
+        if self.l1_regularization:
+            train_loss += self.l1_regularizer(model=self.model)
+        elif self.elastic_net_regularization:
+            train_loss += self.elastic_net_regularizer(model=self.model)
+        
         train_loss.backward()
         self.optimizer.step()
 
