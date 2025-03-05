@@ -5,11 +5,12 @@ import traceback
 import numpy as np
 import torch.nn as nn
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 
 sys.path.append("./src/")
 
 from transUNet import TransUNet
-from utils import device_init, plot_images, path_names
+from utils import device_init, plot_images, path_names, load_file
 from helper import helper
 from loss.bce_loss import BCE
 from transUNet import TransUNet
@@ -258,7 +259,6 @@ class Trainer:
                     print(f"Error plotting images in epoch {epoch+1}: {e}")
                     traceback.print_exc()
 
-                # Update History
                 self.history["train_loss"].append(np.mean(train_loss))
                 self.history["valid_loss"].append(np.mean(valid_loss))
 
@@ -268,6 +268,30 @@ class Trainer:
             except Exception as e:
                 print(f"Unexpected error in epoch {epoch+1}: {e}")
                 traceback.print_exc()
+
+    @staticmethod
+    def display_history():
+        metrics_path = path_names()["metrics_path"]
+        metrics_path = os.path.join(metrics_path, "history.pkl")
+        history = load_file(filename=metrics_path)
+
+        if metrics_path is not None:
+            _, axes = plt.subplots(1, 1, figsize=(10, 10), sharex=True)
+
+            axes[0, 0].plot(history["train_loss"], label="Train Loss")
+            axes[0, 0].plot(history["valid_loss"], label="Test Loss")
+            axes[0, 0].set_title("Loss")
+            axes[0, 0].set_xlabel("Epochs")
+            axes[0, 0].legend()
+
+            axes[0, 0].axis("off")
+
+            plt.tight_layout()
+            plt.savefig(os.path.join(metrics_path, "history.png"))
+            plt.show()
+            print("History saved as 'history.png' in the metrics folder".capitalize())
+        else:
+            print("No history found".capitalize())
 
 
 if __name__ == "__main__":
