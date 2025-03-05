@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 sys.path.append("./src/")
 
 from transUNet import TransUNet
-from utils import device_init, plot_images, path_names, load_file
+from utils import device_init, plot_images, path_names, load_file, IoUScore
 from helper import helper
 from loss.bce_loss import BCE
 from transUNet import TransUNet
@@ -18,6 +18,7 @@ from loss.dice_loss import DiceLoss
 from loss.focal_loss import FocalLoss
 from loss.jaccard_loss import JaccardLoss
 from loss.tversky_loss import TverskyLoss
+
 
 class Trainer:
     def __init__(
@@ -80,6 +81,8 @@ class Trainer:
             alpha_tversky=self.alpha_tversky,
             beta_tversky=self.beta_tversky,
         )
+
+        self.IoU = IoUScore(threshold=0.5, smooth=self.loss_smooth)
 
         self.train_dataloader = self.init["train_dataloader"]
         self.valid_dataloader = self.init["valid_dataloader"]
@@ -165,11 +168,15 @@ class Trainer:
     def display_progress(self, **kwargs):
         train_loss = kwargs["train_loss"]
         valid_loss = kwargs["valid_loss"]
+
+        train_IoU = kwargs["train_IoU"]
+        valid_IoU = kwargs["valid_IoU"]
+
         epochs_run = kwargs["epoch"]
 
         print(
-            "Epoch: [{}/{}] - train_loss: {:.4f} - test_loss: {:.4f}".format(
-                epochs_run, self.epochs, train_loss, valid_loss
+            "Epoch: [{}/{}] - train_loss: {:.4f} - test_loss: {:.4f} - train_IoU: {:.4f} - test_IoU: {:.4f}".format(
+                epochs_run, self.epochs, train_loss, valid_loss, train_IoU, valid_IoU
             )
         )
 
@@ -203,6 +210,8 @@ class Trainer:
     def train(self):
         for epoch in tqdm(range(self.epochs), desc="Training TransUNet"):
             try:
+                train_IoU = []
+                valid_IoU = []
                 train_loss = []
                 valid_loss = []
 
@@ -216,7 +225,11 @@ class Trainer:
                         loss = self.update_train(
                             segmented=segmented, predicted=predicted
                         )
+                        IoU = self.IoU(predicted=predicted, actual=segmented)
+
                         train_loss.append(loss["train_loss"])
+                        train_IoU.append(IoU)
+
                     except Exception as e:
                         print(
                             f"Error in training loop (batch {index}, epoch {epoch+1}): {e}"
@@ -230,7 +243,11 @@ class Trainer:
 
                         predicted = self.model(images)
                         loss = self.criterion(segmented, predicted)
+                        IoU = self.IoU(predicted=predicted, actual=segmented)
+
                         valid_loss.append(loss.item())
+                        valid_IoU.append(IoU)
+
                     except Exception as e:
                         print(
                             f"Error in validation loop (batch {index}, epoch {epoch+1}): {e}"
@@ -241,6 +258,8 @@ class Trainer:
                     self.display_progress(
                         train_loss=np.mean(train_loss),
                         valid_loss=np.mean(valid_loss),
+                        train_IoU=np.mean(train_IoU),
+                        valid_IoU=np.mean(valid_IoU),
                         epoch=epoch + 1,
                     )
                 except Exception as e:
