@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 sys.path.append("./src/")
 
 from transUNet import TransUNet
-from utils import device_init, plot_images, path_names, load_file, IoUScore
+from utils import device_init, plot_images, path_names, dump_files, load_file, IoUScore
 from helper import helper
 from loss.bce_loss import BCE
 from transUNet import TransUNet
@@ -82,7 +82,7 @@ class Trainer:
             beta_tversky=self.beta_tversky,
         )
 
-        self.IoU = IoUScore(threshold=0.5, smooth=self.loss_smooth)
+        self.IoU = IoUScore(threshold=0.5, smooth=1e-5)
 
         self.train_dataloader = self.init["train_dataloader"]
         self.valid_dataloader = self.init["valid_dataloader"]
@@ -120,7 +120,7 @@ class Trainer:
             )
 
         self.loss = float("inf")
-        self.history = {"train_loss": [], "valid_loss": []}
+        self.history = {"train_loss": [], "valid_loss": [], "train_IoU": [], "valid_IoU": []}
 
     def l1_regularization(self, model: TransUNet = None):
         if (model is None) and (not isinstance(model, TransUNet)):
@@ -228,7 +228,7 @@ class Trainer:
                         IoU = self.IoU(predicted=predicted, actual=segmented)
 
                         train_loss.append(loss["train_loss"])
-                        train_IoU.append(IoU)
+                        train_IoU.append(IoU.item())
 
                     except Exception as e:
                         print(
@@ -246,7 +246,7 @@ class Trainer:
                         IoU = self.IoU(predicted=predicted, actual=segmented)
 
                         valid_loss.append(loss.item())
-                        valid_IoU.append(IoU)
+                        valid_IoU.append(IoU.item())
 
                     except Exception as e:
                         print(
@@ -287,41 +287,63 @@ class Trainer:
                 print(f"Unexpected error in epoch {epoch+1}: {e}")
                 traceback.print_exc()
 
+        dump_files(
+            value=self.history,
+            filename=os.path.join(path_names()["metrics_path"], "history.pkl"),
+        )
+
     @staticmethod
     def display_history():
         metrics_path = path_names()["metrics_path"]
-        metrics_path = os.path.join(metrics_path, "history.pkl")
-        history = load_file(filename=metrics_path)
+        history_file = os.path.join(metrics_path, "history.pkl")
 
-        if metrics_path is not None:
-            _, axes = plt.subplots(1, 1, figsize=(10, 10), sharex=True)
+        if not os.path.exists(history_file):
+            print("No history found.")
+            return
 
-            axes[0, 0].plot(history["train_loss"], label="Train Loss")
-            axes[0, 0].plot(history["valid_loss"], label="Test Loss")
-            axes[0, 0].set_title("Loss")
-            axes[0, 0].set_xlabel("Epochs")
-            axes[0, 0].legend()
+        history = load_file(filename=history_file)
 
-            axes[0, 0].axis("off")
+        if history is None or not isinstance(history, dict):
+            print("Invalid or empty history file.")
+            return
+        
+        fig, axes = plt.subplots(2, 2, figsize=(12, 10), sharex=True)
 
-            plt.tight_layout()
-            plt.savefig(os.path.join(metrics_path, "history.png"))
-            plt.show()
-            print("History saved as 'history.png' in the metrics folder".capitalize())
-        else:
-            print("No history found".capitalize())
+        axes[0, 0].plot(history["train_loss"], label="Train Loss", color="blue")
+        axes[0, 0].plot(history["valid_loss"], label="Validation Loss", color="red")
+        axes[0, 0].set_title("Loss")
+        axes[0, 0].set_xlabel("Epochs")
+        axes[0, 0].set_ylabel("Loss")
+        axes[0, 0].legend()
+
+        axes[0, 1].plot(history["train_IoU"], label="Train IoU", color="green")
+        axes[0, 1].plot(history["valid_IoU"], label="Validation IoU", color="purple")
+        axes[0, 1].set_title("IoU Score")
+        axes[0, 1].set_xlabel("Epochs")
+        axes[0, 1].set_ylabel("IoU Score")
+        axes[0, 1].legend()
+
+        axes[1, 0].axis("off")
+        axes[1, 1].axis("off")
+
+        plt.tight_layout()
+        save_path = os.path.join(metrics_path, "history.png")
+        plt.savefig(save_path)
+        plt.show()
+
+        print(f"History saved as '{save_path}'.")
 
 
 if __name__ == "__main__":
     trainer = Trainer(
         model=None,
-        epochs=50,
+        epochs=200,
         lr=0.0002,
         beta1=0.9,
         beta2=0.999,
-        weight_decay=0.0,
+        weight_decay=10e-2,
         momentum=0.95,
-        loss_smooth="dice",
+        loss_smooth="bce",
         alpha_focal=0.75,
         gamma_focal=2.0,
         alpha_tversky=0.75,
@@ -335,3 +357,4 @@ if __name__ == "__main__":
     )
 
     trainer.train()
+    Trainer.display_history()

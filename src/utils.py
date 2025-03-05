@@ -84,6 +84,7 @@ def plot_images(
     predicted_images: torch.Tensor = None,
     predicted: bool = False,
     epoch: int = 0,
+    testing: bool = False,
 ):
     if not predicted:
         processed_data_path = path_names()["processed_data_path"]
@@ -98,6 +99,8 @@ def plot_images(
     max_number = min(16, images.size(0))
     num_of_rows = math.ceil(math.sqrt(max_number))
     num_of_columns = math.ceil(max_number / num_of_rows)
+
+    paths = path_names()
 
     plt.figure(figsize=(10, 20))
 
@@ -144,11 +147,12 @@ def plot_images(
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
     plt.tight_layout()
     if not predicted:
-        save_path = os.path.join(path_names()["files_path"], "images.png")
+        save_path = os.path.join(paths["files_path"], "images.png")
+    elif predicted and not testing:
+        save_path = os.path.join(paths["train_images"], f"image{epoch}.png")
     else:
-        save_path = os.path.join(
-            path_names()["train_images"], "image{}.png".format(epoch)
-        )
+        save_path = os.path.join(paths["test_image"], f"pred_image{epoch}.png")
+
     plt.savefig(save_path)
     plt.show()
     plt.close()
