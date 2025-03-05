@@ -185,10 +185,6 @@ def plot_model_architecture(
     print(f"Model architecture saved in {filename}/{model_name}.{format}")
 
 
-import torch
-import torch.nn as nn
-
-
 class IoUScore(nn.Module):
     def __init__(self, threshold: float = 0.5, smooth: float = 1e-6):
         super(IoUScore, self).__init__()
