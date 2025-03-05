@@ -1,2 +1,0 @@
-,Train Images,Valid Images,Train Masks,Valid Masks,Image Size,Mask Size
-Dataset Details,500,100,500,100,"torch.Size([16, 3, 224, 224])","torch.Size([16, 1, 224, 224])"

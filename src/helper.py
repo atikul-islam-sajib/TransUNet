@@ -11,7 +11,10 @@ from loss.dice_loss import DiceLoss
 from loss.focal_loss import FocalLoss
 from loss.jaccard_loss import JaccardLoss
 from loss.tversky_loss import TverskyLoss
+from loss.mse_loss import MeanSquaredLoss
+from loss.combined_loss import CombinedLoss
 from utils import path_names, load_file, config_files
+
 
 def load_dataloader():
     processed_path = path_names()["processed_data_path"]
@@ -50,7 +53,6 @@ def helper(**kwargs):
     activation: str = config_files()["TransUNet"]["activation"]
     layer_norm_eps: float = float(config_files()["TransUNet"]["layer_norm_eps"])
     bias: bool = config_files()["TransUNet"]["bias"]
-    
 
     if model is None:
         trans_unet = TransUNet(
@@ -62,17 +64,27 @@ def helper(**kwargs):
             dropout=dropout,
             activation=activation,
             layer_norm_eps=layer_norm_eps,
-            bias=bias
+            bias=bias,
         )
     elif isinstance(model, TransUNet):
         trans_unet = model
     else:
         raise ValueError("Invalid model type. Expected TransUNet.".capitalize())
-    
+
     if adam:
-        optimizer = optim.Adam(params=trans_unet.parameters(), lr=lr, betas=(beta1, beta2), weight_decay=weight_decay)
+        optimizer = optim.Adam(
+            params=trans_unet.parameters(),
+            lr=lr,
+            betas=(beta1, beta2),
+            weight_decay=weight_decay,
+        )
     elif SGD:
-        optimizer = optim.SGD(params=trans_unet.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)
+        optimizer = optim.SGD(
+            params=trans_unet.parameters(),
+            lr=lr,
+            momentum=momentum,
+            weight_decay=weight_decay,
+        )
 
     if loss == "bce" or loss == "BCE":
         criterion = BCE(name="BCEWithLogitsLoss")
@@ -83,7 +95,15 @@ def helper(**kwargs):
     elif loss == "jaccard":
         criterion = JaccardLoss(smooth=loss_smooth)
     elif loss == "tversky":
-        criterion = TverskyLoss(alpha=alpha_tversky, beta=beta_tversky, smooth=loss_smooth)
+        criterion = TverskyLoss(
+            alpha=alpha_tversky, beta=beta_tversky, smooth=loss_smooth
+        )
+    elif loss == "mse" or loss == "MSE":
+        criterion = MeanSquaredLoss(reduction="mean")
+    else:
+        raise ValueError(
+            "Invalid loss function. Expected one of the following: bce, dice, focal, jaccard, tversky, mse"
+        )
 
     return {
         "train_dataloader": load_dataloader()["train_dataloader"],
@@ -101,20 +121,20 @@ if __name__ == "__main__":
     "dice" | "focal" | "jaccard" | "tversky" | "BCE"
     """
     init = helper(
-        model = None,
-        lr = 2e-4,
-        beta1 = 0.9,
-        beta2 = 0.999,
-        weight_decay = 1e-5,
-        momentum = 0.9,
-        adam = True,
-        SGD = False,
-        loss = "bce",
-        loss_smooth = 1e-6,
-        alpha_focal = 0.25,
-        gamma_focal = 2.0,
-        alpha_tversky = 0.5,
-        beta_tversky = 0.5
+        model=None,
+        lr=2e-4,
+        beta1=0.9,
+        beta2=0.999,
+        weight_decay=1e-5,
+        momentum=0.9,
+        adam=True,
+        SGD=False,
+        loss="bce",
+        loss_smooth=1e-6,
+        alpha_focal=0.25,
+        gamma_focal=2.0,
+        alpha_tversky=0.5,
+        beta_tversky=0.5,
     )
 
     assert init["train_dataloader"].__class__ == torch.utils.data.DataLoader
@@ -124,7 +144,7 @@ if __name__ == "__main__":
         assert init["optimizer"].__class__ == torch.optim.Adam
     elif SGD:
         assert init["optimizer"].__class__ == torch.optim.SGD
-    
+
     if loss == "bce" or loss == "BCE":
         assert init["criterion"].__class__ == BCE
     elif loss == "dice":
@@ -136,4 +156,6 @@ if __name__ == "__main__":
     elif loss == "jaccard":
         assert init["criterion"].__class__ == JaccardLoss
     else:
-        raise ValueError("Invalid loss function. Expected one of: bce, dice, focal, jaccard, tversky.".capitalize())
+        raise ValueError(
+            "Invalid loss function. Expected one of: bce, dice, focal, jaccard, tversky.".capitalize()
+        )

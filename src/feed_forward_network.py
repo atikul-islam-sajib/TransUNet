@@ -30,7 +30,7 @@ class FeedForwardNeuralNetwork(nn.Module):
         elif self.activation == "leaky":
             self.activation_func = nn.LeakyReLU(negative_slope=0.2, inplace=True)
         elif self.activation == "gelu":
-            self.activation_func = nn.GELU(inplace=True)
+            self.activation_func = nn.GELU()
         elif self.activation == "selu":
             self.activation_func = nn.SELU(inplace=True)
         else:

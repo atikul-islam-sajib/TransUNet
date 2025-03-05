@@ -27,6 +27,8 @@ from loss.dice_loss import DiceLoss
 from loss.focal_loss import FocalLoss
 from loss.jaccard_loss import JaccardLoss
 from loss.tversky_loss import TverskyLoss
+from loss.mse_loss import MeanSquaredLoss
+from loss.combined_loss import CombinedLoss
 
 
 class Trainer:
@@ -49,7 +51,7 @@ class Trainer:
         l1_regularization: bool = False,
         elastic_net_regularization: bool = False,
         verbose: bool = True,
-        device: str = "cuad",
+        device: str = "cuda",
         loss_func: str = "bce",
     ):
         self.model = model
@@ -123,10 +125,10 @@ class Trainer:
             assert self.init["criterion"].__class__ == TverskyLoss
         elif self.loss_func == "jaccard":
             assert self.init["criterion"].__class__ == JaccardLoss
+        elif self.loss_func == "mse" or self.loss_func == "MSE":
+            assert self.init["criterion"].__class__ == MeanSquaredLoss
         else:
-            raise ValueError(
-                "Invalid loss function. Expected one of: bce, dice, focal, jaccard, tversky.".capitalize()
-            )
+            assert self.init["criterion"].__class__ == CombinedLoss
 
         self.loss = float("inf")
         self.history = {
@@ -293,6 +295,8 @@ class Trainer:
 
                 self.history["train_loss"].append(np.mean(train_loss))
                 self.history["valid_loss"].append(np.mean(valid_loss))
+                self.history["train_IoU"].append(np.mean(train_IoU))
+                self.history["valid_IoU"].append(np.mean(valid_IoU))
 
             except KeyboardInterrupt:
                 print("\nTraining interrupted manually. Saving progress...")
@@ -349,26 +353,32 @@ class Trainer:
 
 
 if __name__ == "__main__":
-    epochs = config_files()["trainer"]["epochs"]
-    lr = config_files()["trainer"]["lr"]
-    adam = config_files()["trainer"]["optimizer"]["adam"]
+    trainer_config = config_files()["trainer"]
+
+    epochs = trainer_config["epochs"]
+    lr = trainer_config["lr"]
+
+    adam = trainer_config["adam"]
     beta1 = adam["beta1"]
     beta2 = adam["beta2"]
-    weight_decay = adam["weight_decay"]
-    SGD = config_files()["trainer"]["optimizer"]["SGD"]
+    weight_decay = float(adam["weight_decay"])
+
+    SGD = trainer_config["SGD"]
     momentum = SGD["momentum"]
-    SGD_weight_decay = SGD["weight_decay"]
-    loss = config_files()["trainer"]["loss"]
+    SGD_weight_decay = float(SGD["weight_decay"])
+
+    loss = trainer_config["loss"]
     loss_type = loss["type"]
-    loss_smooth = loss["loss_smooth"]
-    alpha_focal = loss["alpha_focal"]
-    gamma_focal = loss["gamma_focal"]
-    alpha_tversky = loss["alpha_tversky"]
-    beta_tversky = loss["beta_tversky"]
-    l1_regularization = config_files()["trainer"]["l1_regularization"]
-    elastic_net_regularization = config_files()["trainer"]["elastic_net_regularization"]
-    verbose = config_files()["trainer"]["verbose"]
-    device = config_files()["trainer"]["device"]
+    loss_smooth = float(loss["loss_smooth"])
+    alpha_focal = float(loss["alpha_focal"])
+    gamma_focal = float(loss["gamma_focal"])
+    alpha_tversky = float(loss["alpha_tversky"])
+    beta_tversky = float(loss["beta_tversky"])
+    l1_regularization = trainer_config["l1_regularization"]
+    elastic_net_regularization = trainer_config["elastic_net_regularization"]
+    verbose = trainer_config["verbose"]
+    device = trainer_config["device"]
+
 
     parser = argparse.ArgumentParser(
         description="Train the TransUNet model for the segmentation dataset.".title()
@@ -412,8 +422,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--beta_tversky", type=float, default=beta_tversky, help="Beta for Tversky loss"
     )
-    parser.add_argument("--adam", action="store_true", help="Use Adam optimizer")
-    parser.add_argument("--SGD", action="store_true", help="Use SGD optimizer")
+    parser.add_argument("--adam", type=bool, default=adam, help="Use Adam optimizer")
+    parser.add_argument("--SGD", type=bool, default=SGD, help="Use SGD optimizer")
     parser.add_argument(
         "--l1_regularization", action="store_true", help="Use L1 regularization"
     )
@@ -428,6 +438,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--device", type=str, default=device, help="Device for training (cuda or cpu)"
     )
+    parser.add_argument("--loss_type", type=str, default=loss_type, help="Define the loss type")
 
     args = parser.parse_args()
 
@@ -439,6 +450,7 @@ if __name__ == "__main__":
         beta2=args.beta2,
         weight_decay=args.weight_decay,
         momentum=args.momentum,
+        loss_func=loss_type,
         loss_smooth=args.loss_smooth,
         alpha_focal=args.alpha_focal,
         gamma_focal=args.gamma_focal,
