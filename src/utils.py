@@ -84,7 +84,7 @@ def plot_images(
     predicted_images: torch.Tensor = None,
     predicted: bool = False,
     epoch: int = 0,
-):  
+):
     if not predicted:
         processed_data_path = path_names()["processed_data_path"]
         processed_data_path = load_file(
@@ -146,7 +146,9 @@ def plot_images(
     if not predicted:
         save_path = os.path.join(path_names()["files_path"], "images.png")
     else:
-        save_path = os.path.join(path_names()["train_images"], "image{}.png".format(epoch))
+        save_path = os.path.join(
+            path_names()["train_images"], "image{}.png".format(epoch)
+        )
     plt.savefig(save_path)
     plt.show()
     plt.close()
@@ -177,3 +179,30 @@ def plot_model_architecture(
         filename=os.path.join(filename, model_name), format=format
     )
     print(f"Model architecture saved in {filename}/{model_name}.{format}")
+
+
+import torch
+import torch.nn as nn
+
+
+class IoUScore(nn.Module):
+    def __init__(self, threshold: float = 0.5, smooth: float = 1e-6):
+        super(IoUScore, self).__init__()
+        self.threshold = threshold
+        self.smooth = smooth
+
+    def forward(self, predicted: torch.Tensor, actual: torch.Tensor) -> torch.Tensor:
+        if not isinstance(predicted, torch.Tensor) or not isinstance(
+            actual, torch.Tensor
+        ):
+            raise TypeError("Inputs must be of type torch.Tensor.")
+
+        predicted = (predicted > self.threshold).float()
+        actual = (actual > self.threshold).float()
+
+        intersection = (predicted * actual).sum(dim=(1, 2, 3))
+        union = (predicted + actual).sum(dim=(1, 2, 3)) - intersection
+
+        iou = (intersection + self.smooth) / (union + self.smooth)
+
+        return iou.mean()
