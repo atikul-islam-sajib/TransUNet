@@ -1,6 +1,7 @@
 import os
 import sys
 import torch
+import argparse
 import traceback
 import numpy as np
 import torch.nn as nn
@@ -10,7 +11,15 @@ import matplotlib.pyplot as plt
 sys.path.append("./src/")
 
 from transUNet import TransUNet
-from utils import device_init, plot_images, path_names, dump_files, load_file, IoUScore
+from utils import (
+    device_init,
+    config_files,
+    plot_images,
+    path_names,
+    dump_files,
+    load_file,
+    IoUScore,
+)
 from helper import helper
 from loss.bce_loss import BCE
 from transUNet import TransUNet
@@ -120,7 +129,12 @@ class Trainer:
             )
 
         self.loss = float("inf")
-        self.history = {"train_loss": [], "valid_loss": [], "train_IoU": [], "valid_IoU": []}
+        self.history = {
+            "train_loss": [],
+            "valid_loss": [],
+            "train_IoU": [],
+            "valid_IoU": [],
+        }
 
     def l1_regularization(self, model: TransUNet = None):
         if (model is None) and (not isinstance(model, TransUNet)):
@@ -306,7 +320,7 @@ class Trainer:
         if history is None or not isinstance(history, dict):
             print("Invalid or empty history file.")
             return
-        
+
         fig, axes = plt.subplots(2, 2, figsize=(12, 10), sharex=True)
 
         axes[0, 0].plot(history["train_loss"], label="Train Loss", color="blue")
@@ -335,25 +349,107 @@ class Trainer:
 
 
 if __name__ == "__main__":
+    epochs = config_files()["trainer"]["epochs"]
+    lr = config_files()["trainer"]["lr"]
+    adam = config_files()["trainer"]["optimizer"]["adam"]
+    beta1 = adam["beta1"]
+    beta2 = adam["beta2"]
+    weight_decay = adam["weight_decay"]
+    SGD = config_files()["trainer"]["optimizer"]["SGD"]
+    momentum = SGD["momentum"]
+    SGD_weight_decay = SGD["weight_decay"]
+    loss = config_files()["trainer"]["loss"]
+    loss_type = loss["type"]
+    loss_smooth = loss["loss_smooth"]
+    alpha_focal = loss["alpha_focal"]
+    gamma_focal = loss["gamma_focal"]
+    alpha_tversky = loss["alpha_tversky"]
+    beta_tversky = loss["beta_tversky"]
+    l1_regularization = config_files()["trainer"]["l1_regularization"]
+    elastic_net_regularization = config_files()["trainer"]["elastic_net_regularization"]
+    verbose = config_files()["trainer"]["verbose"]
+    device = config_files()["trainer"]["device"]
+
+    parser = argparse.ArgumentParser(
+        description="Train the TransUNet model for the segmentation dataset.".title()
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=epochs, help="Number of epochs for training"
+    )
+    parser.add_argument(
+        "--lr", type=float, default=lr, help="Learning rate for training"
+    )
+    parser.add_argument(
+        "--beta1", type=float, default=beta1, help="Beta1 for Adam optimizer"
+    )
+    parser.add_argument(
+        "--beta2", type=float, default=beta2, help="Beta2 for Adam optimizer"
+    )
+    parser.add_argument(
+        "--weight_decay",
+        type=float,
+        default=weight_decay,
+        help="Weight decay for Adam optimizer",
+    )
+    parser.add_argument(
+        "--momentum", type=float, default=momentum, help="Momentum for SGD optimizer"
+    )
+    parser.add_argument(
+        "--loss_smooth", type=str, default=loss_smooth, help="Loss smooth type"
+    )
+    parser.add_argument(
+        "--alpha_focal", type=float, default=alpha_focal, help="Alpha for Focal loss"
+    )
+    parser.add_argument(
+        "--gamma_focal", type=float, default=gamma_focal, help="Gamma for Focal loss"
+    )
+    parser.add_argument(
+        "--alpha_tversky",
+        type=float,
+        default=alpha_tversky,
+        help="Alpha for Tversky loss",
+    )
+    parser.add_argument(
+        "--beta_tversky", type=float, default=beta_tversky, help="Beta for Tversky loss"
+    )
+    parser.add_argument("--adam", action="store_true", help="Use Adam optimizer")
+    parser.add_argument("--SGD", action="store_true", help="Use SGD optimizer")
+    parser.add_argument(
+        "--l1_regularization", action="store_true", help="Use L1 regularization"
+    )
+    parser.add_argument(
+        "--elastic_net_regularization",
+        action="store_true",
+        help="Use Elastic net regularization",
+    )
+    parser.add_argument(
+        "--verbose", action="store_true", help="Display progress and save images"
+    )
+    parser.add_argument(
+        "--device", type=str, default=device, help="Device for training (cuda or cpu)"
+    )
+
+    args = parser.parse_args()
+
     trainer = Trainer(
         model=None,
-        epochs=200,
-        lr=0.0002,
-        beta1=0.9,
-        beta2=0.999,
-        weight_decay=10e-2,
-        momentum=0.95,
-        loss_smooth="bce",
-        alpha_focal=0.75,
-        gamma_focal=2.0,
-        alpha_tversky=0.75,
-        beta_tversky=0.50,
-        adam=True,
-        SGD=False,
-        l1_regularization=False,
-        elastic_net_regularization=False,
-        verbose=True,
-        device="cuda",
+        epochs=args.epochs,
+        lr=args.lr,
+        beta1=args.beta1,
+        beta2=args.beta2,
+        weight_decay=args.weight_decay,
+        momentum=args.momentum,
+        loss_smooth=args.loss_smooth,
+        alpha_focal=args.alpha_focal,
+        gamma_focal=args.gamma_focal,
+        alpha_tversky=args.alpha_tversky,
+        beta_tversky=args.beta_tversky,
+        adam=args.adam,
+        SGD=args.SGD,
+        l1_regularization=args.l1_regularization,
+        elastic_net_regularization=args.elastic_net_regularization,
+        verbose=args.verbose,
+        device=args.device,
     )
 
     trainer.train()
