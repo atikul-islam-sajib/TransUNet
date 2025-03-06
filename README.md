@@ -1,11 +1,16 @@
-# **🚀 TransUNet - Transformer-Based U-Net for Medical Image Segmentation**
+# **🚀 TransUNet - Unofficial Implementation of Transformer-Based U-Net for Medical Image Segmentation**
 
-**TransUNet** is an advanced **hybrid deep learning model** that combines **CNNs (Convolutional Neural Networks)** and **Transformers** to improve segmentation accuracy in medical imaging. The model enhances **U-Net** by integrating **self-attention mechanisms**, making it more efficient for complex segmentation tasks.
+This is an **unofficial implementation** of **[TransUNet](https://arxiv.org/abs/2102.04306)**:  
+> **"Transformers Make Strong Encoders for Medical Image Segmentation"**  
+> *Jieneng Chen, Yutong Lu, Qihang Yu, et al.*
+
+TransUNet is a **hybrid deep learning model** that combines **CNNs (Convolutional Neural Networks)** and **Transformers** to improve segmentation accuracy in medical imaging. This repository provides a **fully configurable** and **easy-to-use** implementation of TransUNet.
 
 ---
 
 ## **📌 Key Features**
-✅ Hybrid **CNN + Transformer** architecture for robust segmentation  
+✅ **Unofficial Implementation** based on the **original paper**  
+✅ Hybrid **CNN + Transformer** architecture for enhanced segmentation  
 ✅ Supports multiple optimizers: **Adam, AdamW, SGD**  
 ✅ Configurable loss functions: **BCE, Focal, Tversky**  
 ✅ Multi-device support: **CPU, GPU, Apple M1/M2 (`mps`)**  
@@ -124,7 +129,7 @@ Generated segmentation masks are saved in:
 ---
 
 ## **📌 Citation**
-If you use this repository, please consider citing:
+If you use this repository, please consider citing the **original TransUNet paper**:
 ```
 @article{chen2021transunet,
   title={TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation},
@@ -137,7 +142,8 @@ If you use this repository, please consider citing:
 ---
 
 ## **📌 License**
-This project is **open-source** and available under the **MIT License**.
+This project is **open-source** and available under the **MIT License**.  
+🚨 **Note:** This is an **unofficial implementation** and is **not affiliated** with the original authors.
 
 ---
 

@@ -50,11 +50,11 @@ trainer:
   l1_regularization: False
   elastic_net_regularization: False
   verbose: True
-  device: "mps"
+  device: "cuda"
 
 tester:
   dataset: "test"
-  device: "mps"
+  device: "cuda"
 
 inference:
   image: "../artifacts/data/processed..."
