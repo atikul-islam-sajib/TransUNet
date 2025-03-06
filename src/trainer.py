@@ -361,14 +361,20 @@ if __name__ == "__main__":
     epochs = trainer_config["epochs"]
     lr = trainer_config["lr"]
 
-    adam = trainer_config["adam"]
+    optimizer = trainer_config["optimizer"]
+    adam = optimizer["adam"]
     beta1 = adam["beta1"]
     beta2 = adam["beta2"]
     weight_decay = float(adam["weight_decay"])
 
-    SGD = trainer_config["SGD"]
+    SGD = optimizer["SGD"]
     momentum = SGD["momentum"]
     SGD_weight_decay = float(SGD["weight_decay"])
+
+    AdamW = optimizer["AdamW"]
+    beta1 = AdamW["beta1"]
+    beta2 = AdamW["beta2"]
+    weight_decay = float(AdamW["weight_decay"])
 
     loss = trainer_config["loss"]
     loss_type = loss["type"]
@@ -424,8 +430,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--beta_tversky", type=float, default=beta_tversky, help="Beta for Tversky loss"
     )
-    parser.add_argument("--adam", type=bool, default=adam, help="Use Adam optimizer")
-    parser.add_argument("--SGD", type=bool, default=SGD, help="Use SGD optimizer")
+    parser.add_argument(
+        "--optimizer",
+        type=str,
+        default=optimizer,
+        help="Select the optimizer",
+        choices=["Adam", "AdamW", "SGD"],
+    )
     parser.add_argument(
         "--l1_regularization", action="store_true", help="Use L1 regularization"
     )
@@ -460,8 +471,7 @@ if __name__ == "__main__":
         gamma_focal=args.gamma_focal,
         alpha_tversky=args.alpha_tversky,
         beta_tversky=args.beta_tversky,
-        adam=args.adam,
-        SGD=args.SGD,
+        optimizer=args.optimizer,
         l1_regularization=args.l1_regularization,
         elastic_net_regularization=args.elastic_net_regularization,
         verbose=args.verbose,
