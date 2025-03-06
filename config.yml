@@ -81,15 +81,19 @@ TransUNet:
 trainer:
   epochs: 300
   lr: 0.0001
-  adam: 
-    beta1: 0.9
-    beta2: 0.999
-    weight_decay: 0.0001
-  SGD: 
-    momentum: 0.95
-    weight_decay: 0.0
-  AdamW:
-    pass
+  optimizer: "AdamW"
+  optimizers:
+    adam: 
+      beta1: 0.9
+      beta2: 0.999
+      weight_decay: 0.0001
+    sgd: 
+      momentum: 0.95
+      weight_decay: 0.0
+    adamw:
+      beta1: 0.9
+      beta2: 0.999
+      weight_decay: 0.0001
   loss: 
     type: "bce"
     loss_smooth: 1e-06
@@ -107,7 +111,8 @@ tester:
   device: "cuda"
 
 inference:
-  Image: "./artifacts/data/processed..."
+  image: "./artifacts/data/processed..."
+
 
 
 #   artifacts:
