@@ -1,3 +1,57 @@
+# artifacts:
+#   raw_data_path: "./data/raw/"
+#   processed_data_path: "./data/processed/"
+#   files_path: "./artifacts/files/"
+#   train_models: "./artifacts/checkpoints/train_models/"
+#   best_model: "./artifacts/checkpoints/best_model/"
+#   metrics_path: "./artifacts/metrics/"
+#   train_images: "./artifacts/outputs/train_images/"
+#   test_image: "./artifacts/outputs/test_image/"
+
+# dataloader:
+#   image_path: "./data/raw/dataset.zip"
+#   image_channels: 3
+#   image_size: 128
+#   batch_size: 8
+#   split_size: 0.30
+
+# TransUNet:
+#   nheads: 4
+#   num_layers: 4
+#   dim_feedforward: 256
+#   dropout: 0.5
+#   activation: "leaky"
+#   layer_norm_eps: 1e-05
+#   bias: False
+
+# trainer:
+#   epochs: 500
+#   lr: 2e-4
+#   adam: 
+#     beta1: 0.9
+#     beta2: 0.999
+#     weight_decay: 0.05
+#   SGD: 
+#     momentum: 0.95
+#     weight_decay: 0.0
+#   loss: 
+#     type: "dice"
+#     loss_smooth: 1e-06
+#     alpha_focal: 0.75
+#     gamma_focal: 2.0
+#     alpha_tversky: 0.75
+#     beta_tversky: 0.5
+#   l1_regularization: False
+#   elastic_net_regularization: False
+#   verbose: True
+#   device: "cuda"
+
+# tester:
+#   dataset: "test"
+#   device: "cuda"
+
+
+# ## Get the best result with it, so far ##
 artifacts:
   raw_data_path: "./data/raw/"
   processed_data_path: "./data/processed/"
@@ -12,25 +66,25 @@ dataloader:
   image_path: "./data/raw/dataset.zip"
   image_channels: 3
   image_size: 128
-  batch_size: 1
+  batch_size: 16
   split_size: 0.30
 
 TransUNet:
   nheads: 4
   num_layers: 4
-  dim_feedforward: 256
-  dropout: 0.1
-  activation: "leaky"
+  dim_feedforward: 128
+  dropout: 0.3
+  activation: "gelu"
   layer_norm_eps: 1e-05
   bias: False
 
 trainer:
   epochs: 300
-  lr: 1e-4
+  lr: 0.0001
   adam: 
     beta1: 0.9
     beta2: 0.999
-    weight_decay: 10e-04
+    weight_decay: 0.0001
   SGD: 
     momentum: 0.95
     weight_decay: 0.0
@@ -38,7 +92,7 @@ trainer:
     type: "bce"
     loss_smooth: 1e-06
     alpha_focal: 0.75
-    gamma_focal: 2.0
+    gamma_focal: 2
     alpha_tversky: 0.75
     beta_tversky: 0.5
   l1_regularization: False
@@ -51,8 +105,7 @@ tester:
   device: "cuda"
 
 
-# ## Get the best result with it, so far ##
-# artifacts:
+#   artifacts:
 #   raw_data_path: "./data/raw/"
 #   processed_data_path: "./data/processed/"
 #   files_path: "./artifacts/files/"
@@ -103,3 +156,4 @@ tester:
 # tester:
 #   dataset: "test"
 #   device: "cuda"
+
