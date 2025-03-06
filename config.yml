@@ -104,6 +104,9 @@ tester:
   dataset: "test"
   device: "cuda"
 
+inference:
+  Image: "./artifacts/data/processed..."
+
 
 #   artifacts:
 #   raw_data_path: "./data/raw/"

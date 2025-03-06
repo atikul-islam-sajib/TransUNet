@@ -122,7 +122,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--image",
         type=str,
-        default=config_files()["Inference"]["Image"],
+        default=config_files()["inference"]["Image"],
         help="Path to the input image".capitalize(),
     )
     args = parser.parse_args()
