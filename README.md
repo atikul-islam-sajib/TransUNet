@@ -211,12 +211,3 @@ If you use this repository, please consider citing the **original TransUNet pape
 ## **📌 License**
 This project is **open-source** and available under the **MIT License**.  
 🚨 **Note:** This is an **unofficial implementation** and is **not affiliated** with the original authors.
-
----
-
-# **🔥 Ready to Get Started?**
-- Modify `config.yaml` for your setup.  
-- Run **training** with: `python src/cli.py --train`  
-- Run **testing** with: `python src/cli.py --test`  
-
-🚀 **Happy Training & Testing with TransUNet!** 🚀  
