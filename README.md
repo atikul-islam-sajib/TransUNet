@@ -168,30 +168,21 @@ inference:
 ---
 
 ## **📌 Viewing Results**
-### **🔹 Model Checkpoints**
-Trained models are saved in:
-```bash
-./artifacts/checkpoints/train_models/
-```
-
-### **🔹 Best Model**
-The best-performing model is saved in:
-```bash
-./artifacts/checkpoints/best_model/
-```
-
-### **🔹 Test Predictions**
-Generated segmentation masks are saved in:
-```bash
-./artifacts/outputs/test_image/
-```
+| **Process**           | **Saved Location**  | **Description** |
+|-----------------------|--------------------|-----------------|
+| **Model Checkpoints** | `./artifacts/checkpoints/train_models/` | Stores model checkpoints during training. |
+| **Best Model**        | `./artifacts/checkpoints/best_model/`    | Saves the best-performing model based on validation metrics. |
+| **Test Predictions**  | `./artifacts/outputs/test_image/`       | Stores predicted segmentation masks from test data. |
 
 ---
 
 ## **📌 TransUNet Workflow**
-```
-1️⃣ Load Dataset  ----->  2️⃣ Train Model  ----->  3️⃣ Evaluate  ----->  4️⃣ Generate Predictions
-```
+| **Step** | **Process**            | **Description** |
+|---------|----------------------|-----------------|
+| 1️⃣      | **Load Dataset**       | Load and preprocess the dataset for training. |
+| 2️⃣      | **Train Model**        | Train TransUNet using the dataset and save checkpoints. |
+| 3️⃣      | **Evaluate Model**     | Validate model performance on test data. |
+| 4️⃣      | **Generate Predictions** | Apply the trained model on test images and generate segmentation masks. |
 
 ---
 
