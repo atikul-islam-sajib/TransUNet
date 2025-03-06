@@ -88,6 +88,8 @@ trainer:
   SGD: 
     momentum: 0.95
     weight_decay: 0.0
+  AdamW:
+    pass
   loss: 
     type: "bce"
     loss_smooth: 1e-06

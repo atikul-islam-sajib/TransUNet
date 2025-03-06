@@ -36,6 +36,7 @@ def helper(**kwargs):
     weight_decay: float = kwargs["weight_decay"]
     momentum: float = kwargs["momentum"]
     adam: bool = kwargs["adam"]
+    AdamW: bool = kwargs["AdamW"]
     SGD: bool = kwargs["SGD"]
     loss: str = kwargs["loss"]
     loss_smooth: float = kwargs["loss_smooth"]
@@ -83,6 +84,13 @@ def helper(**kwargs):
             params=trans_unet.parameters(),
             lr=lr,
             momentum=momentum,
+            weight_decay=weight_decay,
+        )
+    elif AdamW:
+        optimizer = optim.AdamW(
+            params=trans_unet.parameters(),
+            lr=lr,
+            betas=(beta1, beta2),
             weight_decay=weight_decay,
         )
 

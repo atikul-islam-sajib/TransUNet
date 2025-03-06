@@ -48,6 +48,7 @@ class Trainer:
         beta_tversky: float = 0.5,
         adam: bool = True,
         SGD: bool = False,
+        AdamW: bool = False,
         l1_regularization: bool = False,
         elastic_net_regularization: bool = False,
         verbose: bool = True,
@@ -68,6 +69,7 @@ class Trainer:
         self.beta_tversky = beta_tversky
         self.adam = adam
         self.SGD = SGD
+        self.AdamW = AdamW
         self.l1_regularization = l1_regularization
         self.elastic_net_regularization = elastic_net_regularization
         self.verbose = verbose
@@ -85,6 +87,7 @@ class Trainer:
             momentum=self.momentum,
             adam=self.adam,
             SGD=self.SGD,
+            AdamW=self.AdamW,
             loss=self.loss_func,
             loss_smooth=self.loss_smooth,
             alpha_focal=self.alpha_focal,
@@ -208,7 +211,7 @@ class Trainer:
             train_loss += self.l1_regularizer(model=self.model)
         elif self.elastic_net_regularization:
             train_loss += self.elastic_net_regularizer(model=self.model)
-        
+
         train_loss.backward()
         self.optimizer.step()
 
@@ -385,7 +388,6 @@ if __name__ == "__main__":
     verbose = trainer_config["verbose"]
     device = trainer_config["device"]
 
-
     parser = argparse.ArgumentParser(
         description="Train the TransUNet model for the segmentation dataset.".title()
     )
@@ -444,7 +446,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--device", type=str, default=device, help="Device for training (cuda or cpu)"
     )
-    parser.add_argument("--loss_type", type=str, default=loss_type, help="Define the loss type")
+    parser.add_argument(
+        "--loss_type", type=str, default=loss_type, help="Define the loss type"
+    )
 
     args = parser.parse_args()
 
