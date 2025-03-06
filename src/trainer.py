@@ -107,9 +107,11 @@ class Trainer:
         assert self.init["train_dataloader"].__class__ == torch.utils.data.DataLoader
         assert self.init["valid_dataloader"].__class__ == torch.utils.data.DataLoader
         assert self.init["model"].__class__ == TransUNet
-        if self.adam:
+        if self.optimizer == "Adam":
             assert self.init["optimizer"].__class__ == torch.optim.Adam
-        elif self.SGD:
+        elif self.optimizer == "AdamW":
+            assert self.init["optimizer"].__class__ == torch.optim.AdamW
+        elif self.optimizer == "SGD":
             assert self.init["optimizer"].__class__ == torch.optim.SGD
 
         if self.loss_func == "bce" or self.criterion == "BCE":
@@ -362,19 +364,18 @@ if __name__ == "__main__":
     lr = trainer_config["lr"]
 
     optimizer = trainer_config["optimizer"]
-    adam = optimizer["adam"]
-    beta1 = adam["beta1"]
-    beta2 = adam["beta2"]
-    weight_decay = float(adam["weight_decay"])
+    optmizers_config = trainer_config["optimizers"]
 
-    SGD = optimizer["SGD"]
-    momentum = SGD["momentum"]
-    SGD_weight_decay = float(SGD["weight_decay"])
+    beta1, beta2, weight_decay, momentum = 0.0, 0.0, 0.0, 0.0
 
-    AdamW = optimizer["AdamW"]
-    beta1 = AdamW["beta1"]
-    beta2 = AdamW["beta2"]
-    weight_decay = float(AdamW["weight_decay"])
+    if "Adam" in optmizers_config or "AdamW" in optmizers_config:
+        beta1 = float(optmizers_config["Adam"]["beta1"])
+        beta2 = float(optmizers_config["Adam"]["beta2"])
+        weight_decay = float(optmizers_config["Adam"]["weight_decay"])
+
+    elif "SGD" in optmizers_config:
+        momentum = float(optmizers_config["SGD"]["momentum"])
+        SGD_weight_decay = float(optmizers_config["SGD"]["weight_decay"])
 
     loss = trainer_config["loss"]
     loss_type = loss["type"]

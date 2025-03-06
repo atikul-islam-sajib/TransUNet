@@ -66,31 +66,31 @@ dataloader:
   image_path: "./data/raw/dataset.zip"
   image_channels: 3
   image_size: 128
-  batch_size: 16
+  batch_size: 8
   split_size: 0.30
 
 TransUNet:
   nheads: 4
   num_layers: 4
-  dim_feedforward: 128
+  dim_feedforward: 512
   dropout: 0.3
   activation: "gelu"
   layer_norm_eps: 1e-05
   bias: False
 
 trainer:
-  epochs: 300
+  epochs: 100
   lr: 0.0001
   optimizer: "AdamW"
   optimizers:
-    adam: 
+    Adam: 
       beta1: 0.9
       beta2: 0.999
       weight_decay: 0.0001
-    sgd: 
+    SGD: 
       momentum: 0.95
       weight_decay: 0.0
-    adamw:
+    AdamW:
       beta1: 0.9
       beta2: 0.999
       weight_decay: 0.0001
@@ -104,11 +104,11 @@ trainer:
   l1_regularization: False
   elastic_net_regularization: False
   verbose: True
-  device: "cuda"
+  device: "mps"
 
 tester:
   dataset: "test"
-  device: "cuda"
+  device: "mps"
 
 inference:
   image: "./artifacts/data/processed..."

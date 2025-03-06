@@ -35,7 +35,7 @@ def helper(**kwargs):
     beta2: float = kwargs["beta2"]
     weight_decay: float = kwargs["weight_decay"]
     momentum: float = kwargs["momentum"]
-    optimizer_selector: str = kwargs["optimizer_selector"]
+    optimizer_selector: str = kwargs["optimizer"]
     loss: str = kwargs["loss"]
     loss_smooth: float = kwargs["loss_smooth"]
     alpha_focal: float = kwargs["alpha_focal"]

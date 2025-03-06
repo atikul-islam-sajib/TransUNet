@@ -16,20 +16,24 @@ def cli():
     image_size = config_files()["dataloader"]["image_size"]
     batch_size = config_files()["dataloader"]["batch_size"]
     split_size = config_files()["dataloader"]["split_size"]
-
     trainer_config = config_files()["trainer"]
 
     epochs = trainer_config["epochs"]
     lr = trainer_config["lr"]
 
-    adam = trainer_config["adam"]
-    beta1 = adam["beta1"]
-    beta2 = adam["beta2"]
-    weight_decay = float(adam["weight_decay"])
+    optimizer = trainer_config["optimizer"]
+    optmizers_config = trainer_config["optimizers"]
 
-    SGD = trainer_config["SGD"]
-    momentum = SGD["momentum"]
-    SGD_weight_decay = float(SGD["weight_decay"])
+    beta1, beta2, weight_decay, momentum = 0.0, 0.0, 0.0, 0.0
+
+    if "Adam" in optmizers_config or "AdamW" in optmizers_config:
+        beta1 = float(optmizers_config["Adam"]["beta1"])
+        beta2 = float(optmizers_config["Adam"]["beta2"])
+        weight_decay = float(optmizers_config["Adam"]["weight_decay"])
+
+    elif "SGD" in optmizers_config:
+        momentum = float(optmizers_config["SGD"]["momentum"])
+        weight_decay = float(optmizers_config["SGD"]["weight_decay"])
 
     loss = trainer_config["loss"]
     loss_type = loss["type"]
@@ -116,8 +120,13 @@ def cli():
     parser.add_argument(
         "--beta_tversky", type=float, default=beta_tversky, help="Beta for Tversky loss"
     )
-    parser.add_argument("--adam", type=bool, default=adam, help="Use Adam optimizer")
-    parser.add_argument("--SGD", type=bool, default=SGD, help="Use SGD optimizer")
+    parser.add_argument(
+        "--optimizer",
+        type=str,
+        default=optimizer,
+        help="Select the optimizer to use",
+        choices=["Adam", "AdamW", "SGD"],
+    )
     parser.add_argument(
         "--l1_regularization",
         type=bool,
@@ -134,9 +143,6 @@ def cli():
         "--verbose", type=bool, default=verbose, help="Display progress and save images"
     )
     parser.add_argument(
-        "--device", type=str, default=device, help="Device for training (cuda or cpu)"
-    )
-    parser.add_argument(
         "--loss_type", type=str, default=loss_type, help="Define the loss type"
     )
 
@@ -149,7 +155,7 @@ def cli():
     parser.add_argument(
         "--device",
         type=str,
-        default=config_files()["tester"]["device"],
+        default=config_files()["trainer"]["device"],
         help="Device to use for testing".capitalize(),
     )
     parser.add_argument(
@@ -197,8 +203,7 @@ def cli():
             gamma_focal=args.gamma_focal,
             alpha_tversky=args.alpha_tversky,
             beta_tversky=args.beta_tversky,
-            adam=args.adam,
-            SGD=args.SGD,
+            optimizer=args.optimizer,
             l1_regularization=args.l1_regularization,
             elastic_net_regularization=args.elastic_net_regularization,
             verbose=args.verbose,
@@ -209,7 +214,7 @@ def cli():
         Trainer.display_history()
 
     elif args.test:
-        dataset = args.dataset
+        dataset = args.dataset_type
         device = args.device
 
         tester = Tester(dataset=dataset, device=device)

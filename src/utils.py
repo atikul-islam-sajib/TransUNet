@@ -4,9 +4,12 @@ import math
 import yaml
 import torch
 import joblib
+import matplotlib
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from torchview import draw_graph
+
+matplotlib.use("Agg")
 
 sys.path.append("./src/")
 
@@ -154,7 +157,6 @@ def plot_images(
         save_path = os.path.join(paths["test_image"], f"pred_image{epoch}.png")
 
     plt.savefig(save_path)
-    plt.show()
     plt.close()
     print("Image files saved in", save_path)
 
