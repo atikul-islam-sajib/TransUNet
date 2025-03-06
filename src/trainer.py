@@ -46,9 +46,7 @@ class Trainer:
         gamma_focal: float = 2,
         alpha_tversky: float = 0.75,
         beta_tversky: float = 0.5,
-        adam: bool = True,
-        SGD: bool = False,
-        AdamW: bool = False,
+        optimizer: str = "AdamW",
         l1_regularization: bool = False,
         elastic_net_regularization: bool = False,
         verbose: bool = True,
@@ -67,9 +65,7 @@ class Trainer:
         self.gamma_focal = gamma_focal
         self.alpha_tversky = alpha_tversky
         self.beta_tversky = beta_tversky
-        self.adam = adam
-        self.SGD = SGD
-        self.AdamW = AdamW
+        self.optimizer = optimizer
         self.l1_regularization = l1_regularization
         self.elastic_net_regularization = elastic_net_regularization
         self.verbose = verbose
@@ -85,9 +81,7 @@ class Trainer:
             beta2=self.beta2,
             weight_decay=self.weight_decay,
             momentum=self.momentum,
-            adam=self.adam,
-            SGD=self.SGD,
-            AdamW=self.AdamW,
+            optimizer=self.optimizer,
             loss=self.loss_func,
             loss_smooth=self.loss_smooth,
             alpha_focal=self.alpha_focal,

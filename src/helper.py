@@ -35,9 +35,7 @@ def helper(**kwargs):
     beta2: float = kwargs["beta2"]
     weight_decay: float = kwargs["weight_decay"]
     momentum: float = kwargs["momentum"]
-    adam: bool = kwargs["adam"]
-    AdamW: bool = kwargs["AdamW"]
-    SGD: bool = kwargs["SGD"]
+    optimizer_selector: str = kwargs["optimizer_selector"]
     loss: str = kwargs["loss"]
     loss_smooth: float = kwargs["loss_smooth"]
     alpha_focal: float = kwargs["alpha_focal"]
@@ -72,26 +70,30 @@ def helper(**kwargs):
     else:
         raise ValueError("Invalid model type. Expected TransUNet.".capitalize())
 
-    if adam:
+    if optimizer_selector == "Adam":
         optimizer = optim.Adam(
             params=trans_unet.parameters(),
             lr=lr,
             betas=(beta1, beta2),
             weight_decay=weight_decay,
         )
-    elif SGD:
+    elif optimizer_selector == "SGD":
         optimizer = optim.SGD(
             params=trans_unet.parameters(),
             lr=lr,
             momentum=momentum,
             weight_decay=weight_decay,
         )
-    elif AdamW:
+    elif optimizer_selector == "AdamW":
         optimizer = optim.AdamW(
             params=trans_unet.parameters(),
             lr=lr,
             betas=(beta1, beta2),
             weight_decay=weight_decay,
+        )
+    else:
+        raise ValueError(
+            "Invalid optimizer selector. Expected one of the following: Adam, SGD, AdamW"
         )
 
     if loss == "bce" or loss == "BCE":
