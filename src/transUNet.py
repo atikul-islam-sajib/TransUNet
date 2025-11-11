@@ -26,6 +26,8 @@ class TransUNet(nn.Module):
         activation: str = "relu",
         layer_norm_eps: float = 1e-05,
         bias: bool = False,
+        use_diff_attn: bool = False,
+        lam: float = 0.5,
     ):
         super(TransUNet, self).__init__()
 
@@ -38,6 +40,8 @@ class TransUNet(nn.Module):
         self.activation = activation
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
+        self.use_diff_attn = use_diff_attn
+        self.lam = lam
 
         warnings.warn(
             "Output channel configuration is determined based on image size:\n"
@@ -106,6 +110,8 @@ class TransUNet(nn.Module):
             activation=self.activation,
             layer_norm_eps=self.layer_norm_eps,
             bias=self.bias,
+            use_diff_attn=self.use_diff_attn,
+            lam=self.lam,
         )
 
     def forward(self, x: torch.Tensor):
@@ -205,6 +211,15 @@ if __name__ == "__main__":
         default=False,
         help="Display the model architecture".capitalize(),
     )
+    parser.add_argument(
+        "--use_diff_attn",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--lam",
+        type=float,
+        default=0.5,
+    )
 
     args = parser.parse_args()
 
@@ -218,6 +233,8 @@ if __name__ == "__main__":
         activation=args.activation,
         layer_norm_eps=args.layer_norm_eps,
         bias=args.bias,
+        use_diff_attn=args.use_diff_attn,
+        lam=args.lam,                      
     )
 
     images = torch.randn((1, args.image_channels, args.image_size, args.image_size))
