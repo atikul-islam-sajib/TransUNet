@@ -25,6 +25,8 @@ class ViT(nn.Module):
         activation: str = "relu",
         layer_norm_eps: float = 1e-05,
         bias: bool = False,
+        use_diff_attn: bool = False,  
+        lam: float = 0.5,              
     ):
         super(ViT, self).__init__()
         self.image_size = image_size
@@ -36,6 +38,8 @@ class ViT(nn.Module):
         self.activation = activation
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
+        self.use_diff_attn = use_diff_attn  
+        self.lam = lam                      
 
         self.patch_embedding = PatchEmbedding(
             image_size=self.image_size,
@@ -54,6 +58,8 @@ class ViT(nn.Module):
                     activation=self.activation,
                     layer_norm_eps=self.layer_norm_eps,
                     bias=self.bias,
+                    use_diff_attn=self.use_diff_attn,  
+                    lam=self.lam,                      
                 )
                 for _ in tqdm(range(self.num_layers))
             ]
@@ -86,51 +92,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Vision Transformer, aka as ViT".title()
     )
-    parser.add_argument(
-        "--image_size", type=int, default=256, help="Image size".capitalize()
-    )
-    parser.add_argument(
-        "--dimension", type=int, default=512, help="Dimension".capitalize()
-    )
-    parser.add_argument(
-        "--nheads", type=int, default=4, help="Number of heads".capitalize()
-    )
-    parser.add_argument(
-        "--num_layers", type=int, default=4, help="Number of layers".capitalize()
-    )
-    parser.add_argument(
-        "--dim_feedforward",
-        type=int,
-        default=1024,
-        help="Feedforward dimension".capitalize(),
-    )
-    parser.add_argument(
-        "--dropout", type=float, default=0.1, help="Dropout probability".capitalize()
-    )
-    parser.add_argument(
-        "--activation",
-        choices=["relu", "gelu", "silu"],
-        default="relu",
-        help="Activation function".capitalize(),
-    )
-    parser.add_argument(
-        "--layer_norm_eps",
-        type=float,
-        default=1e-05,
-        help="Layer normalization epsilon".capitalize(),
-    )
-    parser.add_argument(
-        "--bias",
-        action="store_true",
-        default=False,
-        help="Add bias to the layers".capitalize(),
-    )
-    parser.add_argument(
-        "--display",
-        action="store_true",
-        default=False,
-        help="Display the model architecture".capitalize(),
-    )
+    parser.add_argument("--image_size", type=int, default=256)
+    parser.add_argument("--dimension", type=int, default=512)
+    parser.add_argument("--nheads", type=int, default=4)
+    parser.add_argument("--num_layers", type=int, default=4)
+    parser.add_argument("--dim_feedforward", type=int, default=1024)
+    parser.add_argument("--dropout", type=float, default=0.1)
+    parser.add_argument("--activation", choices=["relu", "gelu", "silu"], default="relu")
+    parser.add_argument("--layer_norm_eps", type=float, default=1e-05)
+    parser.add_argument("--bias", action="store_true", default=False)
+    parser.add_argument("--display", action="store_true", default=False)
+    parser.add_argument("--use_diff_attn", action="store_true")  
+    parser.add_argument("--lam", type=float, default=0.5)       
 
     args = parser.parse_args()
 
@@ -144,10 +117,11 @@ if __name__ == "__main__":
         activation=args.activation,
         layer_norm_eps=args.layer_norm_eps,
         bias=args.bias,
+        use_diff_attn=args.use_diff_attn,  
+        lam=args.lam,                      
     )
 
     images = torch.randn((16, args.dimension, 16, 16))
-
     assert (vit(x=images).size()) == (16, args.dimension, 16, 16)
 
     if args.display:
