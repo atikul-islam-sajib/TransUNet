@@ -6,10 +6,10 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
-from multi_head_attention import MultiHeadAttention
 from layer_normalization import LayerNormalization
 from feed_forward_network import FeedForwardNeuralNetwork
 from utils import total_params, plot_model_architecture
+from multi_head_attention import MultiHeadAttention, DifferentialMultiHeadAttention
 
 
 class TransformerEncoderBlock(nn.Module):
@@ -22,6 +22,8 @@ class TransformerEncoderBlock(nn.Module):
         activation: str = "relu",
         layer_norm_eps: float = 1e-05,
         bias: bool = False,
+        use_diff_attn: bool = False,
+        lam: float = 0.5,
     ):
         super(TransformerEncoderBlock, self).__init__()
         self.dimension = dimension
@@ -31,10 +33,18 @@ class TransformerEncoderBlock(nn.Module):
         self.activation = activation
         self.layer_norm_eps = layer_norm_eps
         self.bias = bias
+        self.use_diff_attn = use_diff_attn
+        self.lam = lam
 
-        self.multi_head_attention = MultiHeadAttention(
-            nheads=self.nheads, dimension=self.dimension
-        )
+        if self.use_diff_attn:
+            self.multi_head_attention = DifferentialMultiHeadAttention(
+                nheads=self.nheads, dimension=self.dimension, lam=self.lam
+            )
+        else:
+            self.multi_head_attention = MultiHeadAttention(
+                nheads=self.nheads, dimension=self.dimension
+            )
+
         self.layer_norm1 = LayerNormalization(
             dimension=self.dimension, layer_norm_eps=self.layer_norm_eps
         )
@@ -112,6 +122,17 @@ if __name__ == "__main__":
     )
     parser.add_argument("--bias", type=bool, default=False, help="Bias".capitalize())
     parser.add_argument(
+        "--use_diff_attn",
+        action="store_true",
+        help="Use Differential Attention (DiffAttn)",
+    )
+    parser.add_argument(
+        "--lam",
+        type=float,
+        default=0.5,
+        help="Lambda parameter for Differential Attention",
+    )
+    parser.add_argument(
         "--display",
         action="store_true",
         default=False,
@@ -128,6 +149,8 @@ if __name__ == "__main__":
         activation=args.activation,
         layer_norm_eps=args.layer_norm_eps,
         bias=args.bias,
+        use_diff_attn=args.use_diff_attn,
+        lam=args.lam,
     )
 
     images = torch.randn((1, 256, args.dimension))
@@ -140,4 +163,7 @@ if __name__ == "__main__":
             input_data=images,
             model_name="TransformerEncoderBlock",
             format="pdf",
+        )
+        print(
+            f"Total parameters: {TransformerEncoderBlock.total_parameters(model=transfomer)}"
         )

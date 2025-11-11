@@ -838,6 +838,38 @@
         "documentation": {}
     },
     {
+        "label": "LayerNormalization",
+        "importPath": "layer_normalization",
+        "description": "layer_normalization",
+        "isExtraImport": true,
+        "detail": "layer_normalization",
+        "documentation": {}
+    },
+    {
+        "label": "LayerNormalization",
+        "importPath": "layer_normalization",
+        "description": "layer_normalization",
+        "isExtraImport": true,
+        "detail": "layer_normalization",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feed_forward_network",
+        "description": "feed_forward_network",
+        "isExtraImport": true,
+        "detail": "feed_forward_network",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feed_forward_network",
+        "description": "feed_forward_network",
+        "isExtraImport": true,
+        "detail": "feed_forward_network",
+        "documentation": {}
+    },
+    {
         "label": "MultiHeadAttention",
         "importPath": "multi_head_attention",
         "description": "multi_head_attention",
@@ -846,35 +878,11 @@
         "documentation": {}
     },
     {
-        "label": "LayerNormalization",
-        "importPath": "layer_normalization",
-        "description": "layer_normalization",
+        "label": "DifferentialMultiHeadAttention",
+        "importPath": "multi_head_attention",
+        "description": "multi_head_attention",
         "isExtraImport": true,
-        "detail": "layer_normalization",
-        "documentation": {}
-    },
-    {
-        "label": "LayerNormalization",
-        "importPath": "layer_normalization",
-        "description": "layer_normalization",
-        "isExtraImport": true,
-        "detail": "layer_normalization",
-        "documentation": {}
-    },
-    {
-        "label": "FeedForwardNeuralNetwork",
-        "importPath": "feed_forward_network",
-        "description": "feed_forward_network",
-        "isExtraImport": true,
-        "detail": "feed_forward_network",
-        "documentation": {}
-    },
-    {
-        "label": "FeedForwardNeuralNetwork",
-        "importPath": "feed_forward_network",
-        "description": "feed_forward_network",
-        "isExtraImport": true,
-        "detail": "feed_forward_network",
+        "detail": "multi_head_attention",
         "documentation": {}
     },
     {
