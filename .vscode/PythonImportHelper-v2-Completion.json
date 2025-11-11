@@ -1,0 +1,1305 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "torch.nn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.nn",
+        "description": "torch.nn",
+        "detail": "torch.nn",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "importPath": "loss.bce_loss",
+        "description": "loss.bce_loss",
+        "isExtraImport": true,
+        "detail": "loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "importPath": "loss.bce_loss",
+        "description": "loss.bce_loss",
+        "isExtraImport": true,
+        "detail": "loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "importPath": "loss.bce_loss",
+        "description": "loss.bce_loss",
+        "isExtraImport": true,
+        "detail": "loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "importPath": "loss.focal_loss",
+        "description": "loss.focal_loss",
+        "isExtraImport": true,
+        "detail": "loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "importPath": "loss.focal_loss",
+        "description": "loss.focal_loss",
+        "isExtraImport": true,
+        "detail": "loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "importPath": "loss.focal_loss",
+        "description": "loss.focal_loss",
+        "isExtraImport": true,
+        "detail": "loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "importPath": "loss.mse_loss",
+        "description": "loss.mse_loss",
+        "isExtraImport": true,
+        "detail": "loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "importPath": "loss.mse_loss",
+        "description": "loss.mse_loss",
+        "isExtraImport": true,
+        "detail": "loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "importPath": "loss.mse_loss",
+        "description": "loss.mse_loss",
+        "isExtraImport": true,
+        "detail": "loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "PatchEmbedding",
+        "importPath": "patch_embedding",
+        "description": "patch_embedding",
+        "isExtraImport": true,
+        "detail": "patch_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "PatchEmbedding",
+        "importPath": "patch_embedding",
+        "description": "patch_embedding",
+        "isExtraImport": true,
+        "detail": "patch_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "TransformerEncoderBlock",
+        "importPath": "transformer_encoder_block",
+        "description": "transformer_encoder_block",
+        "isExtraImport": true,
+        "detail": "transformer_encoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "TransformerEncoderBlock",
+        "importPath": "transformer_encoder_block",
+        "description": "transformer_encoder_block",
+        "isExtraImport": true,
+        "detail": "transformer_encoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "dump_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_file",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_images",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_file",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "device_init",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "device_init",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_images",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_file",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "device_init",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_images",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "dump_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_file",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "IoUScore",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "Tester",
+        "importPath": "tester",
+        "description": "tester",
+        "isExtraImport": true,
+        "detail": "tester",
+        "documentation": {}
+    },
+    {
+        "label": "Trainer",
+        "importPath": "trainer",
+        "description": "trainer",
+        "isExtraImport": true,
+        "detail": "trainer",
+        "documentation": {}
+    },
+    {
+        "label": "Loader",
+        "importPath": "dataloader",
+        "description": "dataloader",
+        "isExtraImport": true,
+        "detail": "dataloader",
+        "documentation": {}
+    },
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "zipfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "zipfile",
+        "description": "zipfile",
+        "detail": "zipfile",
+        "documentation": {}
+    },
+    {
+        "label": "warnings",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "warnings",
+        "description": "warnings",
+        "detail": "warnings",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "transforms",
+        "importPath": "torchvision",
+        "description": "torchvision",
+        "isExtraImport": true,
+        "detail": "torchvision",
+        "documentation": {}
+    },
+    {
+        "label": "transforms",
+        "importPath": "torchvision",
+        "description": "torchvision",
+        "isExtraImport": true,
+        "detail": "torchvision",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "torch.optim",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.optim",
+        "description": "torch.optim",
+        "detail": "torch.optim",
+        "documentation": {}
+    },
+    {
+        "label": "TransUNet",
+        "importPath": "transUNet",
+        "description": "transUNet",
+        "isExtraImport": true,
+        "detail": "transUNet",
+        "documentation": {}
+    },
+    {
+        "label": "TransUNet",
+        "importPath": "transUNet",
+        "description": "transUNet",
+        "isExtraImport": true,
+        "detail": "transUNet",
+        "documentation": {}
+    },
+    {
+        "label": "TransUNet",
+        "importPath": "transUNet",
+        "description": "transUNet",
+        "isExtraImport": true,
+        "detail": "transUNet",
+        "documentation": {}
+    },
+    {
+        "label": "TransUNet",
+        "importPath": "transUNet",
+        "description": "transUNet",
+        "isExtraImport": true,
+        "detail": "transUNet",
+        "documentation": {}
+    },
+    {
+        "label": "TransUNet",
+        "importPath": "transUNet",
+        "description": "transUNet",
+        "isExtraImport": true,
+        "detail": "transUNet",
+        "documentation": {}
+    },
+    {
+        "label": "JaccardLoss",
+        "importPath": "loss.jaccard_loss",
+        "description": "loss.jaccard_loss",
+        "isExtraImport": true,
+        "detail": "loss.jaccard_loss",
+        "documentation": {}
+    },
+    {
+        "label": "JaccardLoss",
+        "importPath": "loss.jaccard_loss",
+        "description": "loss.jaccard_loss",
+        "isExtraImport": true,
+        "detail": "loss.jaccard_loss",
+        "documentation": {}
+    },
+    {
+        "label": "TverskyLoss",
+        "importPath": "loss.tversky_loss",
+        "description": "loss.tversky_loss",
+        "isExtraImport": true,
+        "detail": "loss.tversky_loss",
+        "documentation": {}
+    },
+    {
+        "label": "TverskyLoss",
+        "importPath": "loss.tversky_loss",
+        "description": "loss.tversky_loss",
+        "isExtraImport": true,
+        "detail": "loss.tversky_loss",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedLoss",
+        "importPath": "loss.combined_loss",
+        "description": "loss.combined_loss",
+        "isExtraImport": true,
+        "detail": "loss.combined_loss",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedLoss",
+        "importPath": "loss.combined_loss",
+        "description": "loss.combined_loss",
+        "isExtraImport": true,
+        "detail": "loss.combined_loss",
+        "documentation": {}
+    },
+    {
+        "label": "save_image",
+        "importPath": "torchvision.utils",
+        "description": "torchvision.utils",
+        "isExtraImport": true,
+        "detail": "torchvision.utils",
+        "documentation": {}
+    },
+    {
+        "label": "scaled_dot_product",
+        "importPath": "scaled_dot_product",
+        "description": "scaled_dot_product",
+        "isExtraImport": true,
+        "detail": "scaled_dot_product",
+        "documentation": {}
+    },
+    {
+        "label": "scaled_dot_product",
+        "importPath": "scaled_dot_product",
+        "description": "scaled_dot_product",
+        "isExtraImport": true,
+        "detail": "scaled_dot_product",
+        "documentation": {}
+    },
+    {
+        "label": "traceback",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "traceback",
+        "description": "traceback",
+        "detail": "traceback",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "helper",
+        "importPath": "helper",
+        "description": "helper",
+        "isExtraImport": true,
+        "detail": "helper",
+        "documentation": {}
+    },
+    {
+        "label": "helper",
+        "importPath": "helper",
+        "description": "helper",
+        "isExtraImport": true,
+        "detail": "helper",
+        "documentation": {}
+    },
+    {
+        "label": "ViT",
+        "importPath": "ViT",
+        "description": "ViT",
+        "isExtraImport": true,
+        "detail": "ViT",
+        "documentation": {}
+    },
+    {
+        "label": "VisionTransformer",
+        "importPath": "ViT",
+        "description": "ViT",
+        "isExtraImport": true,
+        "detail": "ViT",
+        "documentation": {}
+    },
+    {
+        "label": "EncoderBlock",
+        "importPath": "encoder_block",
+        "description": "encoder_block",
+        "isExtraImport": true,
+        "detail": "encoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "DecoderBlock",
+        "importPath": "decoder_block",
+        "description": "decoder_block",
+        "isExtraImport": true,
+        "detail": "decoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "MultiHeadAttention",
+        "importPath": "multi_head_attention",
+        "description": "multi_head_attention",
+        "isExtraImport": true,
+        "detail": "multi_head_attention",
+        "documentation": {}
+    },
+    {
+        "label": "LayerNormalization",
+        "importPath": "layer_normalization",
+        "description": "layer_normalization",
+        "isExtraImport": true,
+        "detail": "layer_normalization",
+        "documentation": {}
+    },
+    {
+        "label": "LayerNormalization",
+        "importPath": "layer_normalization",
+        "description": "layer_normalization",
+        "isExtraImport": true,
+        "detail": "layer_normalization",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feed_forward_network",
+        "description": "feed_forward_network",
+        "isExtraImport": true,
+        "detail": "feed_forward_network",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feed_forward_network",
+        "description": "feed_forward_network",
+        "isExtraImport": true,
+        "detail": "feed_forward_network",
+        "documentation": {}
+    },
+    {
+        "label": "yaml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
+        "documentation": {}
+    },
+    {
+        "label": "joblib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "joblib",
+        "description": "joblib",
+        "detail": "joblib",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib",
+        "description": "matplotlib",
+        "detail": "matplotlib",
+        "documentation": {}
+    },
+    {
+        "label": "draw_graph",
+        "importPath": "torchview",
+        "description": "torchview",
+        "isExtraImport": true,
+        "detail": "torchview",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "MultiHeadAttentionLayer",
+        "importPath": "multihead_attention_layer",
+        "description": "multihead_attention_layer",
+        "isExtraImport": true,
+        "detail": "multihead_attention_layer",
+        "documentation": {}
+    },
+    {
+        "label": "TransformerEncoder",
+        "importPath": "transformer_encoder",
+        "description": "transformer_encoder",
+        "isExtraImport": true,
+        "detail": "transformer_encoder",
+        "documentation": {}
+    },
+    {
+        "label": "LossFunction",
+        "importPath": "loss_functon",
+        "description": "loss_functon",
+        "isExtraImport": true,
+        "detail": "loss_functon",
+        "documentation": {}
+    },
+    {
+        "label": "TextTransformerEncoder",
+        "importPath": "text_transformer",
+        "description": "text_transformer",
+        "isExtraImport": true,
+        "detail": "text_transformer",
+        "documentation": {}
+    },
+    {
+        "label": "MultiModalClassifier",
+        "importPath": "multi_modal_clf",
+        "description": "multi_modal_clf",
+        "isExtraImport": true,
+        "detail": "multi_modal_clf",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "kind": 6,
+        "importPath": "src.loss.bce_loss",
+        "description": "src.loss.bce_loss",
+        "peekOfCode": "class BCE(nn.Module):\n    def __init__(self, name: str = \"BCEWithLogitsLoss\", reduction: str = \"mean\"):\n        super(BCE, self).__init__()\n        self.name = name\n        self.reduction = reduction\n        if self.name == \"BCEWithLogitsLoss\":\n            self.loss_func = nn.BCEWithLogitsLoss(reduction=self.reduction)\n        elif self.name == \"BCELoss\":\n            self.loss_func = nn.BCELoss(reduction=self.reduction)\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor):",
+        "detail": "src.loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedLoss",
+        "kind": 6,
+        "importPath": "src.loss.combined_loss",
+        "description": "src.loss.combined_loss",
+        "peekOfCode": "class CombinedLoss(nn.Module):\n    def __init__(\n        self,\n        smooth: float = 1e-5,\n        alpha: float = 0.75,\n        gamma: float = 2.0,\n        reduction: str = \"mean\",\n        combined_type: str = \"focal + bce\",\n        weights: dict = None,\n    ):",
+        "detail": "src.loss.combined_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "kind": 6,
+        "importPath": "src.loss.dice_loss",
+        "description": "src.loss.dice_loss",
+        "peekOfCode": "class DiceLoss(nn.Module):\n    def __init__(self, reduction: str = \"mean\", smooth: float = 1e-5):\n        super(DiceLoss, self).__init__()\n        self.smooth = smooth\n        self.reduction = reduction\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor):\n        if not isinstance(predicted, torch.Tensor) or not isinstance(\n            actual, torch.Tensor\n        ):\n            raise ValueError(\"Inputs must be torch.Tensor\")",
+        "detail": "src.loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "kind": 6,
+        "importPath": "src.loss.focal_loss",
+        "description": "src.loss.focal_loss",
+        "peekOfCode": "class FocalLoss(nn.Module):\n    def __init__(self, alpha=0.75, gamma=2.0, reduction=\"mean\"):\n        super(FocalLoss, self).__init__()\n        self.alpha = alpha\n        self.gamma = gamma\n        self.reduction = reduction\n        self.bce_loss = nn.BCEWithLogitsLoss(reduction=\"none\")\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor):\n        if not isinstance(predicted, torch.Tensor) or not isinstance(\n            actual, torch.Tensor",
+        "detail": "src.loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "JaccardLoss",
+        "kind": 6,
+        "importPath": "src.loss.jaccard_loss",
+        "description": "src.loss.jaccard_loss",
+        "peekOfCode": "class JaccardLoss(nn.Module):\n    def __init__(self, reduction: str = \"mean\", smooth: float = 1e-5):\n        super(JaccardLoss, self).__init__()\n        self.smooth = smooth\n        self.reduction = reduction\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor):\n        if not isinstance(predicted, torch.Tensor) or not isinstance(\n            actual, torch.Tensor\n        ):\n            raise ValueError(\"Inputs must be torch.Tensor\")",
+        "detail": "src.loss.jaccard_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "kind": 6,
+        "importPath": "src.loss.mse_loss",
+        "description": "src.loss.mse_loss",
+        "peekOfCode": "class MeanSquaredLoss(nn.Module):\n    def __init__(self, reduction: str = \"mean\"):\n        super(MeanSquaredLoss, self).__init__()\n        self.reduction = reduction\n        self.criterion = nn.MSELoss(reduction=self.reduction)\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor):\n        if not isinstance(predicted, torch.Tensor) and not isinstance(\n            actual, torch.Tensor\n        ):\n            raise TypeError(",
+        "detail": "src.loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "TverskyLoss",
+        "kind": 6,
+        "importPath": "src.loss.tversky_loss",
+        "description": "src.loss.tversky_loss",
+        "peekOfCode": "class TverskyLoss(nn.Module):\n    def __init__(self, alpha: float = 0.7, beta: float = 0.3, reduction: str = \"mean\"):\n        super(TverskyLoss, self).__init__()\n        self.alpha = alpha\n        self.beta = beta\n        self.reduction = reduction\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor):\n        if not isinstance(predicted, torch.Tensor) or not isinstance(\n            actual, torch.Tensor\n        ):",
+        "detail": "src.loss.tversky_loss",
+        "documentation": {}
+    },
+    {
+        "label": "ViT",
+        "kind": 6,
+        "importPath": "src.ViT",
+        "description": "src.ViT",
+        "peekOfCode": "class ViT(nn.Module):\n    def __init__(\n        self,\n        image_size: int = 256,\n        dimension: int = 512,\n        nheads: int = 8,\n        num_layers: int = 4,\n        dim_feedforward: int = 1024,\n        dropout: float = 0.1,\n        activation: str = \"relu\",",
+        "detail": "src.ViT",
+        "documentation": {}
+    },
+    {
+        "label": "cli",
+        "kind": 2,
+        "importPath": "src.cli",
+        "description": "src.cli",
+        "peekOfCode": "def cli():\n    image_path = path_names()[\"image_path\"]\n    image_channels = config_files()[\"dataloader\"][\"image_channels\"]\n    image_size = config_files()[\"dataloader\"][\"image_size\"]\n    batch_size = config_files()[\"dataloader\"][\"batch_size\"]\n    split_size = config_files()[\"dataloader\"][\"split_size\"]\n    trainer_config = config_files()[\"trainer\"]\n    epochs = trainer_config[\"epochs\"]\n    lr = trainer_config[\"lr\"]\n    optimizer = trainer_config[\"optimizer\"]",
+        "detail": "src.cli",
+        "documentation": {}
+    },
+    {
+        "label": "Loader",
+        "kind": 6,
+        "importPath": "src.dataloader",
+        "description": "src.dataloader",
+        "peekOfCode": "class Loader:\n    def __init__(\n        self,\n        image_path=None,\n        image_channels: int = 3,\n        image_size: int = 224,\n        batch_size: int = 4,\n        split_size: float = 0.25,\n        shuffle: bool = False,\n    ):",
+        "detail": "src.dataloader",
+        "documentation": {}
+    },
+    {
+        "label": "DecoderBlock",
+        "kind": 6,
+        "importPath": "src.decoder_block",
+        "description": "src.decoder_block",
+        "peekOfCode": "class DecoderBlock(nn.Module):\n    def __init__(self, in_channels: int = 256, out_channels: int = 128):\n        super(DecoderBlock, self).__init__()\n        self.in_channels = in_channels\n        self.out_channels = out_channels\n        self.kernel_size = 1\n        self.stride_size = 1\n        self.padding_size = 1\n        self.layers = []\n        self.upsample = nn.Upsample(",
+        "detail": "src.decoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "EncoderBlock",
+        "kind": 6,
+        "importPath": "src.encoder_block",
+        "description": "src.encoder_block",
+        "peekOfCode": "class EncoderBlock(nn.Module):\n    def __init__(self, in_channels: int = 128, out_channels: int = 2 * 128):\n        super(EncoderBlock, self).__init__()\n        self.in_channels = in_channels\n        self.out_channels = out_channels\n        self.kernel_size = 1\n        self.stride_size = 1\n        self.padding_size = self.kernel_size // 2\n        self.layers = list()\n        self.conv1 = nn.Sequential(",
+        "detail": "src.encoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "kind": 6,
+        "importPath": "src.feed_forward_network",
+        "description": "src.feed_forward_network",
+        "peekOfCode": "class FeedForwardNeuralNetwork(nn.Module):\n    def __init__(\n        self,\n        dimension: int = 512,\n        dim_feedforward: int = 1024,\n        activation: str = \"relu\",\n        dropout: float = 0.1,\n        bias: bool = False,\n    ):\n        super(FeedForwardNeuralNetwork, self).__init__()",
+        "detail": "src.feed_forward_network",
+        "documentation": {}
+    },
+    {
+        "label": "load_dataloader",
+        "kind": 2,
+        "importPath": "src.helper",
+        "description": "src.helper",
+        "peekOfCode": "def load_dataloader():\n    processed_path = path_names()[\"processed_data_path\"]\n    train_dataloader = os.path.join(processed_path, \"train_dataloader.pkl\")\n    valid_dataloader = os.path.join(processed_path, \"test_dataloader.pkl\")\n    train_dataloader = load_file(filename=train_dataloader)\n    valid_dataloader = load_file(filename=valid_dataloader)\n    return {\"train_dataloader\": train_dataloader, \"valid_dataloader\": valid_dataloader}\ndef helper(**kwargs):\n    model: TransUNet = kwargs[\"model\"]\n    lr: float = kwargs[\"lr\"]",
+        "detail": "src.helper",
+        "documentation": {}
+    },
+    {
+        "label": "helper",
+        "kind": 2,
+        "importPath": "src.helper",
+        "description": "src.helper",
+        "peekOfCode": "def helper(**kwargs):\n    model: TransUNet = kwargs[\"model\"]\n    lr: float = kwargs[\"lr\"]\n    beta1: float = kwargs[\"beta1\"]\n    beta2: float = kwargs[\"beta2\"]\n    weight_decay: float = kwargs[\"weight_decay\"]\n    momentum: float = kwargs[\"momentum\"]\n    optimizer_selector: str = kwargs[\"optimizer\"]\n    loss: str = kwargs[\"loss\"]\n    loss_smooth: float = kwargs[\"loss_smooth\"]",
+        "detail": "src.helper",
+        "documentation": {}
+    },
+    {
+        "label": "Inference",
+        "kind": 6,
+        "importPath": "src.inference",
+        "description": "src.inference",
+        "peekOfCode": "class Inference:\n    def __init__(self, image: str = None):\n        try:\n            self.image = image\n            self.paths = config_files()\n            self.dataloader = self.paths[\"dataloader\"]\n            self.image_size = self.dataloader[\"image_size\"]\n            self.device = device_init(device=self.paths[\"trainer\"][\"device\"])\n        except KeyError as e:\n            raise ValueError(f\"Missing configuration key: {e}\")",
+        "detail": "src.inference",
+        "documentation": {}
+    },
+    {
+        "label": "LayerNormalization",
+        "kind": 6,
+        "importPath": "src.layer_normalization",
+        "description": "src.layer_normalization",
+        "peekOfCode": "class LayerNormalization(nn.Module):\n    def __init__(self, dimension: int = 512, layer_norm_eps: float = 1e-05):\n        super(LayerNormalization, self).__init__()\n        self.dimension = dimension\n        self.layer_norm_eps = layer_norm_eps\n        self.alpha = nn.Parameter(\n            data=torch.ones((1, 1, self.dimension)), requires_grad=True\n        )\n        self.beta = nn.Parameter(\n            data=torch.zeros((1, 1, self.dimension)), requires_grad=True",
+        "detail": "src.layer_normalization",
+        "documentation": {}
+    },
+    {
+        "label": "MultiHeadAttention",
+        "kind": 6,
+        "importPath": "src.multi_head_attention",
+        "description": "src.multi_head_attention",
+        "peekOfCode": "class MultiHeadAttention(nn.Module):\n    def __init__(self, nheads: int = 4, dimension: int = 256):\n        super(MultiHeadAttention, self).__init__()\n        self.nheads = nheads\n        self.dimension = dimension\n        assert dimension % nheads == 0, \"Dimension must be divisible by nheads\"\n        self.QKV = nn.Linear(\n            in_features=self.dimension, out_features=3 * self.dimension\n        )\n    def forward(self, x: torch.Tensor):",
+        "detail": "src.multi_head_attention",
+        "documentation": {}
+    },
+    {
+        "label": "PatchEmbedding",
+        "kind": 6,
+        "importPath": "src.patch_embedding",
+        "description": "src.patch_embedding",
+        "peekOfCode": "class PatchEmbedding(nn.Module):\n    def __init__(\n        self,\n        image_size: int = 128,\n        patch_size: int = 1,\n        dimension: int = 1024,\n        bias: bool = False,\n    ):\n        super(PatchEmbedding, self).__init__()\n        self.image_size = image_size",
+        "detail": "src.patch_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "scaled_dot_product",
+        "kind": 2,
+        "importPath": "src.scaled_dot_product",
+        "description": "src.scaled_dot_product",
+        "peekOfCode": "def scaled_dot_product(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor):\n    if not (\n        isinstance(query, torch.Tensor)\n        and isinstance(key, torch.Tensor)\n        and isinstance(value, torch.Tensor)\n    ):\n        raise ValueError(\"Inputs must be torch.Tensor\")\n    key = key.transpose(-1, -2)\n    logits = torch.matmul(query, key)\n    dimension = key.size(-1)",
+        "detail": "src.scaled_dot_product",
+        "documentation": {}
+    },
+    {
+        "label": "scaled_dot_product",
+        "kind": 2,
+        "importPath": "src.scaled_dot_product",
+        "description": "src.scaled_dot_product",
+        "peekOfCode": "def scaled_dot_product(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor):\n    \"\"\"Standard scaled dot-product attention\"\"\"\n    if not all(isinstance(t, torch.Tensor) for t in [query, key, value]):\n        raise ValueError(\"Inputs must be torch.Tensor\")\n    key = key.transpose(-1, -2)\n    d = key.size(-1)\n    logits = torch.matmul(query, key) / torch.sqrt(\n        torch.tensor(float(d), dtype=query.dtype, device=query.device)\n    )\n    attn = torch.softmax(logits, dim=-1)",
+        "detail": "src.scaled_dot_product",
+        "documentation": {}
+    },
+    {
+        "label": "diff_scaled_dot_product",
+        "kind": 2,
+        "importPath": "src.scaled_dot_product",
+        "description": "src.scaled_dot_product",
+        "peekOfCode": "def diff_scaled_dot_product(\n    query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, lam: float = 0.5\n):\n    if not all(isinstance(t, torch.Tensor) for t in [query, key, value]):\n        raise ValueError(\"Inputs must be torch.Tensor\")\n    b, h, n, d2 = query.shape  # [batch, heads, seq, 2*d]\n    d = d2 // 2\n    Q1, Q2 = torch.split(query, d, dim=-1)\n    K1, K2 = torch.split(key, d, dim=-1)\n    K1 = K1.transpose(-1, -2)",
+        "detail": "src.scaled_dot_product",
+        "documentation": {}
+    },
+    {
+        "label": "Tester",
+        "kind": 6,
+        "importPath": "src.tester",
+        "description": "src.tester",
+        "peekOfCode": "class Tester:\n    def __init__(self, dataset: str = \"test\", device: str = \"cuda\"):\n        self.dataset = dataset\n        self.device = device\n        self.device = device_init(device=self.device)\n    def load_dataloder(self):\n        processed_path = path_names()[\"processed_data_path\"]\n        train_dataloader_path = os.path.join(processed_path, \"train_dataloader.pkl\")\n        valid_dataloader_path = os.path.join(processed_path, \"test_dataloader.pkl\")\n        train_dataloader = load_file(filename=train_dataloader_path)",
+        "detail": "src.tester",
+        "documentation": {}
+    },
+    {
+        "label": "Trainer",
+        "kind": 6,
+        "importPath": "src.trainer",
+        "description": "src.trainer",
+        "peekOfCode": "class Trainer:\n    def __init__(\n        self,\n        model: TransUNet = None,\n        epochs: int = 200,\n        lr: float = 2e-04,\n        beta1: float = 0.5,\n        beta2: float = 0.999,\n        weight_decay: float = 1e-04,\n        momentum: float = 0.85,",
+        "detail": "src.trainer",
+        "documentation": {}
+    },
+    {
+        "label": "TransUNet",
+        "kind": 6,
+        "importPath": "src.transUNet",
+        "description": "src.transUNet",
+        "peekOfCode": "class TransUNet(nn.Module):\n    def __init__(\n        self,\n        image_channels: int = 3,\n        image_size: int = 256,\n        nheads: int = 8,\n        num_layers: int = 4,\n        dim_feedforward: int = 2048,\n        dropout: float = 0.1,\n        activation: str = \"relu\",",
+        "detail": "src.transUNet",
+        "documentation": {}
+    },
+    {
+        "label": "TransformerEncoderBlock",
+        "kind": 6,
+        "importPath": "src.transformer_encoder_block",
+        "description": "src.transformer_encoder_block",
+        "peekOfCode": "class TransformerEncoderBlock(nn.Module):\n    def __init__(\n        self,\n        dimension: int = 512,\n        nheads: int = 8,\n        dim_feedforward: int = 2048,\n        dropout: float = 0.1,\n        activation: str = \"relu\",\n        layer_norm_eps: float = 1e-05,\n        bias: bool = False,",
+        "detail": "src.transformer_encoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "IoUScore",
+        "kind": 6,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "class IoUScore(nn.Module):\n    def __init__(self, threshold: float = 0.5, smooth: float = 1e-6):\n        super(IoUScore, self).__init__()\n        self.threshold = threshold\n        self.smooth = smooth\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor) -> torch.Tensor:\n        if not isinstance(predicted, torch.Tensor) or not isinstance(\n            actual, torch.Tensor\n        ):\n            raise TypeError(\"Inputs must be of type torch.Tensor.\")",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def config_files():\n    with open(\"./config.yml\", \"r\") as config_file:\n        return yaml.safe_load(config_file)\ndef dump_files(value=None, filename=None):\n    if (value is not None) and (filename is not None):\n        joblib.dump(value=value, filename=filename)\n    else:\n        raise ValueError(\n            \"Determine the filename and value of a config file\".capitalize()\n        )",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "dump_files",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def dump_files(value=None, filename=None):\n    if (value is not None) and (filename is not None):\n        joblib.dump(value=value, filename=filename)\n    else:\n        raise ValueError(\n            \"Determine the filename and value of a config file\".capitalize()\n        )\ndef load_file(filename: str = None):\n    if filename is not None:\n        return joblib.load(filename)",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_file",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def load_file(filename: str = None):\n    if filename is not None:\n        return joblib.load(filename)\n    else:\n        raise ValueError(\n            \"Please provide a filename to load config data from.\".capitalize()\n        )\ndef device_init(device: str = \"cuda\"):\n    if device == \"cuda\":\n        return torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "device_init",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def device_init(device: str = \"cuda\"):\n    if device == \"cuda\":\n        return torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n    elif device == \"mps\":\n        return torch.device(\"mps\" if torch.backends.mps.is_available() else \"cpu\")\n    else:\n        return torch.device(device)\ndef weight_init(m):\n    classname = m.__class__.__name__\n    if classname.find(\"Conv\") != -1:",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "weight_init",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def weight_init(m):\n    classname = m.__class__.__name__\n    if classname.find(\"Conv\") != -1:\n        nn.init.kaiming_normal_(m.weight.data, nonlinearity=\"relu\")\n        if m.bias is not None:\n            nn.init.constant_(m.bias.data, 0.0)\n        elif classname.find(\"BatchNorm\") != -1:\n            nn.init.constant_(m.weight.data, 1.0)\n            nn.init.constant_(m.bias.data, 0.0)\ndef path_names():",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "path_names",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def path_names():\n    raw_data_path: str = config_files()[\"artifacts\"][\"raw_data_path\"]\n    processed_data_path: str = config_files()[\"artifacts\"][\"processed_data_path\"]\n    train_models_path: str = config_files()[\"artifacts\"][\"train_models\"]\n    best_model_path: str = config_files()[\"artifacts\"][\"best_model\"]\n    files_path: str = config_files()[\"artifacts\"][\"files_path\"]\n    metrics_path: str = config_files()[\"artifacts\"][\"metrics_path\"]\n    train_images: str = config_files()[\"artifacts\"][\"train_images\"]\n    test_image: str = config_files()[\"artifacts\"][\"test_image\"]\n    image_path: str = config_files()[\"dataloader\"][\"image_path\"]",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_images",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def plot_images(\n    original_images: torch.Tensor = None,\n    original_masks: torch.Tensor = None,\n    predicted_images: torch.Tensor = None,\n    predicted: bool = False,\n    epoch: int = 0,\n    testing: bool = False,\n):\n    if not predicted:\n        processed_data_path = path_names()[\"processed_data_path\"]",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "total_params",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def total_params(model=None):\n    if model is None:\n        raise ValueError(\n            \"Please provide a model to calculate the total parameters.\".capitalize()\n        )\n    return sum(p.numel() for p in model.parameters() if p.requires_grad)\ndef plot_model_architecture(\n    model=None,\n    input_data: torch.Tensor = None,\n    model_name: str = \"./artifacts/files_name/\",",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "plot_model_architecture",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def plot_model_architecture(\n    model=None,\n    input_data: torch.Tensor = None,\n    model_name: str = \"./artifacts/files_name/\",\n    format: str = \"pdf\",\n):\n    if model is None and not isinstance(input_data, torch):\n        raise ValueError(\n            \"Please provide a model and input data to plot the model architecture.\".capitalize()\n        )",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "UnitTest",
+        "kind": 6,
+        "importPath": "unittest.test",
+        "description": "unittest.test",
+        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self) -> None:\n        self.image_channels = config_files()[\"patchEmbeddings\"][\"channels\"]\n        self.image_size = config_files()[\"patchEmbeddings\"][\"image_size\"]\n        self.patch_size = config_files()[\"patchEmbeddings\"][\"patch_size\"]\n        self.dimension = config_files()[\"patchEmbeddings\"][\"dimension\"]\n        self.nheads = config_files()[\"transfomerEncoderBlock\"][\"nheads\"]\n        self.activation = config_files()[\"transfomerEncoderBlock\"][\"activation\"]\n        self.dropout = config_files()[\"transfomerEncoderBlock\"][\"dropout\"]\n        self.num_encoder_layers = config_files()[\"transfomerEncoderBlock\"][",
+        "detail": "unittest.test",
+        "documentation": {}
+    }
+]
