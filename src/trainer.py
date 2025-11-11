@@ -52,6 +52,8 @@ class Trainer:
         verbose: bool = True,
         device: str = "cuda",
         loss_func: str = "bce",
+        use_diff_attn: bool = False,  
+        lam: float = 0.5,              
     ):
         self.model = model
         self.epochs = epochs
@@ -71,6 +73,8 @@ class Trainer:
         self.verbose = verbose
         self.device = device
         self.loss_func = loss_func
+        self.use_diff_attn = use_diff_attn
+        self.lam = lam
 
         self.device = device_init(device=self.device)
 
@@ -88,6 +92,8 @@ class Trainer:
             gamma_focal=self.gamma_focal,
             alpha_tversky=self.alpha_tversky,
             beta_tversky=self.beta_tversky,
+            use_diff_attn=self.use_diff_attn,
+            lam=self.lam
         )
 
         self.IoU = IoUScore(threshold=0.5, smooth=1e-5)
@@ -455,6 +461,18 @@ if __name__ == "__main__":
     parser.add_argument(
         "--loss_type", type=str, default=loss_type, help="Define the loss type"
     )
+    parser.add_argument(
+        "--use_diff_attn",
+        action="store_true",
+        help="Enable differential attention mechanism",
+    )
+    parser.add_argument(
+        "--lam",
+        type=float,
+        default=0.5,
+        help="Lambda parameter for differential attention weighting",
+    )
+
 
     args = parser.parse_args()
 
@@ -477,6 +495,8 @@ if __name__ == "__main__":
         elastic_net_regularization=args.elastic_net_regularization,
         verbose=args.verbose,
         device=args.device,
+        use_diff_attn=args.use_diff_attn,  
+        lam=args.lam,                      
     )
 
     trainer.train()
