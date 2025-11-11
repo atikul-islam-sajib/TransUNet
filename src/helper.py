@@ -43,6 +43,9 @@ def helper(**kwargs):
     alpha_tversky: float = kwargs["alpha_tversky"]
     beta_tversky: float = kwargs["beta_tversky"]
 
+    use_diff_attn: bool = kwargs.get("use_diff_attn", False)
+    lam: float = kwargs.get("lam", 0.5)
+
     image_channels: int = config_files()["dataloader"]["image_channels"]
     image_size: int = config_files()["dataloader"]["image_size"]
     nheads: int = config_files()["TransUNet"]["nheads"]
@@ -64,6 +67,8 @@ def helper(**kwargs):
             activation=activation,
             layer_norm_eps=layer_norm_eps,
             bias=bias,
+            use_diff_attn=use_diff_attn,  
+            lam=lam,                     
         )
     elif isinstance(model, TransUNet):
         trans_unet = model
@@ -127,9 +132,7 @@ def helper(**kwargs):
 if __name__ == "__main__":
     adam, SGD = True, False
     loss = "bce"
-    """
-    "dice" | "focal" | "jaccard" | "tversky" | "BCE"
-    """
+
     init = helper(
         model=None,
         lr=2e-4,
@@ -145,6 +148,8 @@ if __name__ == "__main__":
         gamma_focal=2.0,
         alpha_tversky=0.5,
         beta_tversky=0.5,
+        use_diff_attn=True,
+        lam=0.6,             
     )
 
     assert init["train_dataloader"].__class__ == torch.utils.data.DataLoader
