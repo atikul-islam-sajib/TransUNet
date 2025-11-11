@@ -747,6 +747,14 @@
         "documentation": {}
     },
     {
+        "label": "diff_scaled_dot_product",
+        "importPath": "scaled_dot_product",
+        "description": "scaled_dot_product",
+        "isExtraImport": true,
+        "detail": "scaled_dot_product",
+        "documentation": {}
+    },
+    {
         "label": "scaled_dot_product",
         "importPath": "scaled_dot_product",
         "description": "scaled_dot_product",
@@ -1128,6 +1136,15 @@
         "importPath": "src.multi_head_attention",
         "description": "src.multi_head_attention",
         "peekOfCode": "class MultiHeadAttention(nn.Module):\n    def __init__(self, nheads: int = 4, dimension: int = 256):\n        super(MultiHeadAttention, self).__init__()\n        self.nheads = nheads\n        self.dimension = dimension\n        assert dimension % nheads == 0, \"Dimension must be divisible by nheads\"\n        self.QKV = nn.Linear(\n            in_features=self.dimension, out_features=3 * self.dimension\n        )\n    def forward(self, x: torch.Tensor):",
+        "detail": "src.multi_head_attention",
+        "documentation": {}
+    },
+    {
+        "label": "DifferentialMultiHeadAttention",
+        "kind": 6,
+        "importPath": "src.multi_head_attention",
+        "description": "src.multi_head_attention",
+        "peekOfCode": "class DifferentialMultiHeadAttention(nn.Module):\n    def __init__(self, nheads: int = 4, dimension: int = 256, lam: float = 0.5):\n        super(DifferentialMultiHeadAttention, self).__init__()\n        self.nheads = nheads\n        self.dimension = dimension\n        self.lam = lam\n        assert dimension % nheads == 0, \"Dimension must be divisible by nheads\"\n        self.W_q = nn.Linear(self.dimension, 2 * self.dimension)\n        self.W_k = nn.Linear(self.dimension, 2 * self.dimension)\n        self.W_v = nn.Linear(self.dimension, self.dimension)",
         "detail": "src.multi_head_attention",
         "documentation": {}
     },
