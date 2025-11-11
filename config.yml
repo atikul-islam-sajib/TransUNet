@@ -51,10 +51,5 @@ trainer:
   elastic_net_regularization: False
   verbose: True
   device: "cuda"
-
-tester:
-  dataset: "test"
-  device: "cuda"
-
-inference:
-  image: "./artifacts/data/processed..."
+  use_diff_attn: False       
+  lam: 0.5                   

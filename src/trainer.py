@@ -394,6 +394,9 @@ if __name__ == "__main__":
     elastic_net_regularization = trainer_config["elastic_net_regularization"]
     verbose = trainer_config["verbose"]
     device = trainer_config["device"]
+    use_diff_attn = trainer_config.get("use_diff_attn", False)
+    lam = float(trainer_config.get("lam", 0.5))
+
 
     parser = argparse.ArgumentParser(
         description="Train the TransUNet model for the segmentation dataset.".title()
@@ -463,16 +466,16 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--use_diff_attn",
-        action="store_true",
-        help="Enable differential attention mechanism",
+        type=bool,
+        default=use_diff_attn,
+        help="Enable differential attention in ViT encoder (bool)",
     )
     parser.add_argument(
         "--lam",
         type=float,
-        default=0.5,
-        help="Lambda parameter for differential attention weighting",
+        default=lam,
+        help="Lambda parameter for differential attention",
     )
-
 
     args = parser.parse_args()
 
