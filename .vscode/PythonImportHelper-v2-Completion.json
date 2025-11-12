@@ -18,126 +18,12 @@
         "documentation": {}
     },
     {
-        "label": "torch",
+        "label": "cv2",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "torch",
-        "description": "torch",
-        "detail": "torch",
-        "documentation": {}
-    },
-    {
-        "label": "argparse",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "argparse",
-        "description": "argparse",
-        "detail": "argparse",
-        "documentation": {}
-    },
-    {
-        "label": "torch.nn",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "torch.nn",
-        "description": "torch.nn",
-        "detail": "torch.nn",
-        "documentation": {}
-    },
-    {
-        "label": "BCE",
-        "importPath": "loss.bce_loss",
-        "description": "loss.bce_loss",
-        "isExtraImport": true,
-        "detail": "loss.bce_loss",
-        "documentation": {}
-    },
-    {
-        "label": "BCE",
-        "importPath": "loss.bce_loss",
-        "description": "loss.bce_loss",
-        "isExtraImport": true,
-        "detail": "loss.bce_loss",
-        "documentation": {}
-    },
-    {
-        "label": "BCE",
-        "importPath": "loss.bce_loss",
-        "description": "loss.bce_loss",
-        "isExtraImport": true,
-        "detail": "loss.bce_loss",
-        "documentation": {}
-    },
-    {
-        "label": "DiceLoss",
-        "importPath": "loss.dice_loss",
-        "description": "loss.dice_loss",
-        "isExtraImport": true,
-        "detail": "loss.dice_loss",
-        "documentation": {}
-    },
-    {
-        "label": "DiceLoss",
-        "importPath": "loss.dice_loss",
-        "description": "loss.dice_loss",
-        "isExtraImport": true,
-        "detail": "loss.dice_loss",
-        "documentation": {}
-    },
-    {
-        "label": "DiceLoss",
-        "importPath": "loss.dice_loss",
-        "description": "loss.dice_loss",
-        "isExtraImport": true,
-        "detail": "loss.dice_loss",
-        "documentation": {}
-    },
-    {
-        "label": "FocalLoss",
-        "importPath": "loss.focal_loss",
-        "description": "loss.focal_loss",
-        "isExtraImport": true,
-        "detail": "loss.focal_loss",
-        "documentation": {}
-    },
-    {
-        "label": "FocalLoss",
-        "importPath": "loss.focal_loss",
-        "description": "loss.focal_loss",
-        "isExtraImport": true,
-        "detail": "loss.focal_loss",
-        "documentation": {}
-    },
-    {
-        "label": "FocalLoss",
-        "importPath": "loss.focal_loss",
-        "description": "loss.focal_loss",
-        "isExtraImport": true,
-        "detail": "loss.focal_loss",
-        "documentation": {}
-    },
-    {
-        "label": "MeanSquaredLoss",
-        "importPath": "loss.mse_loss",
-        "description": "loss.mse_loss",
-        "isExtraImport": true,
-        "detail": "loss.mse_loss",
-        "documentation": {}
-    },
-    {
-        "label": "MeanSquaredLoss",
-        "importPath": "loss.mse_loss",
-        "description": "loss.mse_loss",
-        "isExtraImport": true,
-        "detail": "loss.mse_loss",
-        "documentation": {}
-    },
-    {
-        "label": "MeanSquaredLoss",
-        "importPath": "loss.mse_loss",
-        "description": "loss.mse_loss",
-        "isExtraImport": true,
-        "detail": "loss.mse_loss",
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
         "documentation": {}
     },
     {
@@ -150,6 +36,64 @@
         "documentation": {}
     },
     {
+        "label": "zipfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "zipfile",
+        "description": "zipfile",
+        "detail": "zipfile",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
         "label": "tqdm",
         "importPath": "tqdm",
         "description": "tqdm",
@@ -174,35 +118,84 @@
         "documentation": {}
     },
     {
-        "label": "PatchEmbedding",
-        "importPath": "patch_embedding",
-        "description": "patch_embedding",
+        "label": "matplotlib.pyplot",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "patch_embedding",
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
         "documentation": {}
     },
     {
-        "label": "PatchEmbedding",
-        "importPath": "patch_embedding",
-        "description": "patch_embedding",
+        "label": "transforms",
+        "importPath": "torchvision",
+        "description": "torchvision",
         "isExtraImport": true,
-        "detail": "patch_embedding",
+        "detail": "torchvision",
         "documentation": {}
     },
     {
-        "label": "TransformerEncoderBlock",
-        "importPath": "transformer_encoder_block",
-        "description": "transformer_encoder_block",
+        "label": "transforms",
+        "importPath": "torchvision",
+        "description": "torchvision",
         "isExtraImport": true,
-        "detail": "transformer_encoder_block",
+        "detail": "torchvision",
         "documentation": {}
     },
     {
-        "label": "TransformerEncoderBlock",
-        "importPath": "transformer_encoder_block",
-        "description": "transformer_encoder_block",
+        "label": "transforms",
+        "importPath": "torchvision",
+        "description": "torchvision",
         "isExtraImport": true,
-        "detail": "transformer_encoder_block",
+        "detail": "torchvision",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "DataLoader",
+        "importPath": "torch.utils.data",
+        "description": "torch.utils.data",
+        "isExtraImport": true,
+        "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "train_test_split",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "dump",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "load",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
         "documentation": {}
     },
     {
@@ -431,6 +424,14 @@
     },
     {
         "label": "path_names",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "IoUScore",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
@@ -534,6 +535,160 @@
         "documentation": {}
     },
     {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "torch.nn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.nn",
+        "description": "torch.nn",
+        "detail": "torch.nn",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "importPath": "loss.bce_loss",
+        "description": "loss.bce_loss",
+        "isExtraImport": true,
+        "detail": "loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "importPath": "loss.bce_loss",
+        "description": "loss.bce_loss",
+        "isExtraImport": true,
+        "detail": "loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "BCE",
+        "importPath": "loss.bce_loss",
+        "description": "loss.bce_loss",
+        "isExtraImport": true,
+        "detail": "loss.bce_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "DiceLoss",
+        "importPath": "loss.dice_loss",
+        "description": "loss.dice_loss",
+        "isExtraImport": true,
+        "detail": "loss.dice_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "importPath": "loss.focal_loss",
+        "description": "loss.focal_loss",
+        "isExtraImport": true,
+        "detail": "loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "importPath": "loss.focal_loss",
+        "description": "loss.focal_loss",
+        "isExtraImport": true,
+        "detail": "loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "importPath": "loss.focal_loss",
+        "description": "loss.focal_loss",
+        "isExtraImport": true,
+        "detail": "loss.focal_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "importPath": "loss.mse_loss",
+        "description": "loss.mse_loss",
+        "isExtraImport": true,
+        "detail": "loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "importPath": "loss.mse_loss",
+        "description": "loss.mse_loss",
+        "isExtraImport": true,
+        "detail": "loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "MeanSquaredLoss",
+        "importPath": "loss.mse_loss",
+        "description": "loss.mse_loss",
+        "isExtraImport": true,
+        "detail": "loss.mse_loss",
+        "documentation": {}
+    },
+    {
+        "label": "PatchEmbedding",
+        "importPath": "patch_embedding",
+        "description": "patch_embedding",
+        "isExtraImport": true,
+        "detail": "patch_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "PatchEmbedding",
+        "importPath": "patch_embedding",
+        "description": "patch_embedding",
+        "isExtraImport": true,
+        "detail": "patch_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "TransformerEncoderBlock",
+        "importPath": "transformer_encoder_block",
+        "description": "transformer_encoder_block",
+        "isExtraImport": true,
+        "detail": "transformer_encoder_block",
+        "documentation": {}
+    },
+    {
+        "label": "TransformerEncoderBlock",
+        "importPath": "transformer_encoder_block",
+        "description": "transformer_encoder_block",
+        "isExtraImport": true,
+        "detail": "transformer_encoder_block",
+        "documentation": {}
+    },
+    {
         "label": "Tester",
         "importPath": "tester",
         "description": "tester",
@@ -558,24 +713,6 @@
         "documentation": {}
     },
     {
-        "label": "cv2",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "cv2",
-        "description": "cv2",
-        "detail": "cv2",
-        "documentation": {}
-    },
-    {
-        "label": "zipfile",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "zipfile",
-        "description": "zipfile",
-        "detail": "zipfile",
-        "documentation": {}
-    },
-    {
         "label": "warnings",
         "kind": 6,
         "isExtraImport": true,
@@ -591,46 +728,6 @@
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
-        "documentation": {}
-    },
-    {
-        "label": "Image",
-        "importPath": "PIL",
-        "description": "PIL",
-        "isExtraImport": true,
-        "detail": "PIL",
-        "documentation": {}
-    },
-    {
-        "label": "Image",
-        "importPath": "PIL",
-        "description": "PIL",
-        "isExtraImport": true,
-        "detail": "PIL",
-        "documentation": {}
-    },
-    {
-        "label": "transforms",
-        "importPath": "torchvision",
-        "description": "torchvision",
-        "isExtraImport": true,
-        "detail": "torchvision",
-        "documentation": {}
-    },
-    {
-        "label": "transforms",
-        "importPath": "torchvision",
-        "description": "torchvision",
-        "isExtraImport": true,
-        "detail": "torchvision",
-        "documentation": {}
-    },
-    {
-        "label": "DataLoader",
-        "importPath": "torch.utils.data",
-        "description": "torch.utils.data",
-        "isExtraImport": true,
-        "detail": "torch.utils.data",
         "documentation": {}
     },
     {
@@ -763,15 +860,6 @@
         "documentation": {}
     },
     {
-        "label": "traceback",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "traceback",
-        "description": "traceback",
-        "detail": "traceback",
-        "documentation": {}
-    },
-    {
         "label": "numpy",
         "kind": 6,
         "isExtraImport": true,
@@ -781,12 +869,12 @@
         "documentation": {}
     },
     {
-        "label": "matplotlib.pyplot",
+        "label": "traceback",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "matplotlib.pyplot",
-        "description": "matplotlib.pyplot",
-        "detail": "matplotlib.pyplot",
+        "importPath": "traceback",
+        "description": "traceback",
+        "detail": "traceback",
         "documentation": {}
     },
     {
@@ -983,6 +1071,15 @@
         "description": "setuptools",
         "isExtraImport": true,
         "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "Loader",
+        "kind": 6,
+        "importPath": "src.depricated.loader",
+        "description": "src.depricated.loader",
+        "peekOfCode": "class Loader:\n    def __init__(\n        self,\n        image_path=None,\n        image_size: int = 128,\n        batch_size: int = 16,\n        split_size: float = 0.2,\n    ):\n        super(Loader, self).__init__()\n        self.image_path = image_path",
+        "detail": "src.depricated.loader",
         "documentation": {}
     },
     {
@@ -1197,7 +1294,7 @@
         "kind": 6,
         "importPath": "src.tester",
         "description": "src.tester",
-        "peekOfCode": "class Tester:\n    def __init__(self, dataset: str = \"test\", device: str = \"cuda\"):\n        self.dataset = dataset\n        self.device = device\n        self.device = device_init(device=self.device)\n    def load_dataloder(self):\n        processed_path = path_names()[\"processed_data_path\"]\n        train_dataloader_path = os.path.join(processed_path, \"train_dataloader.pkl\")\n        valid_dataloader_path = os.path.join(processed_path, \"test_dataloader.pkl\")\n        train_dataloader = load_file(filename=train_dataloader_path)",
+        "peekOfCode": "class Tester:\n    def __init__(self, dataset: str = \"test\", device: str = \"cuda\"):\n        self.dataset = dataset\n        self.device = device\n        self.device = device_init(device=self.device)\n        # Metrics\n        self.iou_metric = IoUScore(threshold=0.5, smooth=1e-5)\n        self.dice_metric = DiceLoss(smooth=1e-5)\n        self.eps = 1e-7  # avoid div-by-zero\n    def load_dataloader(self):",
         "detail": "src.tester",
         "documentation": {}
     },
@@ -1233,7 +1330,7 @@
         "kind": 6,
         "importPath": "src.utils",
         "description": "src.utils",
-        "peekOfCode": "class IoUScore(nn.Module):\n    def __init__(self, threshold: float = 0.5, smooth: float = 1e-6):\n        super(IoUScore, self).__init__()\n        self.threshold = threshold\n        self.smooth = smooth\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor) -> torch.Tensor:\n        if not isinstance(predicted, torch.Tensor) or not isinstance(\n            actual, torch.Tensor\n        ):\n            raise TypeError(\"Inputs must be of type torch.Tensor.\")",
+        "peekOfCode": "class IoUScore(nn.Module):\n    def __init__(self, threshold: float = 0.5, smooth: float = 1e-6, reduce: bool = True):\n        super(IoUScore, self).__init__()\n        self.threshold = threshold\n        self.smooth = smooth\n        self.reduce = reduce\n    def forward(self, predicted: torch.Tensor, actual: torch.Tensor) -> torch.Tensor:\n        if not isinstance(predicted, torch.Tensor) or not isinstance(actual, torch.Tensor):\n            raise TypeError(\"Inputs must be of type torch.Tensor.\")\n        # Apply sigmoid if logits",
         "detail": "src.utils",
         "documentation": {}
     },

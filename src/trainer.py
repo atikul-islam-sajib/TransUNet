@@ -374,14 +374,21 @@ if __name__ == "__main__":
 
     beta1, beta2, weight_decay, momentum = 0.0, 0.0, 0.0, 0.0
 
-    if "Adam" in optmizers_config or "AdamW" in optmizers_config:
+    beta1, beta2, weight_decay, momentum = 0.0, 0.0, 0.0, 0.0
+
+    if optimizer == "Adam":
         beta1 = float(optmizers_config["Adam"]["beta1"])
         beta2 = float(optmizers_config["Adam"]["beta2"])
         weight_decay = float(optmizers_config["Adam"]["weight_decay"])
 
-    elif "SGD" in optmizers_config:
+    elif optimizer == "AdamW":
+        beta1 = float(optmizers_config["AdamW"]["beta1"])
+        beta2 = float(optmizers_config["AdamW"]["beta2"])
+        weight_decay = float(optmizers_config["AdamW"]["weight_decay"])
+
+    elif optimizer == "SGD":
         momentum = float(optmizers_config["SGD"]["momentum"])
-        SGD_weight_decay = float(optmizers_config["SGD"]["weight_decay"])
+        weight_decay = float(optmizers_config["SGD"]["weight_decay"])
 
     loss = trainer_config["loss"]
     loss_type = loss["type"]

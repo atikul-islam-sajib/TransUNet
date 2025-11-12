@@ -17,29 +17,29 @@ dataloader:
 
 TransUNet:
   nheads: 4
-  num_layers: 4
+  num_layers: 2
   dim_feedforward: 512
-  dropout: 0.3
+  dropout: 0.5
   activation: "gelu"
   layer_norm_eps: 1e-05
   bias: False
 
 trainer:
   epochs: 100
-  lr: 0.0001
+  lr: 0.0002
   optimizer: "AdamW"
   optimizers:
     Adam: 
       beta1: 0.9
       beta2: 0.999
-      weight_decay: 0.0001
+      weight_decay: 0.0
     SGD: 
       momentum: 0.95
       weight_decay: 0.0
     AdamW:
       beta1: 0.9
       beta2: 0.999
-      weight_decay: 0.0001
+      weight_decay: 1e-1
   loss: 
     type: "bce"
     loss_smooth: 1e-06
@@ -50,6 +50,10 @@ trainer:
   l1_regularization: False
   elastic_net_regularization: False
   verbose: True
-  device: "cuda"
+  device: "mps"
   use_diff_attn: False       
-  lam: 0.5                   
+  lam: 0.5   # Ideally 0.3-0.5 is better                
+
+tester:
+  dataset: "test"
+  device: "mps"

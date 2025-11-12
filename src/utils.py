@@ -187,24 +187,32 @@ def plot_model_architecture(
     print(f"Model architecture saved in {filename}/{model_name}.{format}")
 
 
+import torch
+import torch.nn as nn
+
 class IoUScore(nn.Module):
-    def __init__(self, threshold: float = 0.5, smooth: float = 1e-6):
+    def __init__(self, threshold: float = 0.5, smooth: float = 1e-6, reduce: bool = True):
         super(IoUScore, self).__init__()
         self.threshold = threshold
         self.smooth = smooth
+        self.reduce = reduce
 
     def forward(self, predicted: torch.Tensor, actual: torch.Tensor) -> torch.Tensor:
-        if not isinstance(predicted, torch.Tensor) or not isinstance(
-            actual, torch.Tensor
-        ):
+        if not isinstance(predicted, torch.Tensor) or not isinstance(actual, torch.Tensor):
             raise TypeError("Inputs must be of type torch.Tensor.")
+
+        # Apply sigmoid if logits
+        if predicted.min() < 0 or predicted.max() > 1:
+            predicted = torch.sigmoid(predicted)
 
         predicted = (predicted > self.threshold).float()
         actual = (actual > self.threshold).float()
 
-        intersection = (predicted * actual).sum(dim=(1, 2, 3))
-        union = (predicted + actual).sum(dim=(1, 2, 3)) - intersection
+        dims = tuple(range(1, predicted.ndim))  # supports (B, 1, H, W) or (B, H, W)
+
+        intersection = (predicted * actual).sum(dim=dims)
+        union = (predicted + actual).sum(dim=dims) - intersection
 
         iou = (intersection + self.smooth) / (union + self.smooth)
 
-        return iou.mean()
+        return iou.mean() if self.reduce else iou
