@@ -1159,7 +1159,7 @@
         "kind": 2,
         "importPath": "src.cli",
         "description": "src.cli",
-        "peekOfCode": "def cli():\n    image_path = path_names()[\"image_path\"]\n    image_channels = config_files()[\"dataloader\"][\"image_channels\"]\n    image_size = config_files()[\"dataloader\"][\"image_size\"]\n    batch_size = config_files()[\"dataloader\"][\"batch_size\"]\n    split_size = config_files()[\"dataloader\"][\"split_size\"]\n    trainer_config = config_files()[\"trainer\"]\n    epochs = trainer_config[\"epochs\"]\n    lr = trainer_config[\"lr\"]\n    optimizer = trainer_config[\"optimizer\"]",
+        "peekOfCode": "def cli():\n    dataloader_cfg = config_files()[\"dataloader\"]\n    trainer_cfg = config_files()[\"trainer\"]\n    tester_cfg = config_files()[\"tester\"]\n    image_path = path_names()[\"image_path\"]\n    image_channels = dataloader_cfg[\"image_channels\"]\n    image_size = dataloader_cfg[\"image_size\"]\n    batch_size = dataloader_cfg[\"batch_size\"]\n    split_size = dataloader_cfg[\"split_size\"]\n    epochs = trainer_cfg[\"epochs\"]",
         "detail": "src.cli",
         "documentation": {}
     },
